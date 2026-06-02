@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0E0E0C" />
+  <title>Plan de Adán · Tu Coach</title>
+
+  <!-- PWA / iOS -->
+  <link rel="apple-touch-icon" href="data:image/png;base64,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" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Plan Adán" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#0E0E0C; --surface:#151513; --surface-elev:#1A1A18;
+      --border:#2A2A26; --border-strong:#3A3A35;
+      --text:#F5F1E8; --text-dim:#8B847A; --text-soft:#B8B2A6;
+      --accent:#E85D2F; --accent-dim:#C44E25; --accent-soft:rgba(232,93,47,.12);
+      --success:#7CB342;
+      --radius:14px; --radius-sm:9px; --max-w:680px;
+      --ease:cubic-bezier(.22,1,.36,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;scroll-padding-top:74px}
+    html,body{
+      background:var(--bg);color:var(--text);
+      font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+      font-weight:400;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      min-height:100vh;min-height:100dvh;overflow-x:hidden;
+    }
+    body{
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 0%, rgba(232,93,47,.07), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(232,93,47,.04), transparent 60%),
+        var(--bg);
+      background-attachment:fixed;
+      padding-bottom:90px;
+    }
+    body::before{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;opacity:.035;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .wrap{max-width:var(--max-w);margin:0 auto;padding:0 22px;
+      padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right));}
+
+    /* ---------- TOP BAR ---------- */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:linear-gradient(180deg,var(--bg) 75%,transparent 100%);
+      padding-top:max(14px,env(safe-area-inset-top));
+    }
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;
+      max-width:var(--max-w);margin:0 auto;padding:0 22px 12px;}
+    .logo{font-family:'Fraunces',serif;font-weight:500;font-size:16px;letter-spacing:-.02em;
+      display:flex;align-items:center;gap:8px;color:var(--text);}
+    .logo-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);}
+    .topbar-meta{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);}
+
+    /* ---------- HERO ---------- */
+    .hero{padding:26px 0 14px;}
+    .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+      font-weight:500;margin-bottom:16px;}
+    .hero h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(34px,9vw,52px);
+      line-height:1.04;letter-spacing:-.03em;margin-bottom:18px;}
+    .hero h1 em{font-style:italic;font-weight:400;color:var(--accent);}
+    .hero-meta{display:flex;gap:26px;margin-top:24px;padding:18px 0;
+      border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-wrap:wrap;}
+    .hero-meta-item{display:flex;flex-direction:column;gap:3px;}
+    .hero-meta-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);}
+    .hero-meta-value{font-family:'Fraunces',serif;font-size:19px;color:var(--text);font-weight:400;}
+
+    /* ---------- SECTIONS ---------- */
+    section{padding:30px 0 6px;animation:fade .6s var(--ease) both;}
+    @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .sec-eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+      font-weight:500;margin-bottom:10px;}
+    .sec-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(24px,6vw,32px);
+      line-height:1.15;letter-spacing:-.02em;margin-bottom:8px;}
+    .sec-sub{font-size:14px;color:var(--text-dim);line-height:1.55;margin-bottom:20px;max-width:52ch;}
+
+    /* ---------- COACH NOTE ---------- */
+    .coach-note{background:var(--surface-elev);border:1px solid var(--border);
+      border-left:3px solid var(--accent);border-radius:var(--radius);padding:24px 22px;}
+    .coach-note p{font-size:15.5px;line-height:1.62;color:var(--text-soft);margin-bottom:14px;}
+    .coach-note p:last-child{margin-bottom:0;}
+    .coach-note strong{color:var(--text);font-weight:600;}
+    .coach-note .accent{color:var(--accent);font-weight:500;}
+    .coach-sign{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--text);margin-top:4px;}
+
+    /* ---------- CARDS GENERIC ---------- */
+    .card{background:var(--surface-elev);border:1px solid var(--border);border-radius:var(--radius);
+      padding:18px;margin-bottom:12px;}
+    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+    @media(min-width:520px){.stat-grid{grid-template-columns:repeat(4,1fr)}}
+    .stat{background:var(--surface-elev);border:1px solid var(--border);border-radius:var(--radius-sm);
+      padding:16px 14px;text-align:center;}
+    .stat-num{font-family:'Fraunces',serif;font-size:30px;font-weight:400;color:var(--accent);line-height:1;}
+    .stat-num span{font-size:14px;color:var(--text-dim);}
+    .stat-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-top:8px;}
+
+    /* ---------- DAY HEADER ---------- */
+    .day-head{display:flex;align-items:baseline;gap:12px;margin:26px 0 12px;}
+    .day-tag{font-family:'Fraunces',serif;font-size:13px;color:var(--accent);
+      border:1px solid var(--accent);border-radius:30px;padding:4px 12px;white-space:nowrap;}
+    .day-name{font-family:'Fraunces',serif;font-size:20px;font-weight:400;color:var(--text);line-height:1.2;}
+
+    /* ---------- EXERCISE CARD ---------- */
+    .ex{background:var(--surface-elev);border:1px solid var(--border);border-radius:var(--radius);
+      padding:16px 16px 14px;margin-bottom:10px;}
+    .ex-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+    .ex-name{font-size:16px;font-weight:600;color:var(--text);line-height:1.25;}
+    .ex-yt{flex-shrink:0;font-size:12px;color:var(--accent);text-decoration:none;
+      border:1px solid var(--border-strong);border-radius:30px;padding:5px 11px;white-space:nowrap;
+      transition:all .2s var(--ease);display:inline-flex;align-items:center;gap:5px;}
+    .ex-yt:hover{border-color:var(--accent);background:var(--accent-soft);}
+    .ex-meta{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px;}
+    .chip{font-size:11.5px;color:var(--text-soft);background:var(--surface);
+      border:1px solid var(--border);border-radius:7px;padding:4px 9px;font-variant-numeric:tabular-nums;}
+    .chip b{color:var(--text);font-weight:600;}
+    .ex-note{font-size:13px;color:var(--text-dim);line-height:1.45;margin-top:8px;}
+
+    .ex-track{margin-top:14px;padding-top:13px;border-top:1px dashed var(--border-strong);}
+    .ex-last{font-size:12.5px;color:var(--text-dim);margin-bottom:9px;min-height:16px;}
+    .ex-last b{color:var(--text-soft);}
+    .ex-hint{font-size:12.5px;color:var(--success);margin-top:9px;line-height:1.4;display:none;}
+    .ex-hint.show{display:block;}
+    .track-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+    .track-field{flex:1;min-width:78px;}
+    .track-field label{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+      color:var(--text-dim);margin-bottom:4px;}
+    .track-field input{width:100%;background:var(--surface);border:1px solid var(--border-strong);
+      border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans';font-size:16px;
+      padding:10px 11px;outline:none;-webkit-appearance:none;transition:border-color .2s;}
+    .track-field input:focus{border-color:var(--accent);}
+    .btn-save{background:var(--accent);color:var(--bg);border:none;border-radius:var(--radius-sm);
+      font-family:'DM Sans';font-weight:600;font-size:14px;padding:11px 16px;cursor:pointer;
+      transition:all .2s var(--ease);align-self:flex-end;height:42px;white-space:nowrap;}
+    .btn-save:hover{background:#FF6E40;}
+    .btn-save.ok{background:var(--success);}
+    .hist-toggle{font-size:12px;color:var(--text-dim);background:none;border:none;cursor:pointer;
+      margin-top:10px;text-decoration:underline;text-underline-offset:3px;padding:0;font-family:'DM Sans';}
+    .hist{display:none;margin-top:10px;font-size:12.5px;color:var(--text-soft);
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;}
+    .hist.show{display:block;}
+    .hist-line{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border);}
+    .hist-line:last-child{border-bottom:none;}
+    .hist-line span{font-variant-numeric:tabular-nums;}
+
+    /* ---------- INFO BOX ---------- */
+    .info{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:16px 18px;margin-bottom:12px;}
+    .info h4{font-family:'Fraunces',serif;font-weight:500;font-size:16px;margin-bottom:8px;color:var(--text);}
+    .info p{font-size:14px;line-height:1.55;color:var(--text-soft);margin-bottom:8px;}
+    .info p:last-child{margin-bottom:0;}
+    .info ul{list-style:none;margin:6px 0;}
+    .info li{font-size:14px;line-height:1.5;color:var(--text-soft);padding:7px 0 7px 20px;
+      position:relative;border-bottom:1px solid var(--border);}
+    .info li:last-child{border-bottom:none;}
+    .info li::before{content:'';position:absolute;left:2px;top:14px;width:6px;height:6px;
+      border-radius:50%;background:var(--accent);}
+    .info li b{color:var(--text);font-weight:600;}
+
+    /* ---------- MEAL ---------- */
+    .meal-block{margin-bottom:18px;}
+    .meal-title{font-family:'Fraunces',serif;font-size:17px;color:var(--accent);margin-bottom:10px;
+      display:flex;align-items:center;gap:9px;}
+    .meal-title::after{content:'';flex:1;height:1px;background:var(--border);}
+    .meal{background:var(--surface-elev);border:1px solid var(--border);border-radius:var(--radius-sm);
+      padding:13px 15px;margin-bottom:8px;}
+    .meal-name{font-size:14.5px;font-weight:600;color:var(--text);margin-bottom:3px;}
+    .meal-desc{font-size:13px;color:var(--text-dim);line-height:1.45;}
+
+    /* ---------- PROGRESSION TABLE ---------- */
+    .weeks{display:grid;grid-template-columns:1fr;gap:8px;}
+    .week-row{background:var(--surface-elev);border:1px solid var(--border);border-radius:var(--radius-sm);
+      padding:13px 15px;display:flex;align-items:center;gap:14px;}
+    .week-row.deload{border-color:var(--accent-dim);background:var(--accent-soft);}
+    .week-n{font-family:'Fraunces',serif;font-size:15px;color:var(--accent);min-width:62px;}
+    .week-desc{font-size:13.5px;color:var(--text-soft);line-height:1.4;}
+    .week-desc b{color:var(--text);font-weight:600;}
+
+    /* ---------- FOOTER ---------- */
+    footer{margin-top:34px;padding:24px 0 10px;border-top:1px solid var(--border);}
+    .disclaimer{font-size:12.5px;color:var(--text-dim);line-height:1.55;margin-bottom:16px;}
+    .next-steps{background:var(--surface-elev);border:1px solid var(--border);border-radius:var(--radius);
+      padding:18px;margin-bottom:14px;}
+    .next-steps h4{font-family:'Fraunces',serif;font-weight:500;font-size:16px;margin-bottom:10px;}
+    .next-steps p{font-size:13.5px;color:var(--text-soft);line-height:1.55;margin-bottom:6px;}
+    .contact{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:var(--bg);
+      text-decoration:none;font-weight:600;font-size:14px;padding:13px 20px;border-radius:var(--radius);
+      margin-top:6px;transition:all .2s var(--ease);}
+    .contact:hover{background:#FF6E40;transform:translateY(-1px);}
+    .copyfoot{font-size:11px;color:var(--text-dim);text-align:center;margin-top:24px;letter-spacing:.04em;}
+
+    /* ---------- BOTTOM NAV ---------- */
+    .bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:60;
+      background:rgba(20,20,18,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border-top:1px solid var(--border);
+      padding:8px 0 max(8px,env(safe-area-inset-bottom));}
+    .bottomnav-inner{max-width:var(--max-w);margin:0 auto;display:flex;justify-content:space-around;}
+    .navitem{flex:1;text-align:center;text-decoration:none;color:var(--text-dim);
+      font-size:10.5px;letter-spacing:.04em;padding:5px 2px;transition:color .2s;}
+    .navitem svg{display:block;margin:0 auto 3px;stroke:currentColor;fill:none;stroke-width:1.6;}
+    .navitem.active{color:var(--accent);}
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="logo"><span class="logo-dot"></span><span>Tu Coach</span></div>
+      <div class="topbar-meta">Plan 12 semanas</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- HERO -->
+    <header class="hero" id="inicio">
+      <div class="eyebrow">Plan personalizado</div>
+      <h1>Hola, <em>Adán.</em><br />Este es tu plan.</h1>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Inicio</div>
+          <div class="hero-meta-value">1 jun 2026</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Duración</div>
+          <div class="hero-meta-value">12 semanas</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Objetivo</div>
+          <div class="hero-meta-value">Ganar músculo</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- COACH NOTE -->
+    <section>
+      <div class="sec-eyebrow">Lo primero</div>
+      <h2 class="sec-title">Notas honestas de tu coach</h2>
+      <div class="coach-note">
+        <p>Adán, gracias por la honestidad al responder. Con eso ya empezamos bien, porque solo puedo armarte un buen plan si me dices la verdad.</p>
+        <p>Tres cosas que vi y que me importan. <strong>Primero:</strong> duermes 5 horas y me pediste 5 días de gimnasio. No te voy a dar 5 — te di <span class="accent">4</span>. No es por recortarte: el músculo no crece en el gimnasio, crece mientras duermes. Entrenar de más con poco descanso es como echar agua a un balde con un hueco. Con 4 días bien hechos vas a avanzar más que con 5 a medias. Cuando subas tu sueño hacia 7 horas, ahí hablamos de agregar un día.</p>
+        <p><strong>Segundo:</strong> tienes 20 a 30 minutos por sesión. Perfecto, se puede. Por eso tu plan va directo al grano: ejercicios grandes, súper-series y cero relleno. Cada minuto cuenta y lo aproveché.</p>
+        <p><strong>Tercero, y te lo digo claro:</strong> arroz, plátano, lentejas y atún no alcanzan para construir músculo bien. Te falta proteína y, sobre todo, calorías y grasas. Armé tu comida con lo que tienes, pero si quieres resultados de verdad, mira la sección de <span class="accent">sugerencias</span>: con uno o dos añadidos baratos cierras la brecha. No te lo impongo — es la diferencia entre avanzar rápido o estancarte.</p>
+        <p>Ganar músculo a tu nivel es totalmente posible: tienes margen para crecer. Pero las dos palancas más grandes ahora mismo no son el entrenamiento. Son tu <strong>sueño</strong> y tu <strong>proteína</strong>. Arregla esas dos y el cuerpo responde.</p>
+        <p class="coach-sign">Yo pongo el plan. Tú pones la constancia. Nos vemos en 4 semanas para ajustar. Vamos.</p>
+      </div>
+    </section>
+
+    <!-- ENTRENAMIENTO -->
+    <section id="entreno">
+      <div class="sec-eyebrow">Entrenamiento</div>
+      <h2 class="sec-title">Tu rutina</h2>
+      <p class="sec-sub">4 días por semana, dividido en tren superior y tren inferior. Cada músculo se trabaja 2 veces por semana — la frecuencia ideal para crecer a tu nivel. Sesiones de 25 a 30 minutos usando súper-series para ahorrar tiempo.</p>
+
+      <div class="info" style="border-color:var(--border-strong)">
+        <h4>Cómo usar el seguimiento</h4>
+        <p>En cada ejercicio anota el <b>peso</b> y las <b>repeticiones</b> que hiciste y dale a <b>Guardar</b>. La próxima vez verás lo que levantaste la sesión anterior, y la app te dirá cuándo subir el peso. Tus datos se guardan en este celular — no necesitas internet ni cuenta.</p>
+        <p style="margin-bottom:0;color:var(--text-dim);font-size:13px;">Tip: agrega esta página a tu pantalla de inicio para abrirla como una app.</p>
+      </div>
+
+      <div class="info">
+        <h4>Esquema de esfuerzo (RIR) por semana</h4>
+        <p style="margin-bottom:6px;">RIR = repeticiones en reserva (cuántas te quedaban antes del fallo). Ajusta el esfuerzo según la semana del bloque:</p>
+        <ul>
+          <li><b>Semana 1:</b> RIR 3-4 — cómodo, aprende el movimiento.</li>
+          <li><b>Semana 2:</b> RIR 2-3 — sube algo de peso o reps.</li>
+          <li><b>Semana 3:</b> RIR 1-2 — la más exigente, esfuerzo máximo controlado.</li>
+          <li><b>Semana 4:</b> deload, RIR 4-5 — baja una serie por ejercicio y descansa.</li>
+        </ul>
+      </div>
+
+      <div id="program"></div>
+    </section>
+
+    <!-- NUTRICIÓN -->
+    <section id="nutricion">
+      <div class="sec-eyebrow">Nutrición</div>
+      <h2 class="sec-title">Tu alimentación</h2>
+      <p class="sec-sub">Para ganar músculo necesitas comer un poco más de lo que gastas. Aquí está tu objetivo diario y un plan armado con lo que ya comes.</p>
+
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-num">2150<span></span></div><div class="stat-label">Kcal / día</div></div>
+        <div class="stat"><div class="stat-num">140<span>g</span></div><div class="stat-label">Proteína</div></div>
+        <div class="stat"><div class="stat-num">260<span>g</span></div><div class="stat-label">Carbos</div></div>
+        <div class="stat"><div class="stat-num">60<span>g</span></div><div class="stat-label">Grasas</div></div>
+      </div>
+
+      <div class="info">
+        <h4>De dónde sale tu número (sin humo)</h4>
+        <p>Tu cuerpo en reposo total quema cerca de <b>1.570 kcal</b> al día (calculado con tu peso, altura y edad). Como tienes un día sedentario pero entrenas, tu gasto real ronda las <b>1.965 kcal</b>. Para construir músculo necesitas un pequeño excedente, así que tu objetivo es <b>~2.150 kcal</b>. La proteína se prioriza porque es lo que repara y construye el músculo.</p>
+      </div>
+
+      <h3 style="font-family:'Fraunces',serif;font-weight:400;font-size:20px;margin:24px 0 4px;">Plan de comidas con tus alimentos</h3>
+      <p class="sec-sub" style="margin-bottom:18px;">Arroz, plátano, lentejas y atún. Recetas simples, casi sin cocinar (puedes usar arroz precocido y lentejas de lata). Elige una opción por comida.</p>
+
+      <div class="meal-block">
+        <div class="meal-title">Desayuno</div>
+        <div class="meal"><div class="meal-name">Bowl de arroz con atún</div><div class="meal-desc">1½ taza de arroz cocido + 1 lata de atún (escurrido) mezclados + 1 plátano al lado.</div></div>
+        <div class="meal"><div class="meal-name">Lentejas con plátano</div><div class="meal-desc">1 taza de lentejas recalentadas + 1 plátano. Rápido y llena.</div></div>
+        <div class="meal"><div class="meal-name">Arroz con plátano</div><div class="meal-desc">1½ taza de arroz + 1 plátano en rodajas. Para los días con prisa.</div></div>
+      </div>
+
+      <div class="meal-block">
+        <div class="meal-title">Almuerzo</div>
+        <div class="meal"><div class="meal-name">Plato fuerte</div><div class="meal-desc">1½ taza de arroz + 1 taza de lentejas + 1 lata de atún. Tu comida más completa del día.</div></div>
+        <div class="meal"><div class="meal-name">Arroz atunado</div><div class="meal-desc">2 tazas de arroz + 1 lata de atún. Mezcla todo en un solo plato.</div></div>
+        <div class="meal"><div class="meal-name">Lentejas con arroz y plátano</div><div class="meal-desc">1½ taza de lentejas + 1 taza de arroz + 1 plátano.</div></div>
+      </div>
+
+      <div class="meal-block">
+        <div class="meal-title">Cena</div>
+        <div class="meal"><div class="meal-name">Lentejas con atún</div><div class="meal-desc">1 taza de lentejas + 1 lata de atún. Ligera y con buena proteína para la noche.</div></div>
+        <div class="meal"><div class="meal-name">Arroz con atún</div><div class="meal-desc">1 taza de arroz + 1 lata de atún + 1 plátano.</div></div>
+        <div class="meal"><div class="meal-name">Lentejas y plátano</div><div class="meal-desc">1½ taza de lentejas + 1 plátano (maduro o frito si te animas a cocinar).</div></div>
+      </div>
+
+      <div class="meal-block">
+        <div class="meal-title">Snack</div>
+        <div class="meal"><div class="meal-name">Plátano</div><div class="meal-desc">Entre comidas, cuando tengas hambre. Energía rápida.</div></div>
+        <div class="meal"><div class="meal-name">Atún de la lata</div><div class="meal-desc">Si te falta proteína en el día, media lata directo.</div></div>
+      </div>
+
+      <div class="info" style="border-left:3px solid var(--accent);">
+        <h4>Sugerencias opcionales si puedes incorporar</h4>
+        <p style="margin-bottom:10px;">Con solo tus 4 alimentos llegas a unas <b>1.750 kcal</b> y <b>~130 g de proteína</b>: te quedas corto en calorías y muy corto en grasas. No te obligo a comprar nada, pero estos añadidos son baratos, fáciles y cierran la brecha:</p>
+        <ul>
+          <li><b>Aceite (de oliva o el que tengas):</b> 1 cucharada sobre el arroz o las lentejas. +120 kcal y 14 g de grasa. La forma más fácil de cerrar tu déficit.</li>
+          <li><b>Huevos:</b> 2-3 al día, hervidos en lote (duran toda la semana). Proteína y grasa buena, baratísimos. Casi no se cocina.</li>
+          <li><b>Leche entera:</b> 1-2 vasos al día. Se toma sin cocinar — proteína, calorías y calcio.</li>
+          <li><b>Pollo:</b> si pides a domicilio, elige pollo a la brasa o a la plancha en vez de frito. Proteína de calidad.</li>
+          <li><b>Avena:</b> se remoja en leche de un día para otro, sin cocinar. Buen carbo y fibra.</li>
+        </ul>
+        <p style="margin-top:10px;margin-bottom:0;color:var(--text-dim);"><b style="color:var(--text-soft);">Sobre el atún:</b> no más de 2 latas al día de forma habitual; el atún acumula mercurio. Alterna con huevos o pollo cuando puedas.</p>
+      </div>
+
+      <div class="info">
+        <h4>Tu suplemento</h4>
+        <p style="margin-bottom:0;"><b>Creatina monohidrato:</b> 3-5 g al día, a cualquier hora, todos los días (incluso los que no entrenas), con bastante agua. No necesitas "fase de carga". Es de los pocos suplementos con evidencia sólida para fuerza y músculo — buena elección.</p>
+      </div>
+    </section>
+
+    <!-- PROGRESIÓN -->
+    <section id="progreso">
+      <div class="sec-eyebrow">Progresión</div>
+      <h2 class="sec-title">Cómo evoluciona tu plan</h2>
+      <p class="sec-sub">12 semanas divididas en 3 bloques de 4 semanas. Cada bloque sube la exigencia 3 semanas y descarga en la 4ª. Así creces sin quemarte.</p>
+
+      <div class="weeks">
+        <div class="week-row"><div class="week-n">Sem 1</div><div class="week-desc"><b>Arranque.</b> Pesos cómodos (RIR 3-4). Aprende la técnica y anota tus pesos base.</div></div>
+        <div class="week-row"><div class="week-n">Sem 2</div><div class="week-desc"><b>Subimos.</b> Más peso o más reps que la semana 1 (RIR 2-3).</div></div>
+        <div class="week-row"><div class="week-n">Sem 3</div><div class="week-desc"><b>Pico.</b> La semana más dura del bloque (RIR 1-2). Aquí empujas fuerte.</div></div>
+        <div class="week-row deload"><div class="week-n">Sem 4</div><div class="week-desc"><b>Deload.</b> Quita 1 serie por ejercicio y baja el peso (RIR 4-5). Recuperas para volver más fuerte.</div></div>
+      </div>
+      <p class="sec-sub" style="margin:16px 0 8px;">Las semanas 5-8 y 9-12 repiten el mismo patrón, pero deberías mover más peso con las mismas reps que el bloque anterior. Eso es progreso.</p>
+
+      <div class="info">
+        <h4>La regla de oro para subir peso</h4>
+        <p style="margin-bottom:0;">Si completas el <b>tope del rango de reps</b> con el RIR de esa semana, la próxima sesión sube <b>2,5 kg</b> (la mayoría de ejercicios) o <b>5 kg</b> (sentadilla y peso muerto). La app te lo sugiere automáticamente cuando guardas tu serie. Si no llegaste al rango, repite el mismo peso hasta lograrlo. Sin prisa.</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="next-steps">
+        <h4>Próximas revisiones</h4>
+        <p><b style="color:var(--accent)">Semana 4 (en 1 mes):</b> revisamos cómo te sientes, tu progreso de pesos y tu energía. Ajustamos volumen y calorías si hace falta.</p>
+        <p><b style="color:var(--accent)">Semana 12 (en 3 meses):</b> evaluación completa y diseño del siguiente ciclo.</p>
+      </div>
+
+      <p class="disclaimer">
+        Este plan es orientativo y no reemplaza la opinión de un médico, nutricionista o fisioterapeuta. Si en algún momento sientes dolor agudo, mareos, dolor en el pecho o malestar fuera de lo normal, detente y consulta a un profesional de salud. Empieza siempre con pesos que puedas controlar.
+      </p>
+
+      <a class="contact" href="https://wa.me/51992443099" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.7.9-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5l-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.2 3 2 3.1 4.9 4.3c1.8.8 2.5.8 3.4.7.5 0 1.4-.6 1.6-1.1s.2-1 .1-1.1-.2-.2-.5-.3z"/></svg>
+        Escribir a mi coach
+      </a>
+
+      <div class="copyfoot">Plan diseñado para Adán · Tu Coach · 2026</div>
+    </footer>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottomnav">
+    <div class="bottomnav-inner">
+      <a class="navitem" href="#inicio" data-sec="inicio">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/></svg>Inicio</a>
+      <a class="navitem" href="#entreno" data-sec="entreno">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M6.5 6.5 17.5 17.5"/><path d="M4 8l2-2 2 2-2 2zM16 20l2-2 2 2-2 2zM2 10l2-2M14 22l2-2M20 8l2-2M8 16l2-2"/></svg>Entreno</a>
+      <a class="navitem" href="#nutricion" data-sec="nutricion">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M5 3v8a3 3 0 0 0 6 0V3M8 3v18M16 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4v9"/></svg>Comida</a>
+      <a class="navitem" href="#progreso" data-sec="progreso">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M6 20v-6M11 20V8M16 20v-9"/></svg>Progreso</a>
+    </div>
+  </nav>
+
+  <script>
+    // ============================================================
+    //  MANIFEST PWA (inline blob) + icono instalable
+    // ============================================================
+    (function(){
+      var manifest = {
+        name: "Plan de Adán · Tu Coach",
+        short_name: "Plan Adán",
+        start_url: ".",
+        scope: ".",
+        display: "standalone",
+        orientation: "portrait",
+        background_color: "#0E0E0C",
+        theme_color: "#0E0E0C",
+        icons: [
+          { src: "data:image/png;base64,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", sizes: "192x192", type: "image/png", purpose: "any" },
+          { src: "data:image/png;base64,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", sizes: "512x512", type: "image/png", purpose: "any maskable" }
+        ]
+      };
+      try {
+        var blob = new Blob([JSON.stringify(manifest)], { type: "application/manifest+json" });
+        var link = document.createElement("link");
+        link.rel = "manifest";
+        link.href = URL.createObjectURL(blob);
+        document.head.appendChild(link);
+      } catch(e){}
+    })();
+
+    // ============================================================
+    //  DATOS DEL PROGRAMA
+    //  yt = búsqueda en YouTube acotada a canales serios (nunca se rompe).
+    // ============================================================
+    var YT = "https://www.youtube.com/results?search_query=";
+    var PROGRAM = [
+      {
+        tag: "Día 1", name: "Tren Superior A · énfasis empuje",
+        ex: [
+          { id:"ua1", n:"Press de banca con barra", sets:"3", reps:"6-8", top:8, inc:2.5, rir:"2-3", rest:"90-120 s", yt:"jeff+nippard+press+de+banca+tecnica", note:"Baja la barra a la línea del pecho, codos a ~45°, pies firmes en el suelo." },
+          { id:"ua2", n:"Remo con barra", sets:"3", reps:"8-10", top:10, inc:2.5, rir:"2-3", rest:"90 s · súper-serie con el press", yt:"jeff+nippard+remo+con+barra+tecnica", note:"Tira hacia el ombligo, espalda neutra, sin usar impulso de cadera." },
+          { id:"ua3", n:"Press de hombro con mancuernas (sentado)", sets:"3", reps:"8-10", top:10, inc:2.5, rir:"2", rest:"75-90 s", yt:"jeff+nippard+press+hombro+mancuernas", note:"Sin arquear la zona lumbar, sube hasta estirar casi del todo." },
+          { id:"ua4", n:"Jalón al pecho (polea alta)", sets:"3", reps:"10-12", top:12, inc:2.5, rir:"2", rest:"60-75 s · súper-serie con el press de hombro", yt:"jeff+nippard+jalon+al+pecho+lat+pulldown", note:"Lleva la barra al pecho, codos hacia abajo, sin balancearte." },
+          { id:"ua5", n:"Curl de bíceps con mancuernas", sets:"2", reps:"10-12", top:12, inc:2.5, rir:"1-2", rest:"súper-serie con tríceps", yt:"athlean+x+curl+biceps+mancuerna+tecnica", note:"Sin mover los hombros, controla la bajada." },
+          { id:"ua6", n:"Extensión de tríceps en polea", sets:"2", reps:"12-15", top:15, inc:2.5, rir:"1-2", rest:"60 s", yt:"jeff+nippard+extension+triceps+polea", note:"Codos pegados al cuerpo, estira completo abajo." }
+        ]
+      },
+      {
+        tag: "Día 2", name: "Tren Inferior A",
+        ex: [
+          { id:"la1", n:"Sentadilla con barra", sets:"3", reps:"6-8", top:8, inc:5, rir:"2-3", rest:"120 s", yt:"squat+university+back+squat+tecnica", note:"Profundidad cómoda, rodillas siguen la punta del pie, abdomen firme." },
+          { id:"la2", n:"Curl femoral acostado (máquina)", sets:"3", reps:"8-10", top:10, inc:2.5, rir:"2", rest:"75 s", yt:"jeff+nippard+leg+curl+femoral", note:"Recorrido completo, controla la fase de bajada." },
+          { id:"la3", n:"Prensa de piernas (45°)", sets:"3", reps:"10-12", top:12, inc:5, rir:"2", rest:"90 s", yt:"jeff+nippard+prensa+piernas+leg+press", note:"No bloquees las rodillas arriba, pies a la altura de los hombros." },
+          { id:"la4", n:"Elevación de pantorrilla de pie", sets:"3", reps:"12-15", top:15, inc:2.5, rir:"1-2", rest:"45-60 s", yt:"jeff+nippard+elevacion+pantorrilla+calf", note:"Estira bien abajo y contrae 1 segundo arriba." }
+        ],
+        extra: "Opcional al final: plancha frontal, 2 series de 30-40 segundos."
+      },
+      {
+        tag: "Día 3", name: "Tren Superior B · énfasis jalón",
+        ex: [
+          { id:"ub1", n:"Press inclinado con mancuernas", sets:"3", reps:"8-10", top:10, inc:2.5, rir:"2-3", rest:"90 s", yt:"jeff+nippard+press+inclinado+mancuernas", note:"Banco a 30°, baja controlado hacia la clavícula." },
+          { id:"ub2", n:"Dominadas asistidas o jalón neutro", sets:"3", reps:"8-10", top:10, inc:2.5, rir:"2", rest:"90 s · súper-serie con el press inclinado", yt:"jeff+nippard+dominadas+pull+up+tecnica", note:"Si aún no salen libres, usa la máquina asistida o una banda." },
+          { id:"ub3", n:"Remo sentado en polea (agarre cerrado)", sets:"3", reps:"10-12", top:12, inc:2.5, rir:"2", rest:"75 s", yt:"jeff+nippard+remo+sentado+polea+seated+row", note:"Pecho arriba, lleva los codos atrás, aprieta las escápulas." },
+          { id:"ub4", n:"Elevaciones laterales con mancuernas", sets:"3", reps:"12-15", top:15, inc:2.5, rir:"1-2", rest:"60 s", yt:"jeff+nippard+elevaciones+laterales+tecnica", note:"Sube hasta la línea del hombro, sin impulso." },
+          { id:"ub5", n:"Face pull (polea)", sets:"2", reps:"15-20", top:20, inc:2.5, rir:"1-2", rest:"súper-serie con curl", yt:"jeff+nippard+face+pull+tecnica", note:"Tira hacia la frente y separa las manos al final." },
+          { id:"ub6", n:"Curl martillo con mancuernas", sets:"2", reps:"10-12", top:12, inc:2.5, rir:"1-2", rest:"60 s", yt:"athlean+x+curl+martillo+hammer+curl", note:"Agarre neutro (palmas enfrentadas), controla el movimiento." }
+        ]
+      },
+      {
+        tag: "Día 4", name: "Tren Inferior B · cadena posterior",
+        ex: [
+          { id:"lb1", n:"Peso muerto rumano con barra", sets:"3", reps:"6-8", top:8, inc:5, rir:"2-3", rest:"120 s", yt:"squat+university+romanian+deadlift+tecnica", note:"Bisagra de cadera, espalda neutra, siente el estiramiento del femoral." },
+          { id:"lb2", n:"Sentadilla goblet o hack", sets:"3", reps:"10-12", top:12, inc:2.5, rir:"2", rest:"90 s", yt:"jeff+nippard+goblet+squat+tecnica", note:"Torso erguido, baja controlado, sube con fuerza." },
+          { id:"lb3", n:"Extensión de cuádriceps (máquina)", sets:"3", reps:"12-15", top:15, inc:2.5, rir:"1-2", rest:"60 s", yt:"jeff+nippard+leg+extension+cuadriceps", note:"Aprieta 1 segundo arriba, baja controlado." },
+          { id:"lb4", n:"Curl femoral sentado", sets:"3", reps:"10-12", top:12, inc:2.5, rir:"2", rest:"75 s", yt:"jeff+nippard+seated+leg+curl", note:"Recorrido completo, sin tirones." },
+          { id:"lb5", n:"Elevación de pantorrilla sentado", sets:"3", reps:"15-20", top:20, inc:2.5, rir:"1-2", rest:"45 s", yt:"jeff+nippard+seated+calf+raise", note:"Pausa abajo y arriba en cada repetición." }
+        ]
+      }
+    ];
+
+    // ============================================================
+    //  SEGUIMIENTO (localStorage)
+    // ============================================================
+    var TRACK_KEY = "adan_track_v1";
+    var EXMAP = {};
+    PROGRAM.forEach(function(d){ d.ex.forEach(function(e){ EXMAP[e.id]=e; }); });
+
+    function load(){ try{ return JSON.parse(localStorage.getItem(TRACK_KEY)) || {}; }catch(e){ return {}; } }
+    function store(d){ try{ localStorage.setItem(TRACK_KEY, JSON.stringify(d)); }catch(e){} }
+    function today(){
+      var m=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+      var t=new Date(); return t.getDate()+" "+m[t.getMonth()];
+    }
+
+    function buildProgram(){
+      var root = document.getElementById("program");
+      var html = "";
+      PROGRAM.forEach(function(d){
+        html += '<div class="day-head"><span class="day-tag">'+d.tag+'</span><span class="day-name">'+d.name+'</span></div>';
+        d.ex.forEach(function(e){
+          html += ''
+          + '<div class="ex" id="card_'+e.id+'">'
+          +   '<div class="ex-top">'
+          +     '<div class="ex-name">'+e.n+'</div>'
+          +     '<a class="ex-yt" href="'+YT+e.yt+'" target="_blank" rel="noopener">▶ técnica</a>'
+          +   '</div>'
+          +   '<div class="ex-meta">'
+          +     '<span class="chip"><b>'+e.sets+'</b> series</span>'
+          +     '<span class="chip"><b>'+e.reps+'</b> reps</span>'
+          +     '<span class="chip">RIR <b>'+e.rir+'</b></span>'
+          +     '<span class="chip">'+e.rest+'</span>'
+          +   '</div>'
+          +   '<div class="ex-note">'+e.note+'</div>'
+          +   '<div class="ex-track">'
+          +     '<div class="ex-last" id="last_'+e.id+'"></div>'
+          +     '<div class="track-row">'
+          +       '<div class="track-field"><label>Peso (kg)</label><input type="number" inputmode="decimal" id="w_'+e.id+'" placeholder="0" /></div>'
+          +       '<div class="track-field"><label>Reps</label><input type="number" inputmode="numeric" id="r_'+e.id+'" placeholder="0" /></div>'
+          +       '<button class="btn-save" id="btn_'+e.id+'">Guardar</button>'
+          +     '</div>'
+          +     '<div class="ex-hint" id="hint_'+e.id+'"></div>'
+          +     '<button class="hist-toggle" id="ht_'+e.id+'">Ver historial</button>'
+          +     '<div class="hist" id="hist_'+e.id+'"></div>'
+          +   '</div>'
+          + '</div>';
+        });
+        if(d.extra){
+          html += '<div class="ex-note" style="padding:0 4px 6px;color:var(--text-dim)">'+d.extra+'</div>';
+        }
+      });
+      root.innerHTML = html;
+
+      // listeners
+      PROGRAM.forEach(function(d){ d.ex.forEach(function(e){
+        document.getElementById("btn_"+e.id).addEventListener("click", function(){ logEx(e.id); });
+        document.getElementById("ht_"+e.id).addEventListener("click", function(){ toggleHist(e.id); });
+        refreshEx(e.id);
+      }); });
+    }
+
+    function logEx(id){
+      var wEl=document.getElementById("w_"+id), rEl=document.getElementById("r_"+id);
+      var w=parseFloat(wEl.value), r=parseInt(rEl.value,10);
+      if(isNaN(w) && isNaN(r)) return;
+      var d=load();
+      if(!d[id]) d[id]=[];
+      d[id].push({ date: today(), w: isNaN(w)?null:w, r: isNaN(r)?null:r });
+      if(d[id].length>40) d[id]=d[id].slice(-40);
+      store(d);
+      wEl.value=""; rEl.value="";
+      var b=document.getElementById("btn_"+id);
+      b.textContent="Guardado ✓"; b.classList.add("ok");
+      setTimeout(function(){ b.textContent="Guardar"; b.classList.remove("ok"); }, 1400);
+      refreshEx(id);
+    }
+
+    function refreshEx(id){
+      var d=load(), arr=d[id]||[], e=EXMAP[id];
+      var lastEl=document.getElementById("last_"+id);
+      var hintEl=document.getElementById("hint_"+id);
+      if(arr.length){
+        var l=arr[arr.length-1];
+        var txt="Última sesión: ";
+        txt += (l.w!=null? "<b>"+l.w+" kg</b>" : "<b>—</b>");
+        if(l.r!=null) txt += " × <b>"+l.r+"</b> reps";
+        txt += " · "+l.date;
+        lastEl.innerHTML=txt;
+        // sugerencia de progresión
+        if(l.r!=null && l.w!=null && l.r>=e.top){
+          hintEl.innerHTML="✓ Completaste el rango. La próxima sube a <b>"+(l.w+e.inc)+" kg</b>.";
+          hintEl.classList.add("show");
+        } else {
+          hintEl.classList.remove("show"); hintEl.innerHTML="";
+        }
+      } else {
+        lastEl.innerHTML="<span style='color:var(--text-dim)'>Aún sin registro. Anota tu primera serie.</span>";
+        hintEl.classList.remove("show"); hintEl.innerHTML="";
+      }
+    }
+
+    function toggleHist(id){
+      var box=document.getElementById("hist_"+id);
+      var btn=document.getElementById("ht_"+id);
+      if(box.classList.contains("show")){
+        box.classList.remove("show"); btn.textContent="Ver historial"; return;
+      }
+      var d=load(), arr=(d[id]||[]).slice(-4).reverse();
+      if(!arr.length){
+        box.innerHTML="<div style='color:var(--text-dim)'>Sin sesiones todavía.</div>";
+      } else {
+        box.innerHTML = arr.map(function(s){
+          var v=(s.w!=null? s.w+" kg":"—") + (s.r!=null? " × "+s.r+" reps":"");
+          return "<div class='hist-line'><span>"+s.date+"</span><span>"+v+"</span></div>";
+        }).join("");
+      }
+      box.classList.add("show"); btn.textContent="Ocultar historial";
+    }
+
+    // ============================================================
+    //  NAV ACTIVA AL HACER SCROLL
+    // ============================================================
+    function initNav(){
+      var secs=["inicio","entreno","nutricion","progreso"];
+      var items={};
+      document.querySelectorAll(".navitem").forEach(function(a){ items[a.dataset.sec]=a; });
+      function onScroll(){
+        var pos=window.scrollY+120, active="inicio";
+        secs.forEach(function(s){
+          var el=document.getElementById(s);
+          if(el && el.offsetTop<=pos) active=s;
+        });
+        secs.forEach(function(s){ items[s].classList.toggle("active", s===active); });
+      }
+      window.addEventListener("scroll", onScroll, {passive:true});
+      onScroll();
+    }
+
+    // INIT
+    buildProgram();
+    initNav();
+  </script>
+</body>
+</html>
