@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#0E0E0C" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Plan · Jhony" />
+  <title>Tu Plan · Jhony</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- App icon (inline SVG) -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230E0E0C'/%3E%3Ccircle cx='90' cy='90' r='30' fill='%23E85D2F'/%3E%3C/svg%3E" />
+
+  <style>
+    :root {
+      --bg: #0E0E0C;
+      --surface: #151513;
+      --surface-elev: #1A1A18;
+      --border: #2A2A26;
+      --border-strong: #3A3A35;
+      --text: #F5F1E8;
+      --text-dim: #8B847A;
+      --text-soft: #B8B2A6;
+      --accent: #E85D2F;
+      --accent-dim: #C44E25;
+      --accent-soft: rgba(232, 93, 47, 0.12);
+      --success: #7CB342;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --max-w: 680px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232, 93, 47, 0.06), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(232, 93, 47, 0.04), transparent 60%),
+        var(--bg);
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1000;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .app {
+      min-height: 100vh; min-height: 100dvh;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: env(safe-area-inset-top) 0 calc(env(safe-area-inset-bottom) + 60px) 0;
+      position: relative;
+    }
+
+    /* ============ HEADER ============ */
+    .header {
+      padding: 28px 24px 22px;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 500; font-size: 15px;
+      letter-spacing: -0.01em; color: var(--text-soft);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 22px;
+    }
+    .logo-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 12px var(--accent);
+    }
+    .header-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(32px, 8vw, 46px);
+      line-height: 1.04; letter-spacing: -0.03em; margin-bottom: 16px;
+    }
+    .header-name em { font-style: italic; font-weight: 400; color: var(--accent); }
+    .header-meta {
+      display: flex; flex-wrap: wrap; gap: 22px 32px; margin-top: 18px;
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label {
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
+    }
+    .meta-value { font-family: 'Fraunces', serif; font-size: 19px; color: var(--text); font-weight: 400; }
+    .meta-value.accent { color: var(--accent); }
+
+    /* ============ SECTIONS ============ */
+    section { padding: 38px 24px; border-bottom: 1px solid var(--border); }
+    .section-eyebrow {
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px; font-weight: 500;
+    }
+    .section-title {
+      font-family: 'Fraunces', serif; font-weight: 400;
+      font-size: clamp(24px, 5.5vw, 30px); line-height: 1.18;
+      letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .section-sub { font-size: 15px; color: var(--text-dim); line-height: 1.5; margin-bottom: 24px; }
+
+    p.body { font-size: 15.5px; line-height: 1.62; color: var(--text-soft); margin-bottom: 14px; }
+    p.body strong { color: var(--text); font-weight: 600; }
+    p.body .hl { color: var(--accent); font-weight: 500; }
+
+    /* ============ COACH NOTES ============ */
+    .coach-note {
+      background: var(--surface-elev);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 24px 22px;
+    }
+    .coach-note p { font-size: 15.5px; line-height: 1.65; color: var(--text-soft); margin-bottom: 14px; }
+    .coach-note p:last-child { margin-bottom: 0; }
+    .coach-note strong { color: var(--text); font-weight: 600; }
+    .coach-note .accent { color: var(--accent); font-weight: 500; }
+    .coach-sign {
+      margin-top: 18px; font-family: 'Fraunces', serif; font-style: italic;
+      font-size: 17px; color: var(--text); font-weight: 400;
+    }
+
+    /* ============ NUTRITION ============ */
+    .macro-hero {
+      text-align: center; padding: 26px 0 20px;
+      border-bottom: 1px solid var(--border); margin-bottom: 24px;
+    }
+    .macro-hero-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+    .macro-hero-value { font-family: 'Fraunces', serif; font-weight: 300; font-size: 64px; line-height: 1; color: var(--accent); letter-spacing: -0.03em; }
+    .macro-hero-value span { font-size: 22px; color: var(--text-dim); font-weight: 400; }
+
+    .macro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+    .macro-card {
+      background: var(--surface-elev); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 14px; text-align: center;
+    }
+    .macro-card-name { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+    .macro-card-val { font-family: 'Fraunces', serif; font-size: 28px; color: var(--text); font-weight: 400; }
+    .macro-card-val span { font-size: 14px; color: var(--text-dim); }
+    .macro-card-kcal { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+    .info-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 18px; margin-bottom: 16px;
+    }
+    .info-box-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+    .info-box p { font-size: 13.5px; line-height: 1.55; color: var(--text-soft); margin: 0; }
+
+    /* ============ MEALS ============ */
+    .meal-block { margin-bottom: 26px; }
+    .meal-head {
+      display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+    .meal-head h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 20px; color: var(--text); }
+    .meal-head .tag { font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em; }
+    .meal-opt {
+      display: flex; gap: 12px; padding: 12px 0;
+      border-bottom: 1px solid rgba(42,42,38,0.5);
+    }
+    .meal-opt:last-child { border-bottom: none; }
+    .meal-opt-num {
+      flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+      border: 1px solid var(--border-strong); color: var(--text-dim);
+      font-size: 11px; display: flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+    .meal-opt-body { flex: 1; }
+    .meal-opt-name { font-size: 14.5px; color: var(--text); font-weight: 500; line-height: 1.4; }
+    .meal-opt-detail { font-size: 13px; color: var(--text-dim); line-height: 1.45; margin-top: 3px; }
+
+    .suggest-box {
+      background: var(--accent-soft); border: 1px solid rgba(232,93,47,0.25);
+      border-radius: var(--radius); padding: 20px 20px;
+    }
+    .suggest-box .section-eyebrow { margin-bottom: 10px; }
+    .suggest-box p { font-size: 14px; line-height: 1.55; color: var(--text-soft); }
+    .suggest-list { list-style: none; margin-top: 10px; }
+    .suggest-list li { font-size: 14px; color: var(--text-soft); padding: 6px 0 6px 18px; position: relative; line-height: 1.45; }
+    .suggest-list li::before { content: '+'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+
+    /* ============ TRAINING ============ */
+    .week-select-wrap { margin-bottom: 18px; }
+    .week-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; display: block; }
+    .week-pills { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+    .week-pill {
+      flex-shrink: 0; padding: 9px 16px; border-radius: 999px;
+      border: 1px solid var(--border-strong); background: transparent;
+      color: var(--text-dim); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: all 0.2s var(--ease); white-space: nowrap; -webkit-tap-highlight-color: transparent;
+    }
+    .week-pill.active { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+
+    .rir-banner {
+      background: var(--surface-elev); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .rir-big {
+      flex-shrink: 0; text-align: center; min-width: 64px;
+      padding-right: 16px; border-right: 1px solid var(--border);
+    }
+    .rir-big-label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+    .rir-big-val { font-family: 'Fraunces', serif; font-size: 24px; color: var(--accent); line-height: 1.2; margin-top: 2px; }
+    .rir-note { font-size: 13px; line-height: 1.5; color: var(--text-soft); align-self: center; }
+
+    .day-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 22px; -webkit-overflow-scrolling: touch; }
+    .day-tab {
+      flex-shrink: 0; padding: 10px 14px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text-dim); cursor: pointer; transition: all 0.2s var(--ease);
+      text-align: center; -webkit-tap-highlight-color: transparent; min-width: 70px;
+    }
+    .day-tab.active { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
+    .day-tab-num { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
+    .day-tab.active .day-tab-num { color: var(--accent); }
+    .day-tab-name { font-size: 13px; font-weight: 500; margin-top: 2px; }
+
+    .day-header { margin-bottom: 18px; }
+    .day-header h3 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 24px; letter-spacing: -0.02em; }
+    .day-header .focus { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+    .ex-card {
+      background: var(--surface-elev); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px; margin-bottom: 12px;
+    }
+    .ex-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .ex-name { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .ex-scheme { font-size: 13px; color: var(--accent); font-weight: 500; margin-top: 4px; }
+    .ex-yt {
+      flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center;
+      text-decoration: none; transition: all 0.2s var(--ease); -webkit-tap-highlight-color: transparent;
+    }
+    .ex-yt:hover { border-color: var(--accent); background: var(--accent-soft); }
+    .ex-yt svg { width: 16px; height: 16px; }
+    .ex-meta { font-size: 12.5px; color: var(--text-dim); margin-top: 10px; line-height: 1.45; }
+    .ex-meta b { color: var(--text-soft); font-weight: 500; }
+
+    .ex-last {
+      font-size: 12.5px; color: var(--text-soft); margin-top: 14px;
+      padding: 8px 12px; background: var(--surface); border-radius: var(--radius-sm);
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    }
+    .ex-last.empty { color: var(--text-dim); justify-content: center; }
+    .ex-last .progress-tip { color: var(--success); font-weight: 600; font-size: 12px; }
+
+    .ex-log {
+      display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; margin-top: 12px; align-items: end;
+    }
+    .ex-log .fld { display: flex; flex-direction: column; gap: 5px; }
+    .ex-log label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); }
+    .ex-log input {
+      width: 100%; background: var(--surface); border: 1px solid var(--border-strong);
+      color: var(--text); font-family: 'DM Sans'; font-size: 16px; padding: 11px 12px;
+      border-radius: var(--radius-sm); outline: none; transition: border-color 0.2s; -webkit-appearance: none;
+    }
+    .ex-log input:focus { border-color: var(--accent); }
+    .ex-log-btn {
+      background: var(--accent); color: var(--bg); border: none; border-radius: var(--radius-sm);
+      font-family: 'DM Sans'; font-weight: 600; font-size: 14px; padding: 11px 16px; cursor: pointer;
+      transition: all 0.2s var(--ease); white-space: nowrap; -webkit-tap-highlight-color: transparent;
+    }
+    .ex-log-btn:hover { background: #FF6E40; }
+    .ex-log-btn.saved { background: var(--success); }
+
+    .ex-hist-toggle {
+      font-size: 12px; color: var(--text-dim); margin-top: 12px; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 5px; -webkit-tap-highlight-color: transparent;
+      background: none; border: none; font-family: 'DM Sans'; padding: 0;
+    }
+    .ex-hist-toggle:hover { color: var(--accent); }
+    .ex-hist { margin-top: 10px; display: none; }
+    .ex-hist.open { display: block; }
+    .ex-hist-row {
+      display: flex; justify-content: space-between; font-size: 12.5px;
+      padding: 6px 0; border-bottom: 1px solid rgba(42,42,38,0.5); color: var(--text-soft);
+    }
+    .ex-hist-row:last-child { border-bottom: none; }
+    .ex-hist-row .date { color: var(--text-dim); }
+    .ex-hist-empty { font-size: 12.5px; color: var(--text-dim); padding: 6px 0; }
+
+    /* ============ PROGRESSION / BLOCK B ============ */
+    .timeline { margin-top: 8px; }
+    .timeline-row {
+      display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
+    .timeline-row:last-child { border-bottom: none; }
+    .timeline-wk {
+      flex-shrink: 0; width: 78px;
+      font-family: 'Fraunces', serif; font-size: 15px; color: var(--accent); font-weight: 400; line-height: 1.3;
+    }
+    .timeline-body { flex: 1; }
+    .timeline-body h4 { font-size: 14.5px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .timeline-body p { font-size: 13.5px; line-height: 1.5; color: var(--text-soft); margin: 0; }
+
+    /* ============ FOOTER ============ */
+    .footer { padding: 38px 24px 48px; }
+    .disclaimer {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px; margin-bottom: 24px;
+    }
+    .disclaimer p { font-size: 12.5px; line-height: 1.55; color: var(--text-dim); }
+    .contact-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; background: var(--accent); color: var(--bg);
+      text-decoration: none; font-weight: 600; font-size: 16px;
+      padding: 17px; border-radius: var(--radius); transition: all 0.2s var(--ease);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .contact-btn:hover { background: #FF6E40; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232,93,47,0.3); }
+    .footer-fine { text-align: center; font-size: 11px; color: var(--text-dim); margin-top: 20px; letter-spacing: 0.03em; }
+
+    .next-review {
+      display: flex; gap: 12px; margin-bottom: 24px;
+    }
+    .review-card {
+      flex: 1; background: var(--surface-elev); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; text-align: center;
+    }
+    .review-card .when { font-family: 'Fraunces', serif; font-size: 18px; color: var(--accent); }
+    .review-card .what { font-size: 12px; color: var(--text-dim); margin-top: 4px; line-height: 1.4; }
+
+    .hidden { display: none !important; }
+
+    @supports (padding: max(0px)) {
+      .app { padding-left: max(0px, env(safe-area-inset-left)); padding-right: max(0px, env(safe-area-inset-right)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+      <div class="logo"><span class="logo-dot"></span><span>Tu Coach</span></div>
+      <h1 class="header-name">Plan de <em>Jhony</em></h1>
+      <div class="header-meta">
+        <div class="meta-item">
+          <div class="meta-label">Inicio</div>
+          <div class="meta-value">3 jun 2026</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Objetivo</div>
+          <div class="meta-value accent">Tarima</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Tarima (NABBA)</div>
+          <div class="meta-value">18 jul 2026</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Duración</div>
+          <div class="meta-value">12 semanas</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ COACH NOTES ============ -->
+    <section>
+      <div class="section-eyebrow">Notas honestas de tu coach</div>
+      <h2 class="section-title">Léelo antes de empezar.</h2>
+      <div class="coach-note" style="margin-top:18px;">
+        <p>Jhony, lo primero: tus números hablan. <strong>120 en banca, 180 en sentadilla y 160 en peso muerto a 73 kg</strong> no es de alguien nuevo. Ya sabes entrenar, ya sabes empujar, y eso me deja programar con intensidad real desde el día uno. No tengo que enseñarte a sufrir; tengo que dirigir hacia dónde apuntas ese trabajo.</p>
+        <p>Segundo, y esto es lo importante: tu tarima es el <span class="accent">18 de julio</span>. Eso son unas <strong>6 a 7 semanas</strong>, no 12. Así que seamos claros con lo que toca. Las primeras 6 semanas son <strong>preparación pura</strong>: secar grasa, sostener el músculo que ya tienes y llegar lo más definido y lleno posible al escenario. No es momento de buscar récords de fuerza — es momento de no perder lo construido mientras bajamos. Por eso el plan mantiene los pesos pesados (eso preserva músculo en déficit) y deja que la dieta y el cardio hagan la grasa.</p>
+        <p>Tercero, con honestidad de coach: duermes <strong>6 horas</strong>. Mantengo tus 6 días porque estás en prep y el tiempo aprieta, pero tu sueño es <strong>el factor que más te va a frenar</strong>. En un corte, dormir poco te roba recuperación, te da más hambre y te sube el estrés. Si puedes robarle 30–45 min más a la noche, eso te va a rendir más que cualquier suplemento. Si la recuperación se cae, bajamos a 5 días sin drama.</p>
+        <p>Y un punto de calma: las <strong>semanas 7 a 12 ya tienen plan</strong> — recuperación post-tarima y reconstrucción. No te voy a dejar caer al vacío después del show. Eso evita el rebote que tumba a tanta gente.</p>
+        <p class="coach-sign">Vamos por esa tarima. Yo pongo el plan; tú pones la disciplina. — Tu coach</p>
+      </div>
+    </section>
+
+    <!-- ============ NUTRITION ============ -->
+    <section>
+      <div class="section-eyebrow">Nutrición · Energía</div>
+      <h2 class="section-title">Tus calorías para secar.</h2>
+      <p class="section-sub">Calculado con tu metabolismo real, no con una tabla genérica.</p>
+
+      <div class="macro-hero">
+        <div class="macro-hero-label">Objetivo diario (fase de corte)</div>
+        <div class="macro-hero-value">2.100<span> kcal</span></div>
+      </div>
+
+      <div class="macro-grid">
+        <div class="macro-card">
+          <div class="macro-card-name">Proteína</div>
+          <div class="macro-card-val">190<span>g</span></div>
+          <div class="macro-card-kcal">760 kcal</div>
+        </div>
+        <div class="macro-card">
+          <div class="macro-card-name">Carbos</div>
+          <div class="macro-card-val">210<span>g</span></div>
+          <div class="macro-card-kcal">840 kcal</div>
+        </div>
+        <div class="macro-card">
+          <div class="macro-card-name">Grasas</div>
+          <div class="macro-card-val">55<span>g</span></div>
+          <div class="macro-card-kcal">495 kcal</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-box-title">¿De dónde sale este número?</div>
+        <p>Tu cuerpo gasta alrededor de <b style="color:var(--text-soft)">2.700 kcal al día</b> (tu metabolismo basal más tu actividad y tus entrenamientos). Para secar grasa restamos cerca del 22%. Eso te deja un déficit de unas 600 kcal diarias, que se traduce en bajar aprox. <b style="color:var(--text-soft)">0,5 kg por semana</b> — el ritmo justo para perder grasa sin quemar músculo. La proteína va alta a propósito: en déficit protege el músculo.</p>
+      </div>
+
+      <div class="info-box">
+        <div class="info-box-title">Cómo ajustarlo cada semana</div>
+        <p>Pésate <b style="color:var(--text-soft)">en ayunas, mismo día, 1 vez por semana</b>, y tómate una foto de frente y de espalda. Si en 7–10 días no bajas nada, recortamos 20–30 g de carbos o sumamos 15 min de cardio. Si bajas demasiado rápido o te sientes vacío en el gym, subimos un poco los carbos. La balanza manda, no el reloj.</p>
+      </div>
+    </section>
+
+    <!-- ============ MEAL PLAN ============ -->
+    <section>
+      <div class="section-eyebrow">Nutrición · Comidas</div>
+      <h2 class="section-title">Tu plan de comidas.</h2>
+      <p class="section-sub">Armado solo con lo que comes: huevos, pollo, papa, arroz, palta, avena y tu proteína en polvo. Combínalas como quieras durante el día para llegar a tus macros.</p>
+
+      <div class="meal-block">
+        <div class="meal-head"><h3>Desayuno</h3><span class="tag">3 opciones</span></div>
+        <div class="meal-opt"><div class="meal-opt-num">1</div><div class="meal-opt-body"><div class="meal-opt-name">Avena proteica</div><div class="meal-opt-detail">60 g de avena cocida en agua + 1 scoop de proteína + canela. Rápido y llena.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">2</div><div class="meal-opt-body"><div class="meal-opt-name">Huevos + avena</div><div class="meal-opt-detail">3 huevos (puedes hacer 1 entero + 3 claras para bajar grasa) + 40 g de avena.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">3</div><div class="meal-opt-body"><div class="meal-opt-name">Tortilla y palta</div><div class="meal-opt-detail">Tortilla de 3 huevos + 1/4 de palta. Acompaña con un poco de avena si entrenas temprano.</div></div></div>
+      </div>
+
+      <div class="meal-block">
+        <div class="meal-head"><h3>Almuerzo</h3><span class="tag">4 opciones</span></div>
+        <div class="meal-opt"><div class="meal-opt-num">1</div><div class="meal-opt-body"><div class="meal-opt-name">Pollo, arroz y palta</div><div class="meal-opt-detail">180 g de pollo a la plancha + 150 g de arroz cocido + 1/4 de palta. La comida base de tu corte.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">2</div><div class="meal-opt-body"><div class="meal-opt-name">Pollo con papa al horno</div><div class="meal-opt-detail">180 g de pollo + 250 g de papa al horno (más saciante que el arroz, mismos carbos).</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">3</div><div class="meal-opt-body"><div class="meal-opt-name">Arroz con pollo</div><div class="meal-opt-detail">Pollo desmenuzado salteado con arroz. Sazona fuerte: ajo, comino, pimienta.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">4</div><div class="meal-opt-body"><div class="meal-opt-name">Bowl post-entreno</div><div class="meal-opt-detail">Arroz + pollo + 1 huevo encima. Si entrenas al mediodía, mete aquí más carbos.</div></div></div>
+      </div>
+
+      <div class="meal-block">
+        <div class="meal-head"><h3>Cena</h3><span class="tag">3 opciones</span></div>
+        <div class="meal-opt"><div class="meal-opt-num">1</div><div class="meal-opt-body"><div class="meal-opt-name">Pollo y papa</div><div class="meal-opt-detail">180 g de pollo + 200 g de papa cocida. Ligera en grasa, ideal de noche.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">2</div><div class="meal-opt-body"><div class="meal-opt-name">Huevos y papa</div><div class="meal-opt-detail">3 huevos + papa cocida. Buena para los días que no cocinas pollo.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">3</div><div class="meal-opt-body"><div class="meal-opt-name">Pollo y arroz ligero</div><div class="meal-opt-detail">Pollo + 100 g de arroz. Si quieres dejar más carbos para el desayuno, baja el arroz aquí.</div></div></div>
+      </div>
+
+      <div class="meal-block">
+        <div class="meal-head"><h3>Snacks</h3><span class="tag">4 opciones</span></div>
+        <div class="meal-opt"><div class="meal-opt-num">1</div><div class="meal-opt-body"><div class="meal-opt-name">Batido de proteína</div><div class="meal-opt-detail">1 scoop en agua. Tu comodín para llegar a los 190 g de proteína.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">2</div><div class="meal-opt-body"><div class="meal-opt-name">Huevos duros</div><div class="meal-opt-detail">2–3 huevos cocidos. Práctico para llevar.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">3</div><div class="meal-opt-body"><div class="meal-opt-name">Avena con proteína</div><div class="meal-opt-detail">Pequeña porción de avena + medio scoop si te da hambre entre comidas.</div></div></div>
+        <div class="meal-opt"><div class="meal-opt-num">4</div><div class="meal-opt-body"><div class="meal-opt-name">Palta</div><div class="meal-opt-detail">1/4 de palta es tu grasa buena. Úsala para cerrar el día si te faltan grasas.</div></div></div>
+      </div>
+
+      <div class="info-box" style="background:var(--surface-elev);">
+        <div class="info-box-title">Ejemplo de un día completo (≈ 2.100 kcal)</div>
+        <p>Desayuno: avena proteica · Almuerzo: pollo + arroz + palta · Snack: batido de proteína · Cena: pollo + papa + 1 huevo. Eso te deja muy cerca de 190 g de proteína, 210 g de carbos y 55 g de grasa. La creatina (3–5 g) tómala a cualquier hora del día, todos los días, con constancia.</p>
+      </div>
+
+      <div class="suggest-box">
+        <div class="section-eyebrow">Sugerencias opcionales si puedes incorporar</div>
+        <p>Tu lista funciona, pero le faltan fibra y micronutrientes — importantes en un corte para llegar bien al escenario. Nada obligatorio, pero si puedes sumar:</p>
+        <ul class="suggest-list">
+          <li><strong>Verduras verdes</strong> (brócoli, espinaca, ensalada): llenan, casi no suman calorías y mejoran la digestión.</li>
+          <li><strong>Una fruta al día</strong> (plátano, manzana): vitaminas y un buen pre-entreno.</li>
+          <li><strong>Pescado o atún</strong>: proteína magra que rota con el pollo y te da omega 3.</li>
+          <li><strong>Yogurt griego natural</strong>: proteína extra y variedad para los snacks.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ TRAINING ============ -->
+    <section>
+      <div class="section-eyebrow">Entrenamiento · Bloque A (Prep)</div>
+      <h2 class="section-title">Tu rutina de la semana.</h2>
+      <p class="section-sub">Empuje / Jalón / Pierna, 6 días, cada músculo 2 veces por semana. Registra tu peso en cada ejercicio — el plan recuerda lo que hiciste la última vez.</p>
+
+      <div class="week-select-wrap">
+        <span class="week-label">Selecciona tu semana</span>
+        <div class="week-pills" id="weekPills"></div>
+      </div>
+
+      <div class="rir-banner">
+        <div class="rir-big">
+          <div class="rir-big-label">RIR</div>
+          <div class="rir-big-val" id="rirVal">3</div>
+        </div>
+        <div class="rir-note" id="rirNote"></div>
+      </div>
+
+      <div class="day-tabs" id="dayTabs"></div>
+      <div class="day-header" id="dayHeader"></div>
+      <div id="exContainer"></div>
+    </section>
+
+    <!-- ============ PROGRESSION ============ -->
+    <section>
+      <div class="section-eyebrow">Cómo evoluciona tu plan</div>
+      <h2 class="section-title">El mapa de 12 semanas.</h2>
+      <div class="timeline">
+        <div class="timeline-row">
+          <div class="timeline-wk">Sem 1–5</div>
+          <div class="timeline-body">
+            <h4>Preparación</h4>
+            <p>Secamos grasa con la dieta y el cardio. En el gym subimos peso o reps cuando puedas, manteniendo los pesos pesados para no perder músculo. La intensidad sube cada semana (menos repeticiones en reserva).</p>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-wk">Sem 6</div>
+          <div class="timeline-body">
+            <h4>Semana de tarima (peak)</h4>
+            <p>Bajamos el volumen ~40%, pesos cómodos, prioridad total al descanso y a verte lleno. <strong>No experimentes</strong> con agua, sodio ni carbos por tu cuenta — afina los últimos días directamente con tu coach. Es tu primer show: simple y seguro gana.</p>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-wk">Sem 7–8</div>
+          <div class="timeline-body">
+            <h4>Recuperación post-show</h4>
+            <p>Subimos calorías de vuelta poco a poco (reverse), bajamos el cardio y entrenamos relajado. Tu cuerpo y tu cabeza necesitan este respiro. Evita el atracón post-tarima: subimos de forma controlada.</p>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="timeline-wk">Sem 9–12</div>
+          <div class="timeline-body">
+            <h4>Reconstrucción</h4>
+            <p>Ya en mantenimiento o leve superávit, volvemos a buscar músculo y fuerza con más volumen. Aquí es donde creces de verdad para la próxima temporada. Reevaluamos todo al cierre.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="section-eyebrow">Próximos pasos</div>
+      <h2 class="section-title" style="margin-bottom:20px;">Seguimiento.</h2>
+
+      <div class="next-review">
+        <div class="review-card">
+          <div class="when">Sem 4</div>
+          <div class="what">Primera revisión:<br>fotos + medidas</div>
+        </div>
+        <div class="review-card">
+          <div class="when">Post-show</div>
+          <div class="what">Ajuste del<br>bloque de rebuild</div>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        <p>Este plan es orientativo y no reemplaza la opinión de un médico, nutricionista o fisioterapeuta. Si aparece dolor, mareo, falta de aire o cualquier malestar fuera de lo normal, detente y consulta a un profesional de salud antes de seguir. Tú eres responsable de entrenar dentro de tus límites.</p>
+      </div>
+
+      <a class="contact-btn" id="waBtn" href="#" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.04c-.24.68-1.42 1.31-1.95 1.36-.5.05-.97.24-3.27-.68-2.77-1.09-4.5-3.93-4.64-4.11-.13-.18-1.1-1.47-1.1-2.8 0-1.33.7-1.98.95-2.25.24-.27.53-.34.71-.34.18 0 .35 0 .51.01.16.01.39-.06.6.46.24.58.81 2 .88 2.15.07.15.12.32.02.5-.09.18-.14.29-.27.45-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.27.14.43.12.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.6-.14.24.09 1.55.73 1.81.86.27.14.44.2.51.32.07.11.07.66-.17 1.34z"/></svg>
+        Escríbele a tu coach
+      </a>
+
+      <div class="footer-fine">Tu Coach · Plan personalizado · Jhony · 2026</div>
+    </footer>
+
+  </div>
+
+  <script>
+    /* =========================================================
+       CONFIG
+       ========================================================= */
+    var COACH_WHATSAPP = "51992443099"; // <-- Jhon: reemplaza por TU número (código país + número, sin +)
+    var CLIENT_WA = "992443099";       // WhatsApp de Jhony (referencia)
+    var STORAGE_KEY = "coach_jhony_v1";
+
+    /* WhatsApp del coach (mensaje pre-armado) */
+    (function () {
+      var msg = encodeURIComponent("Hola coach, soy Jhony. Tengo una consulta sobre mi plan.");
+      document.getElementById("waBtn").href = "https://wa.me/" + COACH_WHATSAPP + "?text=" + msg;
+    })();
+
+    /* =========================================================
+       SEMANAS (banner RIR del Bloque A)
+       ========================================================= */
+    var WEEKS = {
+      1: { rir: "3",        note: "Semana de entrada. Deja 3 repeticiones en reserva en cada serie. Conoce tus pesos y mantén la técnica perfecta." },
+      2: { rir: "2–3",      note: "Subimos un punto la intensidad. Las últimas reps deben costar." },
+      3: { rir: "2",        note: "Cerca del fallo técnico. Forma impecable: si la técnica se rompe, paras la serie." },
+      4: { rir: "1–2",      note: "Semana más exigente del bloque. Empuja fuerte, pero nunca a costa de la técnica." },
+      5: { rir: "1–2",      note: "Mantenemos la intensidad alta. La dieta y el cardio hacen el grueso del trabajo." },
+      6: { rir: "PEAK",     note: "Semana de tarima: baja el volumen ~40%, pesos cómodos, prioriza descanso y verte lleno. NO experimentes. Coordina los últimos días con tu coach." }
+    };
+
+    /* =========================================================
+       PROGRAMA — BLOQUE A (Empuje / Jalón / Pierna ×2)
+       yt = enlace de búsqueda en YouTube acotado por canal serio
+       ========================================================= */
+    function yt(q) { return "https://www.youtube.com/results?search_query=" + encodeURIComponent(q); }
+
+    var DAYS = [
+      {
+        tag: "Día 1", name: "Empuje A", focus: "Pecho · hombro · tríceps",
+        ex: [
+          { id: "d1e1", name: "Press banca con barra", scheme: "4 × 6–8", rest: "2–3 min", note: "Escápulas retraídas, baja a media tetilla, controla la bajada.", top: 8, yt: yt("Jeff Nippard barbell bench press technique") },
+          { id: "d1e2", name: "Press inclinado con mancuernas", scheme: "3 × 8–10", rest: "2 min", note: "Banco a 30°. Estira abajo, no choques las mancuernas arriba.", top: 10, yt: yt("Jeff Nippard incline dumbbell press") },
+          { id: "d1e3", name: "Cruces en polea (pec fly)", scheme: "3 × 12–15", rest: "60–90 s", note: "Busca el estiramiento del pecho. Aprieta al juntar.", top: 15, yt: yt("Jeff Nippard cable crossover chest") },
+          { id: "d1e4", name: "Elevaciones laterales", scheme: "4 × 12–20", rest: "60 s", note: "Sube con el codo, no con la mano. Sin balanceo.", top: 20, yt: yt("Jeff Nippard lateral raise technique") },
+          { id: "d1e5", name: "Extensión de tríceps en polea (cuerda)", scheme: "3 × 10–15", rest: "60–90 s", note: "Codos pegados al cuerpo, abre la cuerda abajo.", top: 15, yt: yt("ATHLEAN-X triceps rope pushdown") },
+          { id: "d1e6", name: "Extensión sobre cabeza (tríceps)", scheme: "3 × 10–12", rest: "60–90 s", note: "Estira bien la cabeza larga del tríceps detrás de la nuca.", top: 12, yt: yt("Jeff Nippard overhead triceps extension") }
+        ]
+      },
+      {
+        tag: "Día 2", name: "Jalón A", focus: "Espalda (amplitud) · bíceps",
+        ex: [
+          { id: "d2e1", name: "Jalón al pecho, agarre ancho", scheme: "4 × 8–12", rest: "2 min", note: "Lleva los codos hacia las costillas, pecho arriba.", top: 12, yt: yt("Jeff Nippard lat pulldown technique") },
+          { id: "d2e2", name: "Remo en máquina", scheme: "4 × 8–10", rest: "2 min", note: "Tira con la espalda, no con los brazos. Aprieta atrás.", top: 10, yt: yt("Renaissance Periodization machine row back") },
+          { id: "d2e3", name: "Pullover en polea", scheme: "3 × 12–15", rest: "60–90 s", note: "Brazos casi rectos, siente el dorsal estirar arriba.", top: 15, yt: yt("Jeff Nippard cable pullover lats") },
+          { id: "d2e4", name: "Face pull", scheme: "3 × 15–20", rest: "60 s", note: "Salud de hombro: tira hacia la frente, abre los codos.", top: 20, yt: yt("ATHLEAN-X face pull technique") },
+          { id: "d2e5", name: "Curl con barra", scheme: "3 × 8–10", rest: "90 s", note: "Codos quietos, sin impulso de cadera.", top: 10, yt: yt("Jeff Nippard barbell curl technique") },
+          { id: "d2e6", name: "Curl martillo", scheme: "3 × 10–12", rest: "60–90 s", note: "Agarre neutro, trabaja el braquial y el antebrazo.", top: 12, yt: yt("Jeff Nippard hammer curl") }
+        ]
+      },
+      {
+        tag: "Día 3", name: "Pierna A", focus: "Cuádriceps · gemelo · core",
+        ex: [
+          { id: "d3e1", name: "Sentadilla con barra", scheme: "4 × 6–8", rest: "3 min", note: "Profundidad cómoda con técnica, rodillas siguen los pies.", top: 8, yt: yt("Squat University back squat technique") },
+          { id: "d3e2", name: "Prensa 45°", scheme: "3 × 10–12", rest: "2 min", note: "Pies medios, no bloquees del todo la rodilla arriba.", top: 12, yt: yt("Jeff Nippard leg press technique") },
+          { id: "d3e3", name: "Extensión de cuádriceps", scheme: "3 × 12–15", rest: "60–90 s", note: "Aprieta arriba 1 segundo, baja controlado.", top: 15, yt: yt("Jeff Nippard leg extension") },
+          { id: "d3e4", name: "Curl femoral tumbado", scheme: "3 × 10–12", rest: "90 s", note: "No despegues la cadera del banco.", top: 12, yt: yt("Jeff Nippard lying leg curl") },
+          { id: "d3e5", name: "Elevación de gemelos de pie", scheme: "4 × 10–15", rest: "60 s", note: "Rango completo: estira abajo, sube en punta.", top: 15, yt: yt("Jeff Nippard standing calf raise") },
+          { id: "d3e6", name: "Abdominal colgado / plancha", scheme: "3 × 10–15", rest: "60 s", note: "Lleva las rodillas al pecho con control, sin balanceo.", top: 15, yt: yt("ATHLEAN-X hanging leg raise") }
+        ]
+      },
+      {
+        tag: "Día 4", name: "Empuje B", focus: "Hombro · pecho · tríceps",
+        ex: [
+          { id: "d4e1", name: "Press militar con barra", scheme: "4 × 6–8", rest: "2–3 min", note: "Glúteo y abdomen firmes, barra sube en línea recta.", top: 8, yt: yt("Jeff Nippard overhead press technique") },
+          { id: "d4e2", name: "Elevaciones laterales de pie", scheme: "4 × 12–20", rest: "60 s", note: "Tu prioridad para anchura de hombro. Sin balanceo.", top: 20, yt: yt("Jeff Nippard lateral raise") },
+          { id: "d4e3", name: "Press de pecho en máquina", scheme: "3 × 10–12", rest: "90 s", note: "Empuja parejo, aprieta el pecho al final.", top: 12, yt: yt("Jeff Nippard machine chest press") },
+          { id: "d4e4", name: "Pec deck (aperturas en máquina)", scheme: "3 × 12–15", rest: "60–90 s", note: "Codos a la altura del pecho, aprieta al juntar.", top: 15, yt: yt("Jeff Nippard pec deck machine") },
+          { id: "d4e5", name: "Extensión tríceps sobre cabeza en polea", scheme: "3 × 12–15", rest: "60–90 s", note: "Estira bien atrás de la nuca.", top: 15, yt: yt("Jeff Nippard overhead cable triceps extension") },
+          { id: "d4e6", name: "Pushdown en polea", scheme: "3 × 12–15", rest: "60 s", note: "Codos fijos, extensión completa abajo.", top: 15, yt: yt("ATHLEAN-X triceps pushdown") }
+        ]
+      },
+      {
+        tag: "Día 5", name: "Jalón B", focus: "Espalda (grosor) · bíceps",
+        ex: [
+          { id: "d5e1", name: "Remo con barra", scheme: "4 × 6–8", rest: "2–3 min", note: "Espalda neutra, tronco a ~45°, tira a la cadera baja.", top: 8, yt: yt("Squat University barbell row technique") },
+          { id: "d5e2", name: "Dominadas / jalón agarre neutro", scheme: "3 × 8–12", rest: "2 min", note: "Si no salen libres, usa asistencia o jalón neutro.", top: 12, yt: yt("Jeff Nippard pull up technique") },
+          { id: "d5e3", name: "Remo en polea baja, agarre estrecho", scheme: "3 × 10–12", rest: "90 s", note: "Lleva los codos atrás, junta las escápulas.", top: 12, yt: yt("Jeff Nippard seated cable row") },
+          { id: "d5e4", name: "Encogimientos (trapecio)", scheme: "3 × 12–15", rest: "60–90 s", note: "Sube los hombros recto a las orejas, aprieta arriba.", top: 15, yt: yt("Jeff Nippard dumbbell shrug trap") },
+          { id: "d5e5", name: "Curl en banco inclinado (mancuernas)", scheme: "3 × 10–12", rest: "90 s", note: "Estira el bíceps abajo con el brazo detrás del cuerpo.", top: 12, yt: yt("Jeff Nippard incline dumbbell curl") },
+          { id: "d5e6", name: "Curl en polea", scheme: "3 × 12–15", rest: "60 s", note: "Tensión constante, sin descanso arriba.", top: 15, yt: yt("Jeff Nippard cable curl biceps") }
+        ]
+      },
+      {
+        tag: "Día 6", name: "Pierna B", focus: "Posterior · glúteo · gemelo",
+        ex: [
+          { id: "d6e1", name: "Peso muerto rumano", scheme: "4 × 8–10", rest: "2–3 min", note: "Cadera atrás, espalda recta, siente el femoral estirar.", top: 10, yt: yt("Squat University romanian deadlift technique") },
+          { id: "d6e2", name: "Hip thrust", scheme: "3 × 8–12", rest: "2 min", note: "Aprieta el glúteo arriba 1 segundo, mentón metido.", top: 12, yt: yt("Jeff Nippard hip thrust technique") },
+          { id: "d6e3", name: "Prensa con pies altos", scheme: "3 × 12–15", rest: "90 s", note: "Pies arriba en la plataforma para cargar glúteo y femoral.", top: 15, yt: yt("Jeff Nippard leg press foot placement") },
+          { id: "d6e4", name: "Curl femoral sentado", scheme: "3 × 12–15", rest: "60–90 s", note: "Controla la vuelta, no dejes caer el peso.", top: 15, yt: yt("Jeff Nippard seated leg curl") },
+          { id: "d6e5", name: "Elevación de gemelos sentado", scheme: "4 × 12–20", rest: "60 s", note: "Trabaja el sóleo. Rango completo y pausa abajo.", top: 20, yt: yt("Jeff Nippard seated calf raise") },
+          { id: "d6e6", name: "Rueda abdominal / crunch en polea", scheme: "3 × 10–15", rest: "60 s", note: "Abdomen firme, no arquees la zona lumbar.", top: 15, yt: yt("ATHLEAN-X ab wheel rollout") }
+        ]
+      }
+    ];
+
+    /* =========================================================
+       ESTADO
+       ========================================================= */
+    var state = { week: 1, day: 0 };
+
+    function loadData() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : { logs: {} };
+      } catch (e) { return { logs: {} }; }
+    }
+    function saveData(d) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch (e) {}
+    }
+    function getLogs(exId) {
+      var d = loadData();
+      return (d.logs && d.logs[exId]) ? d.logs[exId] : [];
+    }
+    function addLog(exId, weight, reps, week) {
+      var d = loadData();
+      if (!d.logs) d.logs = {};
+      if (!d.logs[exId]) d.logs[exId] = [];
+      d.logs[exId].push({ date: new Date().toISOString(), weight: weight, reps: reps, week: week });
+      saveData(d);
+    }
+
+    /* =========================================================
+       UTILS
+       ========================================================= */
+    function fmtDate(iso) {
+      var dt = new Date(iso);
+      var dd = String(dt.getDate()).padStart(2, "0");
+      var mm = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"][dt.getMonth()];
+      return dd + " " + mm;
+    }
+    function lastEntry(exId) {
+      var logs = getLogs(exId);
+      return logs.length ? logs[logs.length - 1] : null;
+    }
+
+    /* =========================================================
+       RENDER — semanas
+       ========================================================= */
+    function renderWeeks() {
+      var wrap = document.getElementById("weekPills");
+      wrap.innerHTML = "";
+      for (var w = 1; w <= 6; w++) {
+        (function (week) {
+          var b = document.createElement("button");
+          b.className = "week-pill" + (state.week === week ? " active" : "");
+          b.textContent = (week === 6 ? "Sem 6 · Peak" : "Sem " + week);
+          b.onclick = function () { state.week = week; renderWeeks(); renderRir(); renderDay(); };
+          wrap.appendChild(b);
+        })(w);
+      }
+    }
+    function renderRir() {
+      var info = WEEKS[state.week];
+      document.getElementById("rirVal").textContent = info.rir;
+      document.getElementById("rirNote").textContent = info.note;
+    }
+
+    /* =========================================================
+       RENDER — tabs de días
+       ========================================================= */
+    function renderTabs() {
+      var wrap = document.getElementById("dayTabs");
+      wrap.innerHTML = "";
+      DAYS.forEach(function (d, i) {
+        var b = document.createElement("button");
+        b.className = "day-tab" + (state.day === i ? " active" : "");
+        b.innerHTML = '<div class="day-tab-num">' + d.tag + '</div><div class="day-tab-name">' + d.name + '</div>';
+        b.onclick = function () { state.day = i; renderTabs(); renderDay(); };
+        wrap.appendChild(b);
+      });
+    }
+
+    /* =========================================================
+       RENDER — día + ejercicios con tracking
+       ========================================================= */
+    function renderDay() {
+      var day = DAYS[state.day];
+      var head = document.getElementById("dayHeader");
+      head.innerHTML = '<h3>' + day.tag + ' — ' + day.name + '</h3><div class="focus">' + day.focus + '</div>';
+
+      var cont = document.getElementById("exContainer");
+      cont.innerHTML = "";
+
+      day.ex.forEach(function (ex) {
+        var card = document.createElement("div");
+        card.className = "ex-card";
+
+        var last = lastEntry(ex.id);
+        var lastHtml;
+        if (last) {
+          var tip = "";
+          if (Number(last.reps) >= ex.top) {
+            tip = '<span class="progress-tip">↑ Sube +2.5 kg</span>';
+          }
+          lastHtml = '<div class="ex-last"><span>Última vez: <b style="color:var(--text)">' + last.weight + ' kg × ' + last.reps + '</b> · ' + fmtDate(last.date) + '</span>' + tip + '</div>';
+        } else {
+          lastHtml = '<div class="ex-last empty">Aún no registras este ejercicio</div>';
+        }
+
+        card.innerHTML =
+          '<div class="ex-top">' +
+            '<div>' +
+              '<div class="ex-name">' + ex.name + '</div>' +
+              '<div class="ex-scheme">' + ex.scheme + '</div>' +
+            '</div>' +
+            '<a class="ex-yt" href="' + ex.yt + '" target="_blank" rel="noopener" title="Ver técnica">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="#E85D2F" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3" fill="#E85D2F"/></svg>' +
+            '</a>' +
+          '</div>' +
+          '<div class="ex-meta"><b>Descanso:</b> ' + ex.rest + ' &nbsp;·&nbsp; ' + ex.note + '</div>' +
+          lastHtml +
+          '<div class="ex-log">' +
+            '<div class="fld"><label>Peso (kg)</label><input type="number" inputmode="decimal" placeholder="0" data-k="w"></div>' +
+            '<div class="fld"><label>Reps</label><input type="number" inputmode="numeric" placeholder="0" data-k="r"></div>' +
+            '<button class="ex-log-btn">Registrar</button>' +
+          '</div>' +
+          '<button class="ex-hist-toggle">Ver historial ▾</button>' +
+          '<div class="ex-hist"></div>';
+
+        // listeners
+        var btn = card.querySelector(".ex-log-btn");
+        var wIn = card.querySelector('input[data-k="w"]');
+        var rIn = card.querySelector('input[data-k="r"]');
+        btn.onclick = function () {
+          var wv = parseFloat(wIn.value);
+          var rv = parseInt(rIn.value, 10);
+          if (isNaN(wv) || isNaN(rv) || wv < 0 || rv <= 0) {
+            wIn.style.borderColor = "var(--accent)";
+            rIn.style.borderColor = "var(--accent)";
+            return;
+          }
+          addLog(ex.id, wv, rv, state.week);
+          btn.textContent = "✓ Guardado";
+          btn.classList.add("saved");
+          setTimeout(function () { renderDay(); }, 650);
+        };
+
+        var toggle = card.querySelector(".ex-hist-toggle");
+        var hist = card.querySelector(".ex-hist");
+        toggle.onclick = function () {
+          if (hist.classList.contains("open")) {
+            hist.classList.remove("open");
+            toggle.textContent = "Ver historial ▾";
+          } else {
+            renderHist(hist, ex.id);
+            hist.classList.add("open");
+            toggle.textContent = "Ocultar historial ▴";
+          }
+        };
+
+        cont.appendChild(card);
+      });
+    }
+
+    function renderHist(el, exId) {
+      var logs = getLogs(exId).slice(-4).reverse();
+      if (!logs.length) {
+        el.innerHTML = '<div class="ex-hist-empty">Sin registros todavía.</div>';
+        return;
+      }
+      el.innerHTML = logs.map(function (l) {
+        return '<div class="ex-hist-row"><span>' + l.weight + ' kg × ' + l.reps + ' &nbsp;<span style="color:var(--text-dim)">(Sem ' + (l.week || "–") + ')</span></span><span class="date">' + fmtDate(l.date) + '</span></div>';
+      }).join("");
+    }
+
+    /* =========================================================
+       PWA — manifest inline
+       ========================================================= */
+    (function () {
+      var manifest = {
+        name: "Plan de Jhony · Tu Coach",
+        short_name: "Plan Jhony",
+        start_url: ".",
+        display: "standalone",
+        background_color: "#0E0E0C",
+        theme_color: "#0E0E0C",
+        icons: [{
+          src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230E0E0C'/%3E%3Ccircle cx='90' cy='90' r='30' fill='%23E85D2F'/%3E%3C/svg%3E",
+          sizes: "180x180", type: "image/svg+xml", purpose: "any"
+        }]
+      };
+      var blob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
+      var link = document.createElement("link");
+      link.rel = "manifest";
+      link.href = URL.createObjectURL(blob);
+      document.head.appendChild(link);
+    })();
+
+    /* =========================================================
+       INIT
+       ========================================================= */
+    renderWeeks();
+    renderRir();
+    renderTabs();
+    renderDay();
+  </script>
+</body>
+</html>
