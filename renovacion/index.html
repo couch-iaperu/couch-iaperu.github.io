@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0E0E0C" />
+  <title>Renovación de tu plan · Tu Coach</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0E0E0C;
+      --surface: #15151310;
+      --surface-elev: #1A1A18;
+      --border: #2A2A26;
+      --border-strong: #3A3A35;
+      --text: #F5F1E8;
+      --text-dim: #8B847A;
+      --text-soft: #B8B2A6;
+      --accent: #E85D2F;
+      --accent-dim: #C44E25;
+      --accent-soft: rgba(232, 93, 47, 0.12);
+      --error: #E85D2F;
+      --success: #7CB342;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --max-w: 640px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh; min-height: 100dvh;
+      overflow-x: hidden;
+    }
+    body {
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232, 93, 47, 0.06), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(232, 93, 47, 0.04), transparent 60%),
+        var(--bg);
+      background-attachment: fixed;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1000; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .app {
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; flex-direction: column;
+      max-width: var(--max-w); margin: 0 auto;
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;
+      position: relative;
+    }
+    .header {
+      padding: 18px 24px 14px; display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; position: sticky; top: 0;
+      background: linear-gradient(180deg, var(--bg) 70%, transparent 100%); z-index: 10;
+    }
+    .logo {
+      font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; letter-spacing: -0.02em;
+      color: var(--text); display: flex; align-items: center; gap: 8px;
+    }
+    .logo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+    .progress-text { font-size: 12px; color: var(--text-dim); font-variant-numeric: tabular-nums; letter-spacing: 0.04em; text-transform: uppercase; }
+    .progress-bar { height: 2px; background: var(--border); position: relative; overflow: hidden; }
+    .progress-fill { position: absolute; inset: 0 100% 0 0; background: var(--accent); transition: right 0.5s var(--ease); box-shadow: 0 0 12px rgba(232, 93, 47, 0.5); }
+    .screen-wrapper { flex: 1; display: flex; flex-direction: column; padding: 24px; position: relative; overflow: hidden; }
+    .screen { flex: 1; display: flex; flex-direction: column; animation: slideIn 0.45s var(--ease); }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .screen.exiting { animation: slideOut 0.25s var(--ease) forwards; }
+    @keyframes slideOut { to { opacity: 0; transform: translateY(-16px); } }
+    .eyebrow { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; font-weight: 500; }
+    .question-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(26px, 5.5vw, 34px); line-height: 1.18; letter-spacing: -0.02em; color: var(--text); margin-bottom: 12px; }
+    .question-subtitle { font-size: 15px; color: var(--text-dim); line-height: 1.5; margin-bottom: 28px; }
+    .input-group { margin-bottom: 12px; }
+    .input-label { display: block; font-size: 13px; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 0.02em; }
+    input[type="text"], input[type="number"], input[type="date"], input[type="tel"], textarea {
+      width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border-strong);
+      color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 18px; padding: 12px 0; outline: none;
+      transition: border-color 0.2s, padding 0.2s; -webkit-appearance: none; border-radius: 0;
+    }
+    textarea { resize: none; min-height: 120px; line-height: 1.5; font-size: 16px; padding-top: 12px; }
+    input:focus, textarea:focus { border-bottom-color: var(--accent); }
+    input::placeholder, textarea::placeholder { color: var(--text-dim); opacity: 0.5; }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 12px; }
+    .input-row-3 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    @media (min-width: 480px) { .input-row-3 { grid-template-columns: 1fr 1fr 1fr; } }
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .option {
+      display: flex; align-items: center; gap: 14px; padding: 16px 18px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer;
+      transition: all 0.2s var(--ease); user-select: none; -webkit-tap-highlight-color: transparent;
+    }
+    .option:hover { border-color: var(--border-strong); background: var(--surface-elev); }
+    .option.selected { border-color: var(--accent); background: var(--accent-soft); }
+    .option-indicator { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border-strong); flex-shrink: 0; position: relative; transition: all 0.2s var(--ease); }
+    .option-indicator.checkbox { border-radius: 5px; }
+    .option.selected .option-indicator { border-color: var(--accent); background: var(--accent); }
+    .option.selected .option-indicator::after { content: ''; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .option.selected .option-indicator:not(.checkbox)::after { width: 7px; height: 7px; background: var(--bg); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .option.selected .option-indicator.checkbox::after { content: '✓'; color: var(--bg); font-size: 12px; font-weight: 700; line-height: 1; top: 1px; left: 4px; position: absolute; }
+    .option-text { font-size: 15px; color: var(--text); line-height: 1.35; flex: 1; }
+    .nav { display: flex; gap: 12px; margin-top: 32px; padding-top: 20px; }
+    .btn {
+      font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; padding: 16px 24px;
+      border-radius: var(--radius); border: none; cursor: pointer; transition: all 0.2s var(--ease);
+      letter-spacing: 0.01em; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-primary { background: var(--accent); color: var(--bg); flex: 1; font-weight: 600; }
+    .btn-primary:hover:not(:disabled) { background: #FF6E40; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232, 93, 47, 0.3); }
+    .btn-primary:disabled { background: var(--border); color: var(--text-dim); cursor: not-allowed; }
+    .btn-secondary { background: transparent; color: var(--text-dim); border: 1px solid var(--border-strong); padding: 16px 20px; }
+    .btn-secondary:hover { color: var(--text); border-color: var(--text-dim); }
+    .arrow { font-size: 18px; line-height: 1; }
+    .welcome { text-align: left; padding-top: 40px; }
+    .welcome-title { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(36px, 8vw, 56px); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px; }
+    .welcome-title em { font-style: italic; font-weight: 400; color: var(--accent); }
+    .welcome-text { font-size: 17px; line-height: 1.55; color: var(--text-soft); margin-bottom: 18px; }
+    .welcome-meta { display: flex; gap: 24px; margin: 32px 0; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .welcome-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .welcome-meta-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+    .welcome-meta-value { font-family: 'Fraunces', serif; font-size: 22px; color: var(--text); font-weight: 400; }
+    .disclaimer-box { background: var(--surface-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 24px; }
+    .disclaimer-text { font-size: 13px; line-height: 1.5; color: var(--text-soft); margin-bottom: 14px; }
+    .disclaimer-check { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; user-select: none; }
+    .disclaimer-check input { position: absolute; opacity: 0; pointer-events: none; }
+    .disclaimer-check-box { width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid var(--border-strong); flex-shrink: 0; margin-top: 1px; position: relative; transition: all 0.2s var(--ease); }
+    .disclaimer-check.checked .disclaimer-check-box { background: var(--accent); border-color: var(--accent); }
+    .disclaimer-check.checked .disclaimer-check-box::after { content: '✓'; position: absolute; top: 0px; left: 4px; color: var(--bg); font-size: 13px; font-weight: 700; }
+    .disclaimer-check-text { font-size: 13px; line-height: 1.45; color: var(--text); }
+    .success { text-align: center; padding: 80px 0 40px; display: flex; flex-direction: column; align-items: center; }
+    .success-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 28px; position: relative; }
+    .success-icon::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--accent); animation: pulse 2s var(--ease) infinite; }
+    @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+    .success-icon svg { stroke: var(--accent); stroke-width: 2; }
+    .success-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(28px, 6vw, 36px); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .success-text { font-size: 16px; color: var(--text-soft); line-height: 1.55; max-width: 400px; }
+    .success-text strong { color: var(--accent); font-weight: 500; }
+    .loading { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(14, 14, 12, 0.3); border-top-color: var(--bg); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .helper-text { font-size: 13px; color: var(--text-dim); margin-top: 8px; line-height: 1.4; }
+    .error-text { font-size: 13px; color: var(--error); margin-top: 8px; }
+    .resumen-box {
+      background: var(--surface-elev); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px; margin: 20px 0 8px; max-height: 34vh; overflow-y: auto;
+      font-size: 12.5px; line-height: 1.5; color: var(--text-soft);
+      white-space: pre-wrap; word-break: break-word; font-family: 'DM Sans', sans-serif;
+    }
+    .entrega-steps { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 20px; }
+    .entrega-step { display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; line-height: 1.45; color: var(--text-soft); }
+    .entrega-num {
+      flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft);
+      border: 1px solid var(--accent); color: var(--accent); font-size: 12px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+    .btn-copy { background: var(--accent); color: var(--bg); width: 100%; font-weight: 600; }
+    .btn-copy.done { background: var(--success); }
+    .btn-wa { background: transparent; color: var(--text); border: 1px solid var(--border-strong); width: 100%; margin-top: 10px; text-decoration: none; }
+    .btn-wa:hover { border-color: var(--accent); color: var(--accent); }
+    .hidden { display: none !important; }
+    @supports (padding: max(0px)) { .app { padding-left: max(0px, env(safe-area-inset-left)); padding-right: max(0px, env(safe-area-inset-right)); } }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        <span>Tu Coach · Renovación</span>
+      </div>
+      <div class="progress-text" id="progressText">— / —</div>
+    </header>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="screen-wrapper" id="screenWrapper"></div>
+  </div>
+
+  <script>
+    // ============================================
+    // CONFIG
+    // ============================================
+    // 1) Si algún día publicas el Apps Script, pega su URL /exec aquí.
+    //    Con esto puesto, las respuestas van solas a tu Google Sheet.
+    const APPS_SCRIPT_URL = "";
+
+    // 2) Mientras tanto (o siempre), el cliente te envía la respuesta
+    //    por WhatsApp. Déjalo vacío y solo se mostrará el botón "Copiar".
+    //    Si pones tu número (con código de país, solo dígitos),
+    //    aparece además un botón que abre el chat contigo.
+    //    Ejemplo Perú: "51980499718"
+    const COACH_WHATSAPP = "51980499718";
+
+    const state = { currentIndex: 0, answers: {}, disclaimerAccepted: false };
+
+    // ============================================
+    // PREGUNTAS DE RENOVACIÓN
+    // ============================================
+    const questions = [
+      { id: 'welcome', type: 'welcome' },
+
+      // ---------- BLOQUE 0: IDENTIFICACIÓN ----------
+      {
+        id: 'r1_nombre', type: 'text',
+        eyebrow: 'Identificación',
+        title: '¿Cómo te llamas?',
+        subtitle: 'Escríbelo igual que en tu primer formulario, para encontrar tu historial.',
+        placeholder: 'Tu nombre', required: true
+      },
+      {
+        id: 'r2_whatsapp', type: 'text', inputType: 'tel',
+        eyebrow: 'Identificación',
+        title: '¿Tu mismo WhatsApp?',
+        subtitle: 'Con código de país. Si cambiaste de número, pon el nuevo.',
+        placeholder: '+51 999 888 777', required: true
+      },
+
+      // ---------- BLOQUE 1: CUMPLIMIENTO ----------
+      {
+        id: 'r3_cumplimiento', type: 'radio',
+        eyebrow: 'Tu ciclo',
+        title: 'De los entrenamientos que tocaban, ¿cuántos hiciste de verdad?',
+        subtitle: 'Sé honesto. Esto no es un examen: si cumpliste poco, el problema fue el plan y lo tengo que arreglar.',
+        required: true,
+        options: [
+          { value: 'casi_todos', label: 'Casi todos (90% o más)' },
+          { value: 'mayoria', label: 'La mayoría (entre 70% y 90%)' },
+          { value: 'mitad', label: 'Como la mitad (50% a 70%)' },
+          { value: 'pocos', label: 'Menos de la mitad' },
+          { value: 'abandone', label: 'Lo dejé a medias y no volví' }
+        ]
+      },
+      {
+        id: 'r4_obstaculos', type: 'checkbox',
+        eyebrow: 'Tu ciclo',
+        title: '¿Qué te impidió cumplir?',
+        subtitle: 'Marca todo lo que aplique. Esto es lo más útil que me puedes decir.',
+        showIf: (a) => ['mitad', 'pocos', 'abandone', 'mayoria'].includes(a.r3_cumplimiento),
+        required: true,
+        options: [
+          { value: 'tiempo', label: 'Falta de tiempo / horarios' },
+          { value: 'motivacion', label: 'Falta de motivación o ganas' },
+          { value: 'cansancio', label: 'Llegaba muy cansado' },
+          { value: 'trabajo_viajes', label: 'Trabajo, viajes o imprevistos' },
+          { value: 'dolor', label: 'Dolor o molestia física' },
+          { value: 'aburrido', label: 'Me aburrieron los ejercicios' },
+          { value: 'largo', label: 'Las sesiones eran muy largas' },
+          { value: 'dificil', label: 'Me resultó muy difícil o exigente' },
+          { value: 'gym', label: 'Problemas con el gimnasio o el equipo' },
+          { value: 'otro', label: 'Otro motivo (lo cuento al final)' }
+        ]
+      },
+
+      // ---------- BLOQUE 2: RESULTADOS ----------
+      {
+        id: 'r5_medidas', type: 'composite',
+        eyebrow: 'Tus resultados',
+        title: '¿Cómo estás hoy en números?',
+        subtitle: 'Pésate en ayunas si puedes. La cintura se mide a la altura del ombligo, relajado. Si no tienes cinta, deja ese campo en blanco.',
+        required: true,
+        fields: [
+          { name: 'peso_kg', label: 'Peso actual (kg)', type: 'number', placeholder: '70', min: 30, max: 250, required: true },
+          { name: 'cintura_cm', label: 'Cintura (cm)', type: 'number', placeholder: 'opcional', min: 40, max: 200 }
+        ]
+      },
+      {
+        id: 'r6_cambio_cuerpo', type: 'radio',
+        eyebrow: 'Tus resultados',
+        title: '¿Cómo sientes que cambió tu cuerpo?',
+        subtitle: 'Lo que ves en el espejo y en la ropa vale tanto como la balanza.',
+        required: true,
+        options: [
+          { value: 'mas_musculo', label: 'Me veo con más músculo' },
+          { value: 'mas_definido', label: 'Me veo más definido / bajé grasa' },
+          { value: 'ambos', label: 'Ambos: más músculo y menos grasa' },
+          { value: 'igual', label: 'Prácticamente igual' },
+          { value: 'peor', label: 'Me veo peor que antes' },
+          { value: 'no_se', label: 'No sabría decir' }
+        ]
+      },
+      {
+        id: 'r7_fuerza', type: 'composite',
+        eyebrow: 'Tus resultados',
+        title: '¿Qué pesos estás moviendo hoy?',
+        subtitle: 'El peso que levantas con buena técnica para unas 5 a 8 repeticiones — NO tu máximo forzado. Deja en blanco lo que no hagas o no sepas.',
+        required: false,
+        fields: [
+          { name: 'press_banca', label: 'Press banca / press pecho (kg)', type: 'number', placeholder: 'opcional', min: 0, max: 300 },
+          { name: 'sentadilla', label: 'Sentadilla o prensa (kg)', type: 'number', placeholder: 'opcional', min: 0, max: 500 },
+          { name: 'peso_muerto', label: 'Peso muerto o RDL (kg)', type: 'number', placeholder: 'opcional', min: 0, max: 400 },
+          { name: 'jalon_remo', label: 'Jalón o remo (kg)', type: 'number', placeholder: 'opcional', min: 0, max: 300 },
+          { name: 'flexiones', label: 'Flexiones seguidas', type: 'number', placeholder: 'opcional', min: 0, max: 200 },
+          { name: 'dominadas', label: 'Dominadas estrictas', type: 'number', placeholder: 'opcional', min: 0, max: 50 }
+        ]
+      },
+      {
+        id: 'r8_progreso_percibido', type: 'radio',
+        eyebrow: 'Tus resultados',
+        title: 'En fuerza, ¿cómo te fue?',
+        required: true,
+        options: [
+          { value: 'mucho', label: 'Subí bastante peso en casi todo' },
+          { value: 'algo', label: 'Subí algo, en varios ejercicios' },
+          { value: 'poco', label: 'Subí muy poco' },
+          { value: 'estancado', label: 'Me quedé estancado' },
+          { value: 'baje', label: 'Bajé (paré o me lesioné)' }
+        ]
+      },
+      {
+        id: 'r9_estancamiento', type: 'textarea',
+        eyebrow: 'Tus resultados',
+        title: '¿En qué ejercicios te estancaste?',
+        subtitle: 'Nombra los que no subieron o los que sientes que no avanzan. Si ninguno, escribe "ninguno".',
+        placeholder: 'Ej: press de banca llevo 3 semanas en el mismo peso...',
+        required: true, minLength: 4
+      },
+
+      // ---------- BLOQUE 3: EL PLAN COMO EXPERIENCIA ----------
+      {
+        id: 'r10_gusto', type: 'textarea',
+        eyebrow: 'Sobre el plan',
+        title: '¿Qué ejercicios te gustaron y cuáles odiaste?',
+        subtitle: 'Los que disfrutas los haces. Los que odias los saltas. Quiero saber ambos para armar el próximo.',
+        placeholder: 'Me gustó... / No soporto...',
+        required: true, minLength: 8
+      },
+      {
+        id: 'r11_molestias', type: 'radio',
+        eyebrow: 'Sobre el plan',
+        title: '¿Algún ejercicio te causó dolor o molestia?',
+        required: true,
+        options: [
+          { value: 'no', label: 'No, todo bien' },
+          { value: 'si', label: 'Sí, alguno me molestó' }
+        ]
+      },
+      {
+        id: 'r11b_molestias_detalle', type: 'textarea',
+        eyebrow: 'Sobre el plan',
+        title: 'Cuéntame cuál y dónde te molestó.',
+        subtitle: 'Qué ejercicio, en qué parte del cuerpo, si fue durante o después, y si sigue hoy.',
+        placeholder: 'Ej: en el press de hombro sentía pinchazo en el hombro derecho...',
+        showIf: (a) => a.r11_molestias === 'si',
+        required: true, minLength: 10
+      },
+      {
+        id: 'r12_duracion', type: 'radio',
+        eyebrow: 'Sobre el plan',
+        title: 'La duración de cada sesión, ¿cómo estuvo?',
+        required: true,
+        options: [
+          { value: 'corta', label: 'Corta, podría entrenar más' },
+          { value: 'justa', label: 'Justa, me quedó perfecta' },
+          { value: 'larga', label: 'Larga, me costaba terminarla' }
+        ]
+      },
+      {
+        id: 'r13_dificultad', type: 'radio',
+        eyebrow: 'Sobre el plan',
+        title: 'Y la exigencia, ¿cómo la sentiste?',
+        subtitle: 'Piensa en el promedio del ciclo, no en tu peor día.',
+        required: true,
+        options: [
+          { value: 'facil', label: 'Fácil, terminaba con mucha energía' },
+          { value: 'bien', label: 'Bien, exigente pero manejable' },
+          { value: 'duro', label: 'Duro, terminaba muy agotado' },
+          { value: 'demasiado', label: 'Demasiado, no me recuperaba entre sesiones' }
+        ]
+      },
+
+      // ---------- BLOQUE 4: NUTRICIÓN ----------
+      {
+        id: 'r14_dieta_cumplimiento', type: 'radio',
+        eyebrow: 'Tu alimentación',
+        title: '¿Qué tanto seguiste el plan de comidas?',
+        required: true,
+        options: [
+          { value: 'casi_siempre', label: 'Casi siempre lo seguí' },
+          { value: 'mitad', label: 'Como la mitad de los días' },
+          { value: 'poco', label: 'Poco, lo miré pero comí a mi manera' },
+          { value: 'nada', label: 'Nada, no lo usé' }
+        ]
+      },
+      {
+        id: 'r15_dieta_obstaculos', type: 'checkbox',
+        eyebrow: 'Tu alimentación',
+        title: '¿Qué falló con la comida?',
+        subtitle: 'Marca todo lo que aplique.',
+        showIf: (a) => ['mitad', 'poco', 'nada'].includes(a.r14_dieta_cumplimiento),
+        required: true,
+        options: [
+          { value: 'sabor', label: 'No me gustaban las opciones' },
+          { value: 'repetitivo', label: 'Muy repetitivo, me aburrí' },
+          { value: 'tiempo', label: 'No tenía tiempo de cocinar' },
+          { value: 'presupuesto', label: 'Presupuesto, salía caro' },
+          { value: 'cantidad_mucha', label: 'Las cantidades eran demasiado grandes' },
+          { value: 'hambre', label: 'Me quedaba con hambre' },
+          { value: 'familia', label: 'En casa comemos todos lo mismo, no puedo elegir' },
+          { value: 'otro', label: 'Otro motivo' }
+        ]
+      },
+      {
+        id: 'r16_sugerencias', type: 'radio',
+        eyebrow: 'Tu alimentación',
+        title: '¿Incorporaste los alimentos que te sugerí como opcionales?',
+        subtitle: 'Los que estaban en la sección "sugerencias opcionales".',
+        required: true,
+        options: [
+          { value: 'todas', label: 'Sí, casi todos' },
+          { value: 'algunas', label: 'Algunos' },
+          { value: 'ninguna', label: 'Ninguno' },
+          { value: 'no_habia', label: 'No tenía esa sección / no la vi' }
+        ]
+      },
+      {
+        id: 'r17_alimentos', type: 'textarea',
+        eyebrow: 'Tu alimentación',
+        title: '¿Qué comes regularmente HOY?',
+        subtitle: 'Vuelve a listarlo, aunque sea parecido a la vez pasada. Si ahora tienes acceso a más alimentos, ponlos: el plan nuevo se arma con esto.',
+        placeholder: 'pollo, arroz, huevos, avena, leche, atún, lentejas, palta...',
+        required: true, minLength: 20
+      },
+      {
+        id: 'r18_cocina', type: 'radio',
+        eyebrow: 'Tu alimentación',
+        title: 'Hoy, sobre presupuesto y cocina, ¿cuál te describe mejor?',
+        required: true,
+        options: [
+          { value: 'holgado', label: 'Presupuesto holgado y tiempo para cocinar' },
+          { value: 'medio', label: 'Presupuesto medio, cocino lo justo' },
+          { value: 'ajustado', label: 'Presupuesto ajustado, busco lo barato' },
+          { value: 'no_cocino', label: 'Casi no cocino, como lo fácil o pido a domicilio' }
+        ]
+      },
+      {
+        id: 'r19_restricciones', type: 'checkbox',
+        eyebrow: 'Tu alimentación',
+        title: '¿Alguna restricción alimentaria hoy?',
+        subtitle: 'Marca todo lo que aplique, aunque no haya cambiado.',
+        required: true,
+        options: [
+          { value: 'ninguna', label: 'Ninguna, como de todo', exclusive: true },
+          { value: 'vegetariano', label: 'Vegetariano' },
+          { value: 'vegano', label: 'Vegano' },
+          { value: 'sin_lactosa', label: 'Sin lactosa' },
+          { value: 'sin_gluten', label: 'Sin gluten' },
+          { value: 'halal', label: 'Halal' },
+          { value: 'kosher', label: 'Kosher' },
+          { value: 'alergias', label: 'Tengo alergias (las detallo al final)' }
+        ]
+      },
+      {
+        id: 'r20_suplementos', type: 'checkbox',
+        eyebrow: 'Tu alimentación',
+        title: '¿Qué suplementos tomas hoy o estarías dispuesto a tomar?',
+        required: false,
+        options: [
+          { value: 'proteina', label: 'Proteína en polvo' },
+          { value: 'creatina', label: 'Creatina' },
+          { value: 'multivitaminico', label: 'Multivitamínico' },
+          { value: 'omega3', label: 'Omega 3' },
+          { value: 'cafeina', label: 'Cafeína o pre-entreno' },
+          { value: 'ninguno', label: 'No quiero suplementos', exclusive: true }
+        ]
+      },
+
+      // ---------- BLOQUE 5: CONTEXTO ACTUAL ----------
+      {
+        id: 'r21_sueno', type: 'number',
+        eyebrow: 'Tu vida hoy',
+        title: '¿Cuántas horas duermes en promedio ahora?',
+        subtitle: 'El sueño manda sobre cuántos días te puedo programar.',
+        placeholder: '7', required: true, min: 3, max: 14, step: 0.5, suffix: 'horas'
+      },
+      {
+        id: 'r22_dias', type: 'radio',
+        eyebrow: 'Tu vida hoy',
+        title: '¿Cuántos días por semana puedes entrenar en este nuevo ciclo?',
+        subtitle: 'El realista, no el ideal. Puede ser distinto al ciclo pasado.',
+        required: true,
+        options: [
+          { value: '2', label: '2 días' },
+          { value: '3', label: '3 días' },
+          { value: '4', label: '4 días' },
+          { value: '5', label: '5 días' },
+          { value: '6', label: '6 días' }
+        ]
+      },
+      {
+        id: 'r23_minutos', type: 'radio',
+        eyebrow: 'Tu vida hoy',
+        title: '¿Cuánto tiempo tienes por sesión ahora?',
+        required: true,
+        options: [
+          { value: '20-30', label: '20 a 30 minutos' },
+          { value: '30-45', label: '30 a 45 minutos' },
+          { value: '45-60', label: '45 a 60 minutos' },
+          { value: '60-90', label: '60 a 90 minutos' }
+        ]
+      },
+      {
+        id: 'r24_lugar', type: 'radio',
+        eyebrow: 'Tu vida hoy',
+        title: '¿Dónde vas a entrenar en este ciclo?',
+        required: true,
+        options: [
+          { value: 'gym_completo', label: 'Gimnasio comercial (tiene de todo)' },
+          { value: 'gym_casa', label: 'Gimnasio en casa con equipo' },
+          { value: 'solo_casa', label: 'Solo en casa, sin equipo (calistenia)' },
+          { value: 'parque', label: 'Parque al aire libre' },
+          { value: 'mixto', label: 'Mixto / otro' }
+        ]
+      },
+      {
+        id: 'r25_equipo', type: 'checkbox',
+        eyebrow: 'Tu vida hoy',
+        title: '¿Qué equipo tienes disponible?',
+        subtitle: 'Marca todo lo que tengas o puedas conseguir.',
+        showIf: (a) => a.r24_lugar !== 'gym_completo',
+        required: true,
+        options: [
+          { value: 'mancuernas', label: 'Mancuernas' },
+          { value: 'barra', label: 'Barra olímpica + discos' },
+          { value: 'banco', label: 'Banco plano o ajustable' },
+          { value: 'bandas', label: 'Bandas elásticas' },
+          { value: 'kettlebells', label: 'Kettlebells' },
+          { value: 'barra_dominadas', label: 'Barra para dominadas' },
+          { value: 'trx', label: 'TRX o anillas' },
+          { value: 'maquinas', label: 'Algunas máquinas' },
+          { value: 'nada', label: 'Nada de lo anterior, solo mi peso corporal', exclusive: true }
+        ]
+      },
+      {
+        id: 'r26_actividad', type: 'radio',
+        eyebrow: 'Tu vida hoy',
+        title: 'Fuera del entrenamiento, ¿cómo es tu día?',
+        required: true,
+        options: [
+          { value: 'sedentario', label: 'Sedentario (casi todo el día sentado)' },
+          { value: 'mixto', label: 'Mixto (algo de pie, camino algo)' },
+          { value: 'activo', label: 'Activo (trabajo físico, mucho movimiento)' },
+          { value: 'pesado', label: 'Trabajo físico pesado' }
+        ]
+      },
+      {
+        id: 'r27_salud', type: 'checkbox',
+        eyebrow: 'Salud',
+        title: '¿Algo nuevo en tu salud desde el último plan?',
+        subtitle: 'Marca todo lo que aplique hoy. Si nada cambió y estás bien, marca la última opción.',
+        required: true,
+        options: [
+          { value: 'lesion_nueva', label: 'Tuve una lesión durante este ciclo' },
+          { value: 'dolor_activo', label: 'Tengo dolor o molestia activa ahora mismo' },
+          { value: 'condicion_nueva', label: 'Me diagnosticaron una condición nueva' },
+          { value: 'medicamento', label: 'Empecé un medicamento nuevo' },
+          { value: 'cirugia', label: 'Tuve cirugía o procedimiento médico' },
+          { value: 'embarazo', label: 'Estoy embarazada o tuve un bebé hace menos de 6 meses' },
+          { value: 'nada_nuevo', label: 'Nada nuevo, sigo igual y sin dolor', exclusive: true }
+        ]
+      },
+      {
+        id: 'r27b_salud_detalle', type: 'textarea',
+        eyebrow: 'Salud',
+        title: 'Cuéntame qué pasó.',
+        subtitle: 'Qué fue, cuándo, si viste a un profesional y qué te dijo. Esto define qué ejercicios puedo programarte.',
+        placeholder: 'Cuéntame...',
+        showIf: (a) => {
+          const v = a.r27_salud || [];
+          return v.length > 0 && !(v.length === 1 && v[0] === 'nada_nuevo');
+        },
+        required: true, minLength: 10
+      },
+
+      // ---------- BLOQUE 6: NUEVO OBJETIVO ----------
+      {
+        id: 'r28_objetivo', type: 'radio',
+        eyebrow: 'Tu nuevo ciclo',
+        title: '¿Cuál es tu objetivo para estas próximas 12 semanas?',
+        subtitle: 'Puede ser el mismo o uno distinto. Manda lo que quieres AHORA.',
+        required: true,
+        options: [
+          { value: 'bajar_grasa', label: 'Bajar grasa' },
+          { value: 'ganar_musculo', label: 'Ganar músculo' },
+          { value: 'recomposicion', label: 'Recomposición (bajar grasa y ganar músculo)' },
+          { value: 'ganar_fuerza', label: 'Ganar fuerza' },
+          { value: 'mantener', label: 'Mantener lo logrado sin perderlo' },
+          { value: 'salud_energia', label: 'Salud y energía' }
+        ]
+      },
+      {
+        id: 'r29_objetivo_porque', type: 'textarea',
+        eyebrow: 'Tu nuevo ciclo',
+        title: '¿Por qué ese objetivo ahora?',
+        subtitle: 'Qué cambió respecto al ciclo pasado, o por qué quieres seguir con lo mismo.',
+        placeholder: 'Cuéntame...',
+        required: true, minLength: 10
+      },
+      {
+        id: 'r30_musculos', type: 'checkbox',
+        eyebrow: 'Tu nuevo ciclo',
+        title: '¿Qué zona quieres priorizar en este ciclo?',
+        subtitle: 'Máximo 2. Priorizar es darle más atención sin descuidar el resto.',
+        required: true, maxSelect: 2,
+        options: [
+          { value: 'equilibrado', label: 'Desarrollo equilibrado, sin prioridad especial', exclusive: true },
+          { value: 'pecho', label: 'Pecho' },
+          { value: 'espalda', label: 'Espalda' },
+          { value: 'brazos', label: 'Brazos (bíceps, tríceps y antebrazos)' },
+          { value: 'hombros', label: 'Hombros' },
+          { value: 'piernas', label: 'Piernas (cuádriceps y femoral)' },
+          { value: 'gluteos', label: 'Glúteos' },
+          { value: 'core', label: 'Abdomen / core' }
+        ]
+      },
+      {
+        id: 'r31_evento', type: 'radio',
+        eyebrow: 'Tu nuevo ciclo',
+        title: '¿Tienes algún evento o fecha en el horizonte?',
+        subtitle: 'Boda, viaje, competencia, foto, revisión médica. Si no, dilo sin presión.',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sí, tengo un evento' },
+          { value: 'no', label: 'No, sin prisa' }
+        ]
+      },
+      {
+        id: 'r31b_evento_detalles', type: 'composite',
+        eyebrow: 'Tu nuevo ciclo',
+        title: 'Cuéntame los detalles.',
+        subtitle: 'Así calibro el plan al tiempo real que tienes.',
+        showIf: (a) => a.r31_evento === 'si',
+        required: true,
+        fields: [
+          { name: 'evento_nombre', label: '¿Qué evento es?', type: 'text', placeholder: 'Ej: viaje a la playa', required: true },
+          { name: 'evento_fecha', label: '¿Para qué fecha?', type: 'date', required: true }
+        ]
+      },
+      {
+        id: 'r32_cambiar', type: 'textarea',
+        eyebrow: 'Tu nuevo ciclo',
+        title: 'Si pudieras cambiar UNA cosa del plan anterior, ¿cuál sería?',
+        subtitle: 'La pregunta más importante de todas. Sé directo: más variedad, menos días, otra comida, más piernas, lo que sea.',
+        placeholder: 'Cambiaría...',
+        required: true, minLength: 8
+      },
+      {
+        id: 'r33_extra', type: 'textarea',
+        eyebrow: 'Cierre',
+        title: '¿Algo más que deba saber antes de armar tu nuevo plan?',
+        subtitle: 'Alergias, horarios nuevos, miedos, metas personales, lo que sea. Puedes dejarlo en blanco.',
+        placeholder: 'Lo que quieras compartir...',
+        required: false
+      },
+
+      { id: 'entrega', type: 'entrega' },
+      { id: 'success', type: 'success' }
+    ];
+
+    // ============================================
+    // MOTOR
+    // ============================================
+    function getVisibleQuestions() {
+      return questions.filter(q => { if (!q.showIf) return true; return q.showIf(state.answers); });
+    }
+    function getTotalSteps() {
+      return getVisibleQuestions().filter(q => q.type !== 'welcome' && q.type !== 'success' && q.type !== 'entrega').length;
+    }
+    function getCurrentStepNumber() {
+      const visible = getVisibleQuestions();
+      const current = visible[state.currentIndex];
+      if (!current || current.type === 'welcome' || current.type === 'success' || current.type === 'entrega') return 0;
+      let count = 0;
+      for (let i = 0; i <= state.currentIndex; i++) {
+        if (visible[i].type !== 'welcome' && visible[i].type !== 'success' && visible[i].type !== 'entrega') count++;
+      }
+      return count;
+    }
+
+    const wrapper = document.getElementById('screenWrapper');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+
+    function updateProgress() {
+      const total = getTotalSteps();
+      const current = getCurrentStepNumber();
+      if (current === 0) {
+        progressText.textContent = '';
+        progressFill.style.right = '100%';
+      } else {
+        progressText.textContent = current + ' / ' + total;
+        progressFill.style.right = (100 - (current / total) * 100) + '%';
+      }
+    }
+
+    function render() {
+      const visible = getVisibleQuestions();
+      const q = visible[state.currentIndex];
+      if (!q) return;
+      wrapper.innerHTML = '';
+      const screen = document.createElement('div');
+      screen.className = 'screen';
+      if (q.type === 'welcome') screen.innerHTML = renderWelcome();
+      else if (q.type === 'success') screen.innerHTML = renderSuccess();
+      else if (q.type === 'entrega') screen.innerHTML = renderEntrega();
+      else screen.innerHTML = renderQuestion(q);
+      wrapper.appendChild(screen);
+      attachListeners(q);
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderWelcome() {
+      return `
+        <div class="screen welcome">
+          <h1 class="welcome-title">Terminaste un ciclo. <em>Ahora afinamos.</em></h1>
+          <p class="welcome-text">
+            Tu próximo plan no arranca de cero: arranca de lo que ya lograste. Para eso necesito saber qué funcionó, qué no, y qué cambió en tu vida desde entonces.
+          </p>
+          <p class="welcome-text">
+            Responde con honestidad, sobre todo en lo que no cumpliste. Ahí está la información más valiosa para hacerte un plan que sí puedas seguir.
+          </p>
+          <div class="welcome-meta">
+            <div class="welcome-meta-item">
+              <div class="welcome-meta-label">Tiempo</div>
+              <div class="welcome-meta-value">7 min</div>
+            </div>
+            <div class="welcome-meta-item">
+              <div class="welcome-meta-label">Bloques</div>
+              <div class="welcome-meta-value">6</div>
+            </div>
+            <div class="welcome-meta-item">
+              <div class="welcome-meta-label">Entrega</div>
+              <div class="welcome-meta-value">&lt;24h</div>
+            </div>
+          </div>
+          <div class="disclaimer-box">
+            <p class="disclaimer-text">
+              Este plan es orientativo y no reemplaza la opinión de un médico o fisioterapeuta. Si tienes condiciones de salud o dolor activo, consulta con un profesional antes de continuar.
+            </p>
+            <label class="disclaimer-check" id="disclaimerCheck">
+              <input type="checkbox" id="disclaimerInput" />
+              <div class="disclaimer-check-box"></div>
+              <div class="disclaimer-check-text">Entiendo y acepto. Quiero continuar.</div>
+            </label>
+          </div>
+          <div class="nav">
+            <button class="btn btn-primary" id="startBtn" disabled>
+              Empezar
+              <span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderQuestion(q) {
+      let inputHtml = '';
+      if (q.type === 'text') {
+        const val = state.answers[q.id] || '';
+        inputHtml = `<input type="${q.inputType || 'text'}" id="input" placeholder="${q.placeholder || ''}" value="${escapeAttr(val)}" />`;
+      } else if (q.type === 'textarea') {
+        const val = state.answers[q.id] || '';
+        inputHtml = `<textarea id="input" placeholder="${q.placeholder || ''}" rows="5">${escapeHtml(val)}</textarea>`;
+      } else if (q.type === 'number') {
+        const val = state.answers[q.id] != null ? state.answers[q.id] : '';
+        inputHtml = `
+          <div style="display:flex; align-items:baseline; gap:12px;">
+            <input type="number" id="input" placeholder="${q.placeholder || ''}" value="${val}" min="${q.min || ''}" max="${q.max || ''}" step="${q.step || 1}" inputmode="decimal" style="flex:1;" />
+            ${q.suffix ? `<span style="color:var(--text-dim); font-size:15px;">${q.suffix}</span>` : ''}
+          </div>
+        `;
+      } else if (q.type === 'radio') {
+        const selected = state.answers[q.id];
+        inputHtml = `
+          <div class="options">
+            ${q.options.map(opt => `
+              <label class="option ${selected === opt.value ? 'selected' : ''}" data-value="${opt.value}">
+                <div class="option-indicator"></div>
+                <div class="option-text">${opt.label}</div>
+              </label>
+            `).join('')}
+          </div>
+        `;
+      } else if (q.type === 'checkbox') {
+        const selected = state.answers[q.id] || [];
+        inputHtml = `
+          <div class="options">
+            ${q.options.map(opt => `
+              <label class="option ${selected.includes(opt.value) ? 'selected' : ''}" data-value="${opt.value}" data-exclusive="${opt.exclusive ? 'true' : 'false'}">
+                <div class="option-indicator checkbox"></div>
+                <div class="option-text">${opt.label}</div>
+              </label>
+            `).join('')}
+          </div>
+        `;
+      } else if (q.type === 'composite') {
+        inputHtml = `
+          <div class="${q.fields.length > 2 ? 'input-row-3' : 'input-row'}" id="compositeRow">
+            ${q.fields.map(f => {
+              const val = (state.answers[q.id] && state.answers[q.id][f.name] != null) ? state.answers[q.id][f.name] : '';
+              return `
+                <div class="input-group">
+                  <label class="input-label">${f.label}${f.required ? '' : ' (opcional)'}</label>
+                  <input
+                    type="${f.type}"
+                    data-name="${f.name}"
+                    placeholder="${f.placeholder || ''}"
+                    value="${escapeAttr(val)}"
+                    ${f.min != null ? `min="${f.min}"` : ''}
+                    ${f.max != null ? `max="${f.max}"` : ''}
+                    ${f.type === 'number' ? 'inputmode="decimal"' : ''}
+                  />
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+      const isLast = q.id === 'r33_extra';
+      return `
+        ${q.eyebrow ? `<div class="eyebrow">${q.eyebrow}</div>` : ''}
+        <h2 class="question-title">${q.title}</h2>
+        ${q.subtitle ? `<p class="question-subtitle">${q.subtitle}</p>` : ''}
+        ${inputHtml}
+        <div class="nav">
+          <button class="btn btn-secondary" id="backBtn"><span class="arrow">←</span> Atrás</button>
+          <button class="btn btn-primary" id="nextBtn" disabled>
+            ${isLast ? 'Enviar' : 'Continuar'}
+            <span class="arrow">→</span>
+          </button>
+        </div>
+      `;
+    }
+
+    function renderSuccess() {
+      const nombre = state.answers.r1_nombre || '';
+      return `
+        <div class="screen success">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2 class="success-title">Listo${nombre ? ', ' + escapeHtml(nombre) : ''}.</h2>
+          <p class="success-text">
+            Con esto ya sé qué ajustar. Estoy armando tu nuevo ciclo y te llega a tu <strong>WhatsApp en menos de 24 horas</strong>.
+          </p>
+        </div>
+      `;
+    }
+
+    // ============================================
+    // LISTENERS
+    // ============================================
+    function attachListeners(q) {
+      if (q.type === 'welcome') {
+        const check = document.getElementById('disclaimerCheck');
+        const checkInput = document.getElementById('disclaimerInput');
+        const startBtn = document.getElementById('startBtn');
+        check.addEventListener('click', (e) => {
+          e.preventDefault();
+          state.disclaimerAccepted = !state.disclaimerAccepted;
+          checkInput.checked = state.disclaimerAccepted;
+          check.classList.toggle('checked', state.disclaimerAccepted);
+          startBtn.disabled = !state.disclaimerAccepted;
+        });
+        startBtn.addEventListener('click', () => { if (state.disclaimerAccepted) next(); });
+        return;
+      }
+      if (q.type === 'entrega') { attachEntregaListeners(); return; }
+      if (q.type === 'success') return;
+
+      const backBtn = document.getElementById('backBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      backBtn.addEventListener('click', () => prev());
+      nextBtn.addEventListener('click', () => { if (!nextBtn.disabled) handleNext(q); });
+
+      if (q.type === 'text' || q.type === 'textarea' || q.type === 'number') {
+        const input = document.getElementById('input');
+        input.focus();
+        input.addEventListener('input', () => {
+          state.answers[q.id] = q.type === 'number' ? (input.value === '' ? null : Number(input.value)) : input.value;
+          validateCurrent(q);
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && q.type !== 'textarea') {
+            e.preventDefault();
+            if (!nextBtn.disabled) handleNext(q);
+          }
+        });
+        validateCurrent(q);
+      } else if (q.type === 'radio') {
+        const opts = wrapper.querySelectorAll('.option');
+        opts.forEach(opt => {
+          opt.addEventListener('click', () => {
+            opts.forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            state.answers[q.id] = opt.dataset.value;
+            validateCurrent(q);
+            setTimeout(() => { if (!nextBtn.disabled) handleNext(q); }, 280);
+          });
+        });
+        validateCurrent(q);
+      } else if (q.type === 'checkbox') {
+        const opts = wrapper.querySelectorAll('.option');
+        opts.forEach(opt => {
+          opt.addEventListener('click', () => {
+            if (!state.answers[q.id]) state.answers[q.id] = [];
+            let arr = state.answers[q.id];
+            const val = opt.dataset.value;
+            const isExclusive = opt.dataset.exclusive === 'true';
+            if (arr.includes(val)) {
+              arr = arr.filter(v => v !== val);
+            } else {
+              if (isExclusive) {
+                arr = [val];
+              } else {
+                const exclusiveVals = q.options.filter(o => o.exclusive).map(o => o.value);
+                arr = arr.filter(v => !exclusiveVals.includes(v));
+                if (q.maxSelect && arr.length >= q.maxSelect) { return; }
+                arr.push(val);
+              }
+            }
+            state.answers[q.id] = arr;
+            opts.forEach(o => { o.classList.toggle('selected', arr.includes(o.dataset.value)); });
+            validateCurrent(q);
+          });
+        });
+        validateCurrent(q);
+      } else if (q.type === 'composite') {
+        const inputs = wrapper.querySelectorAll('input[data-name]');
+        if (inputs[0]) inputs[0].focus();
+        inputs.forEach(input => {
+          input.addEventListener('input', () => {
+            if (!state.answers[q.id]) state.answers[q.id] = {};
+            const name = input.dataset.name;
+            const val = input.type === 'number' ? (input.value === '' ? null : Number(input.value)) : input.value;
+            state.answers[q.id][name] = val;
+            validateCurrent(q);
+          });
+        });
+        validateCurrent(q);
+      }
+    }
+
+    // ============================================
+    // VALIDACIÓN
+    // ============================================
+    function validateCurrent(q) {
+      const nextBtn = document.getElementById('nextBtn');
+      if (!nextBtn) return;
+      nextBtn.disabled = !isValid(q);
+    }
+
+    function isValid(q) {
+      let v = state.answers[q.id];
+      if (!q.required && q.type !== 'composite') return true;
+      if (q.type === 'text') return v && String(v).trim().length > 0;
+      if (q.type === 'textarea') {
+        const len = (v || '').trim().length;
+        if (q.required) return len >= (q.minLength || 1);
+        return true;
+      }
+      if (q.type === 'number') {
+        if (v == null || v === '') return !q.required;
+        if (q.min != null && v < q.min) return false;
+        if (q.max != null && v > q.max) return false;
+        return true;
+      }
+      if (q.type === 'radio') return v != null && v !== '';
+      if (q.type === 'checkbox') return Array.isArray(v) && v.length > 0;
+      if (q.type === 'composite') {
+        if (!v) v = state.answers[q.id] = {};
+        for (const f of q.fields) {
+          if (!f.required) continue;
+          const fv = v[f.name];
+          if (fv == null || fv === '') return false;
+        }
+        return true;
+      }
+      return true;
+    }
+
+    // ============================================
+    // NAVEGACIÓN
+    // ============================================
+    function next() {
+      const visible = getVisibleQuestions();
+      const cur = visible[state.currentIndex];
+      const screen = wrapper.querySelector('.screen');
+      if (screen) screen.classList.add('exiting');
+      setTimeout(() => {
+        const newVisible = getVisibleQuestions();
+        const idx = newVisible.findIndex(q => q.id === cur.id);
+        state.currentIndex = idx + 1;
+        if (state.currentIndex >= newVisible.length) state.currentIndex = newVisible.length - 1;
+        render();
+      }, 240);
+    }
+
+    function prev() {
+      if (state.currentIndex === 0) return;
+      const screen = wrapper.querySelector('.screen');
+      if (screen) screen.classList.add('exiting');
+      setTimeout(() => { state.currentIndex--; render(); }, 240);
+    }
+
+    function handleNext(q) {
+      if (q.id === 'r33_extra') submitForm();
+      else next();
+    }
+
+    // ============================================
+    // ENVÍO
+    // ============================================
+    async function submitForm() {
+      const nextBtn = document.getElementById('nextBtn');
+      const backBtn = document.getElementById('backBtn');
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.innerHTML = '<span class="loading"></span> Enviando...';
+      }
+      if (backBtn) backBtn.disabled = true;
+
+      const payload = { timestamp: new Date().toISOString(), tipo: 'renovacion', answers: state.answers };
+
+      // Guarda una copia local SIEMPRE, antes de intentar enviar.
+      // Si el envío falla, la respuesta no se pierde: queda en el navegador
+      // del cliente y se puede recuperar (ver recuperarRespuestas() abajo).
+      try { localStorage.setItem('renovacion_backup_' + Date.now(), JSON.stringify(payload)); } catch (e) {}
+
+      // Sin backend configurado: el cliente entrega la respuesta por WhatsApp.
+      if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('http') !== 0) {
+        moveToEntrega();
+        return;
+      }
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        moveToSuccess();
+      } catch (err) {
+        console.error('Submit error:', err);
+        showSubmitError('No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
+      }
+    }
+
+    // ============================================
+    // TEXTO DE ENTREGA (lo que el cliente te manda)
+    // ============================================
+    function labelFor(q, val) {
+      const o = (q.options || []).find(x => x.value === val);
+      return o ? o.label : val;
+    }
+
+    function formatAnswersText() {
+      const a = state.answers;
+      const out = [];
+      out.push('*RENOVACIÓN DE PLAN*');
+      out.push(new Date().toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' }));
+      let bloque = '';
+      questions.forEach(q => {
+        if (q.type === 'welcome' || q.type === 'success' || q.type === 'entrega') return;
+        if (q.showIf && !q.showIf(a)) return;
+        const v = a[q.id];
+        if (v == null || v === '' || (Array.isArray(v) && v.length === 0)) return;
+
+        let val;
+        if (q.type === 'radio') val = labelFor(q, v);
+        else if (q.type === 'checkbox') val = v.map(x => labelFor(q, x)).join(', ');
+        else if (q.type === 'composite') {
+          val = (q.fields || [])
+            .filter(f => v[f.name] != null && v[f.name] !== '')
+            .map(f => f.label + ': ' + v[f.name])
+            .join(' | ');
+        } else val = String(v).trim();
+        if (!val) return;
+
+        if (q.eyebrow && q.eyebrow !== bloque) {
+          bloque = q.eyebrow;
+          out.push('');
+          out.push('*' + bloque.toUpperCase() + '*');
+        }
+        out.push('- ' + q.title.replace(/\s+/g, ' ') + '\n  ' + val);
+      });
+      return out.join('\n');
+    }
+
+    function moveToEntrega() {
+      const visible = getVisibleQuestions();
+      const idx = visible.findIndex(q => q.type === 'entrega');
+      if (idx >= 0) { state.currentIndex = idx; render(); }
+    }
+
+    function renderEntrega() {
+      const nombre = state.answers.r1_nombre || '';
+      const waBtn = COACH_WHATSAPP
+        ? `<a class="btn btn-wa" id="waBtn" target="_blank" rel="noopener">Abrir WhatsApp de mi coach</a>`
+        : '';
+      return `
+        <div class="screen">
+          <div class="eyebrow">Último paso</div>
+          <h2 class="question-title">Ya está${nombre ? ', ' + escapeHtml(nombre) : ''}. Solo envíamelo.</h2>
+          <p class="question-subtitle">Copia tus respuestas y pégalas en nuestro chat de WhatsApp. Con eso armo tu nuevo ciclo.</p>
+          <div class="entrega-steps">
+            <div class="entrega-step"><div class="entrega-num">1</div><div>Toca <b>Copiar mis respuestas</b>.</div></div>
+            <div class="entrega-step"><div class="entrega-num">2</div><div>Abre el chat de WhatsApp con tu coach.</div></div>
+            <div class="entrega-step"><div class="entrega-num">3</div><div>Pega el texto y envíalo. Listo.</div></div>
+          </div>
+          <button class="btn btn-copy" id="copyBtn">Copiar mis respuestas</button>
+          ${waBtn}
+          <div class="resumen-box" id="resumenBox">${escapeHtml(formatAnswersText())}</div>
+          <p class="helper-text">Si el botón no funciona, mantén el dedo sobre el texto de arriba para seleccionarlo y copiarlo a mano.</p>
+        </div>
+      `;
+    }
+
+    function attachEntregaListeners() {
+      const texto = formatAnswersText();
+      const btn = document.getElementById('copyBtn');
+      const wa = document.getElementById('waBtn');
+      if (wa && COACH_WHATSAPP) {
+        wa.href = 'https://wa.me/' + COACH_WHATSAPP + '?text=' + encodeURIComponent(texto);
+      }
+      if (!btn) return;
+      btn.addEventListener('click', async () => {
+        let ok = false;
+        try {
+          await navigator.clipboard.writeText(texto);
+          ok = true;
+        } catch (e) {
+          // Fallback para navegadores sin permiso de portapapeles
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = texto;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+          } catch (e2) { ok = false; }
+        }
+        if (ok) {
+          btn.textContent = '✓ Copiado — ahora pégalo en WhatsApp';
+          btn.classList.add('done');
+        } else {
+          btn.textContent = 'No se pudo copiar — selecciona el texto de abajo';
+        }
+      });
+    }
+
+    function showSubmitError(msg) {
+      const nextBtn = document.getElementById('nextBtn');
+      const backBtn = document.getElementById('backBtn');
+      if (nextBtn) {
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = 'Reintentar <span class="arrow">→</span>';
+      }
+      if (backBtn) backBtn.disabled = false;
+      let box = document.getElementById('submitError');
+      if (!box) {
+        box = document.createElement('p');
+        box.id = 'submitError';
+        box.className = 'error-text';
+        const nav = document.querySelector('.nav');
+        if (nav && nav.parentNode) nav.parentNode.insertBefore(box, nav);
+      }
+      box.textContent = msg;
+    }
+
+    // Rescate manual: abrir la consola del navegador y ejecutar
+    // recuperarRespuestas() para ver las respuestas guardadas localmente.
+    window.recuperarRespuestas = function () {
+      const out = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.indexOf('renovacion_backup_') === 0) out.push(JSON.parse(localStorage.getItem(k)));
+      }
+      console.log(JSON.stringify(out, null, 2));
+      return out;
+    };
+
+    function moveToSuccess() {
+      const visible = getVisibleQuestions();
+      const idx = visible.findIndex(q => q.type === 'success');
+      if (idx >= 0) { state.currentIndex = idx; render(); }
+    }
+
+    // ============================================
+    // UTILS
+    // ============================================
+    function escapeHtml(s) {
+      return String(s || '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+    function escapeAttr(s) { return escapeHtml(s); }
+
+    render();
+  </script>
+</body>
+</html>
