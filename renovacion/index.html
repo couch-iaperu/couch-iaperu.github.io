@@ -1039,8 +1039,13 @@
       // del cliente y se puede recuperar (ver recuperarRespuestas() abajo).
       try { localStorage.setItem('renovacion_backup_' + Date.now(), JSON.stringify(payload)); } catch (e) {}
 
-      // Sin backend configurado: el cliente entrega la respuesta por WhatsApp.
-      if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.indexOf('http') !== 0) {
+      // Sin backend VÁLIDO: el cliente entrega la respuesta por WhatsApp.
+      // Solo se acepta el endpoint de despliegue de Apps Script
+      // (script.google.com/macros/s/.../exec). Cualquier otra cosa —vacío,
+      // la URL temporal .../echo?user_content_key=..., un dominio raro—
+      // NO cuenta como conectado: mejor entregar por WhatsApp que fingir éxito.
+      var backendOk = /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(APPS_SCRIPT_URL);
+      if (!backendOk) {
         moveToEntrega();
         return;
       }
