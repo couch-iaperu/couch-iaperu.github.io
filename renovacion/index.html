@@ -654,6 +654,14 @@
         required: true, minLength: 8
       },
       {
+        id: 'r34_idolo', type: 'text',
+        eyebrow: 'Tu toque personal',
+        title: '¿Qué personaje o figura te inspira?',
+        subtitle: 'Anime, deportista, actor, quien sea. Tu nueva app de miembro llevará su presencia en el diseño, hecha solo para ti. Puedes dejarlo en blanco.',
+        placeholder: 'Ej. Goku, Cristiano Ronaldo, Rocky...',
+        required: false
+      },
+      {
         id: 'r33_extra', type: 'textarea',
         eyebrow: 'Cierre',
         title: '¿Algo más que deba saber antes de armar tu nuevo plan?',
@@ -1073,7 +1081,7 @@
     }
 
     // ---- Fila lista para pegar en la hoja "Renovaciones" (44 columnas) ----
-    const SHEET_COLUMNS = ['timestamp','r1_nombre','r2_whatsapp','r3_cumplimiento','r4_obstaculos','r5_peso_kg','r5_cintura_cm','r6_cambio_cuerpo','r7_press_banca','r7_sentadilla','r7_peso_muerto','r7_jalon_remo','r7_flexiones','r7_dominadas','r8_progreso_percibido','r9_estancamiento','r10_gusto','r11_molestias','r11b_molestias_detalle','r12_duracion','r13_dificultad','r14_dieta_cumplimiento','r15_dieta_obstaculos','r16_sugerencias','r17_alimentos','r18_cocina','r19_restricciones','r20_suplementos','r21_sueno','r22_dias','r23_minutos','r24_lugar','r25_equipo','r26_actividad','r27_salud','r27b_salud_detalle','r28_objetivo','r29_objetivo_porque','r30_musculos','r31_evento','r31b_evento_nombre','r31b_evento_fecha','r32_cambiar','r33_extra'];
+    const SHEET_COLUMNS = ['timestamp','r1_nombre','r2_whatsapp','r3_cumplimiento','r4_obstaculos','r5_peso_kg','r5_cintura_cm','r6_cambio_cuerpo','r7_press_banca','r7_sentadilla','r7_peso_muerto','r7_jalon_remo','r7_flexiones','r7_dominadas','r8_progreso_percibido','r9_estancamiento','r10_gusto','r11_molestias','r11b_molestias_detalle','r12_duracion','r13_dificultad','r14_dieta_cumplimiento','r15_dieta_obstaculos','r16_sugerencias','r17_alimentos','r18_cocina','r19_restricciones','r20_suplementos','r21_sueno','r22_dias','r23_minutos','r24_lugar','r25_equipo','r26_actividad','r27_salud','r27b_salud_detalle','r28_objetivo','r29_objetivo_porque','r30_musculos','r31_evento','r31b_evento_nombre','r31b_evento_fecha','r32_cambiar','r33_extra','r34_idolo'];
     const SHEET_COMPOSITES = {
       r5_peso_kg:['r5_medidas','peso_kg'], r5_cintura_cm:['r5_medidas','cintura_cm'],
       r7_press_banca:['r7_fuerza','press_banca'], r7_sentadilla:['r7_fuerza','sentadilla'],
