@@ -3,12 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0E0E0C" />
-  <title>Tu plan personalizado · Cuestionario</title>
+  <meta name="theme-color" content="#0B0C0B" />
+  <title>Couch IA · Arma tu plan</title>
+  <meta name="apple-mobile-web-app-title" content="Couch IA">
+  <link rel="icon" type="image/png" href="/assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Couch IA · Team Macano">
+  <meta property="og:title" content="Couch IA · Arma tu plan personalizado">
+  <meta property="og:description" content="Tu entrenamiento, tu nutrición y tu progreso — todo en un solo lugar.">
+  <meta property="og:image" content="https://couch-iaperu.github.io/assets/og-couchia.jpg">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="800">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     /* ============================================
@@ -17,19 +27,19 @@
     /* La URL se configura en el <script> al final */
 
     :root {
-      --bg: #0E0E0C;
-      --surface: #15151310;
-      --surface-elev: #1A1A18;
-      --border: #2A2A26;
-      --border-strong: #3A3A35;
-      --text: #F5F1E8;
-      --text-dim: #8B847A;
-      --text-soft: #B8B2A6;
-      --accent: #E85D2F;
-      --accent-dim: #C44E25;
-      --accent-soft: rgba(232, 93, 47, 0.12);
-      --error: #E85D2F;
-      --success: #7CB342;
+      --bg: #0B0C0B;
+      --surface: #13151310;
+      --surface-elev: #191B19;
+      --border: #262926;
+      --border-strong: #363A36;
+      --text: #EFF1EC;
+      --text-dim: #858A84;
+      --text-soft: #B4B9B2;
+      --accent: #A8D70F;
+      --accent-dim: #86B00A;
+      --accent-soft: rgba(168, 215, 15, 0.12);
+      --error: #E0564B;
+      --success: #9FDB3A;
       --radius: 14px;
       --radius-sm: 8px;
       --max-w: 640px;
@@ -56,8 +66,8 @@
 
     body {
       background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232, 93, 47, 0.06), transparent 60%),
-        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(232, 93, 47, 0.04), transparent 60%),
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(168, 215, 15, 0.06), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(168, 215, 15, 0.04), transparent 60%),
         var(--bg);
       background-attachment: fixed;
     }
@@ -100,7 +110,7 @@
     }
 
     .logo {
-      font-family: 'Fraunces', serif;
+      font-family: 'Exo 2', sans-serif;
       font-weight: 500;
       font-size: 17px;
       letter-spacing: -0.02em;
@@ -138,7 +148,7 @@
       inset: 0 100% 0 0;
       background: var(--accent);
       transition: right 0.5s var(--ease);
-      box-shadow: 0 0 12px rgba(232, 93, 47, 0.5);
+      box-shadow: 0 0 12px rgba(168, 215, 15, 0.5);
     }
 
     /* ============================================
@@ -195,7 +205,7 @@
     }
 
     .question-title {
-      font-family: 'Fraunces', serif;
+      font-family: 'Exo 2', sans-serif;
       font-weight: 400;
       font-size: clamp(26px, 5.5vw, 34px);
       line-height: 1.18;
@@ -411,9 +421,9 @@
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: #FF6E40;
+      background: #C2F02E;
       transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(232, 93, 47, 0.3);
+      box-shadow: 0 8px 24px rgba(168, 215, 15, 0.3);
     }
 
     .btn-primary:disabled {
@@ -448,7 +458,7 @@
     }
 
     .welcome-title {
-      font-family: 'Fraunces', serif;
+      font-family: 'Exo 2', sans-serif;
       font-weight: 300;
       font-size: clamp(36px, 8vw, 56px);
       line-height: 1.05;
@@ -492,7 +502,7 @@
     }
 
     .welcome-meta-value {
-      font-family: 'Fraunces', serif;
+      font-family: 'Exo 2', sans-serif;
       font-size: 22px;
       color: var(--text);
       font-weight: 400;
@@ -602,7 +612,7 @@
     }
 
     .success-title {
-      font-family: 'Fraunces', serif;
+      font-family: 'Exo 2', sans-serif;
       font-weight: 400;
       font-size: clamp(28px, 6vw, 36px);
       line-height: 1.15;
@@ -629,7 +639,7 @@
       display: inline-block;
       width: 14px;
       height: 14px;
-      border: 2px solid rgba(14, 14, 12, 0.3);
+      border: 2px solid rgba(11, 12, 11, 0.3);
       border-top-color: var(--bg);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -666,16 +676,32 @@
         padding-right: max(0px, env(safe-area-inset-right));
       }
     }
-  </style>
+  
+    /* ===== MARCA COUCH IA · TEAM MACANO ===== */
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .brand-emblem { width: 34px; height: 34px; object-fit: contain; mix-blend-mode: screen; flex: 0 0 auto; }
+    .brand-txt { display: flex; flex-direction: column; line-height: 1; }
+    .brand-word { font-family: 'Exo 2', sans-serif; font-style: italic; font-weight: 800; font-size: 19px; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #F4F5F3 0%, #CFD1CE 45%, #8C8E8B 100%); -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: #D4D4D4; }
+    .brand-word .ia { -webkit-text-fill-color: #A8D70F; color: #A8D70F; text-shadow: 0 0 14px rgba(168, 215, 15, 0.45); }
+    .brand-sub { font-size: 8.5px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); margin-top: 5px; font-weight: 600; }
+    .brand.lg { flex-direction: column; gap: 14px; text-align: center; }
+    .brand.lg .brand-txt { align-items: center; }
+    .brand.lg .brand-emblem { width: 96px; height: 96px; }
+    .brand.lg .brand-word { font-size: 34px; }
+    .brand.lg .brand-sub { font-size: 9.5px; margin-top: 8px; }
+    .brand-strip { text-align: center; padding: 22px 0 6px; }
+    .brand-strip .claim { font-size: 9.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-dim); line-height: 1.9; margin-top: 12px; }
+    .brand-strip .claim b { color: #A8D70F; font-weight: 600; }
+    /* títulos con el peso de la marca */
+    h1, h2, .section-title, .question-title, .welcome-title, .success-title, .auth-card h2 { font-weight: 700 !important; letter-spacing: -0.01em !important; }  </style>
 </head>
 <body>
   <div class="app" id="app">
 
     <header class="header">
-      <div class="logo">
-        <span class="logo-dot"></span>
-        <span>Tu Coach</span>
-      </div>
+      <div class="brand"><img class="brand-emblem" src="/assets/emblema-256.png" alt="Couch IA"><div class="brand-txt"><div class="brand-word">COUCH <span class="ia">IA</span></div><div class="brand-sub">by Team Macano</div></div></div>
       <div class="progress-text" id="progressText">— / —</div>
     </header>
 

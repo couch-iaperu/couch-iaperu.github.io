@@ -3,27 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0E0E0C">
+  <meta name="theme-color" content="#0B0C0B">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Tu Coach — Plan personalizado</title>
+  <title>Couch IA · Tu plan</title>
+  <meta name="apple-mobile-web-app-title" content="Couch IA">
+  <link rel="icon" type="image/png" href="/assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Couch IA · Team Macano">
+  <meta property="og:title" content="Couch IA · Tu plan personalizado">
+  <meta property="og:description" content="Tu entrenamiento, tu nutrición y tu progreso — todo en un solo lugar.">
+  <meta property="og:image" content="https://couch-iaperu.github.io/assets/og-couchia.jpg">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="800">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0E0E0C;
-      --surface: #151513;
-      --surface-elev: #1A1A18;
-      --border: #2A2A26;
-      --border-strong: #3A3A35;
-      --text: #F5F1E8;
-      --text-dim: #8B847A;
-      --text-soft: #B8B2A6;
-      --accent: #E85D2F;
-      --accent-dim: #C44E25;
-      --accent-soft: rgba(232, 93, 47, 0.12);
-      --green: #7BAE7F;
+      --bg: #0B0C0B;
+      --surface: #131513;
+      --surface-elev: #191B19;
+      --border: #262926;
+      --border-strong: #363A36;
+      --text: #EFF1EC;
+      --text-dim: #858A84;
+      --text-soft: #B4B9B2;
+      --accent: #A8D70F;
+      --accent-dim: #86B00A;
+      --accent-soft: rgba(168, 215, 15, 0.12);
+      --accent-rgb: 168, 215, 15;
+      --green: #9FDB3A;
       --amber: #D9A441;
       --red: #C75C5C;
       --radius: 14px;
@@ -47,9 +58,9 @@
     /* ===== HEADER ===== */
     .header { padding: 34px 0 20px; }
     .header-top { display: flex; align-items: center; gap: 9px; margin-bottom: 22px; }
-    .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(232,93,47,.7); }
-    .logo-text { font-family: 'Fraunces', serif; font-size: 15px; letter-spacing: 0.06em; color: var(--text-soft); }
-    .header h1 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(30px, 7.5vw, 40px); line-height: 1.12; margin-bottom: 20px; }
+    .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(var(--accent-rgb),.7); }
+    .logo-text { font-family: 'Exo 2', sans-serif; font-size: 15px; letter-spacing: 0.06em; color: var(--text-soft); }
+    .header h1 { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: clamp(30px, 7.5vw, 40px); line-height: 1.12; margin-bottom: 20px; }
     .header h1 em { color: var(--accent); }
     .header-meta { display: flex; gap: 22px; flex-wrap: wrap; }
     .meta-item { display: flex; flex-direction: column; gap: 2px; }
@@ -59,7 +70,7 @@
     /* ===== NAV TABS ===== */
     .tabs {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
-      background: rgba(14,14,12,0.92); backdrop-filter: blur(14px);
+      background: rgba(11,12,11,0.92); backdrop-filter: blur(14px);
       border-top: 1px solid var(--border);
       display: flex; justify-content: space-around;
       padding: 8px 4px calc(10px + env(safe-area-inset-bottom));
@@ -80,8 +91,8 @@
     .section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
     .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
-    .section-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: 26px; line-height: 1.2; margin-bottom: 18px; }
-    .block-title { font-family: 'Fraunces', serif; font-weight: 500; font-size: 18px; margin: 30px 0 12px; }
+    .section-title { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 26px; line-height: 1.2; margin-bottom: 18px; }
+    .block-title { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 18px; margin: 30px 0 12px; }
     .body { color: var(--text-soft); font-size: 14.5px; margin-bottom: 12px; }
 
     /* ===== COACH NOTES ===== */
@@ -89,16 +100,16 @@
     .coach-note p { color: var(--text-soft); font-size: 14.5px; margin-bottom: 14px; }
     .coach-note p:last-child { margin-bottom: 0; }
     .coach-note strong { color: var(--text); }
-    .coach-sign { font-family: 'Fraunces', serif; font-style: italic; color: var(--text) !important; font-size: 15.5px; }
+    .coach-sign { font-family: 'Exo 2', sans-serif; font-style: italic; color: var(--text) !important; font-size: 15.5px; }
 
-    .callout { background: var(--accent-soft); border: 1px solid rgba(232,93,47,.25); border-radius: var(--radius); padding: 16px; margin: 16px 0; }
+    .callout { background: var(--accent-soft); border: 1px solid rgba(var(--accent-rgb),.25); border-radius: var(--radius); padding: 16px; margin: 16px 0; }
     .callout p { color: var(--text-soft); font-size: 13.5px; }
     .callout strong { color: var(--text); }
 
     /* ===== STAT / MACRO CARDS ===== */
     .macro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px; margin: 16px 0; }
     .macro-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 10px; text-align: center; }
-    .macro-val { font-family: 'Fraunces', serif; font-size: 24px; color: var(--accent); }
+    .macro-val { font-family: 'Exo 2', sans-serif; font-size: 24px; color: var(--accent); }
     .macro-val span { font-size: 12px; color: var(--text-dim); margin-left: 3px; font-family: 'DM Sans', sans-serif; }
     .macro-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-top: 4px; }
 
@@ -107,9 +118,9 @@
     .tl-item { position: relative; }
     .tl-item::before { content: ''; position: absolute; left: -24.5px; top: 5px; width: 11px; height: 11px; border-radius: 50%; background: var(--surface-elev); border: 2px solid var(--border-strong); }
     .tl-item.deload::before { border-color: var(--amber); }
-    .tl-item.event::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 10px rgba(232,93,47,.6); }
+    .tl-item.event::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb),.6); }
     .tl-week { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
-    .tl-title { font-family: 'Fraunces', serif; font-size: 16px; margin: 2px 0; }
+    .tl-title { font-family: 'Exo 2', sans-serif; font-size: 16px; margin: 2px 0; }
     .tl-desc { font-size: 13px; color: var(--text-soft); }
 
     .rir-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
@@ -147,19 +158,19 @@
     .day-chip.active .d-num { color: var(--accent); }
     .day-chip.done .d-num::after { content: ' ✓'; color: var(--green); }
     .day-head { margin: 8px 0 14px; }
-    .day-head h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 20px; margin-bottom: 6px; }
+    .day-head h3 { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 20px; margin-bottom: 6px; }
     .day-head p { font-size: 13.5px; color: var(--text-soft); }
     .day-done-btn {
       width: 100%; margin-top: 14px; background: var(--surface); border: 1px solid var(--border-strong);
       color: var(--text-soft); border-radius: var(--radius); padding: 13px; font-family: inherit;
       font-size: 14px; font-weight: 600; cursor: pointer;
     }
-    .day-done-btn.done { background: rgba(123,174,127,.12); border-color: var(--green); color: var(--green); }
+    .day-done-btn.done { background: rgba(159,219,58,.12); border-color: var(--green); color: var(--green); }
 
     /* ===== EXERCISE CARD ===== */
     .ex { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; }
     .ex-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
-    .ex-name { font-family: 'Fraunces', serif; font-weight: 500; font-size: 16.5px; }
+    .ex-name { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 16.5px; }
     .ex-video { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; }
     .ex-video svg { width: 15px; height: 15px; fill: var(--accent); }
     .ex-scheme { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
@@ -216,7 +227,7 @@
       box-shadow: 0 8px 30px rgba(0,0,0,.5); transition: transform .3s var(--ease);
     }
     .timer-bar.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
-    .timer-time { font-family: 'Fraunces', serif; font-size: 26px; color: var(--accent); min-width: 74px; }
+    .timer-time { font-family: 'Exo 2', sans-serif; font-size: 26px; color: var(--accent); min-width: 74px; }
     .timer-info { flex: 1; font-size: 12px; color: var(--text-soft); line-height: 1.35; }
     .timer-bar button { background: none; border: 1px solid var(--border-strong); color: var(--text-soft); border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit; font-size: 12px; cursor: pointer; }
     .timer-bar.done-flash { border-color: var(--green); }
@@ -224,7 +235,7 @@
 
     /* ===== NUTRITION ===== */
     .meal-group { margin-bottom: 22px; }
-    .meal-group h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; margin-bottom: 10px; }
+    .meal-group h4 { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 17px; margin-bottom: 10px; }
     .meal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; }
     .meal-top { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 5px; }
     .meal-name { font-weight: 600; font-size: 14.5px; }
@@ -235,7 +246,7 @@
 
     /* ===== PROGRESS / CHARTS ===== */
     .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
-    .chart-card h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; margin-bottom: 4px; }
+    .chart-card h4 { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 16px; margin-bottom: 4px; }
     .chart-card .sub { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; }
     .chart-svg { width: 100%; height: auto; display: block; }
     .chart-empty { font-size: 13px; color: var(--text-dim); padding: 18px 0; text-align: center; }
@@ -249,7 +260,7 @@
     /* ===== CHECK-IN ===== */
     .ci-status { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
     .ci-light { width: 16px; height: 16px; border-radius: 50%; flex: 0 0 auto; }
-    .ci-light.g { background: var(--green); box-shadow: 0 0 12px rgba(123,174,127,.5); }
+    .ci-light.g { background: var(--green); box-shadow: 0 0 12px rgba(159,219,58,.5); }
     .ci-light.a { background: var(--amber); box-shadow: 0 0 12px rgba(217,164,65,.5); }
     .ci-light.r { background: var(--red); box-shadow: 0 0 12px rgba(199,92,92,.5); }
     .ci-status .t { font-size: 13.5px; color: var(--text-soft); }
@@ -274,7 +285,7 @@
     .ci-result { margin-top: 16px; }
     .ci-history { margin-top: 22px; }
     .renew-card { background: linear-gradient(135deg, var(--accent-soft), transparent); border: 1px solid var(--accent); border-radius: var(--radius); padding: 18px; margin: 18px 0; }
-    .renew-card h4 { font-family: 'Fraunces', serif; font-size: 18px; margin-bottom: 8px; }
+    .renew-card h4 { font-family: 'Exo 2', sans-serif; font-size: 18px; margin-bottom: 8px; }
     .renew-card p { font-size: 13.5px; color: var(--text-soft); margin-bottom: 12px; }
 
     /* ===== FOOTER / MISC ===== */
@@ -307,7 +318,7 @@
     .app { position: relative; z-index: 1; }
 
     /* ===== MIEMBRO CICLO 2+ (tema dorado) ===== */
-    body.c2 { --accent: #D9A441; --accent-dim: #B8860B; --accent-soft: rgba(217, 164, 65, 0.13); }
+    body.c2 { --accent-rgb: 217, 164, 65; --accent: #D9A441; --accent-dim: #B8860B; --accent-soft: rgba(217, 164, 65, 0.13); }
     .c2-badge {
       display: none; margin-left: auto; background: linear-gradient(120deg, rgba(217,164,65,.18), rgba(217,164,65,.05));
       border: 1px solid rgba(217,164,65,.5); color: #E9C36A; border-radius: 999px;
@@ -323,7 +334,7 @@
     .auth-overlay.show { display: flex; }
     .auth-card { width: 100%; max-width: 380px; text-align: center; }
     .auth-card .logo-dot { display: inline-block; margin-bottom: 14px; }
-    .auth-card h2 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 26px; margin-bottom: 8px; }
+    .auth-card h2 { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 26px; margin-bottom: 8px; }
     .auth-card .sub { color: var(--text-soft); font-size: 13.5px; margin-bottom: 22px; }
     .auth-card input {
       width: 100%; background: var(--surface-elev); border: 1px solid var(--border-strong);
@@ -336,7 +347,26 @@
     .auth-note { color: var(--text-dim); font-size: 11.5px; margin-top: 16px; line-height: 1.5; }
     .sync-pill { position: fixed; top: 14px; right: 14px; z-index: 55; font-size: 10px; color: var(--text-dim); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; opacity: 0; transition: opacity .3s; }
     .sync-pill.show { opacity: 1; }
-  </style>
+  
+    /* ===== MARCA COUCH IA · TEAM MACANO ===== */
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .brand-emblem { width: 34px; height: 34px; object-fit: contain; mix-blend-mode: screen; flex: 0 0 auto; }
+    .brand-txt { display: flex; flex-direction: column; line-height: 1; }
+    .brand-word { font-family: 'Exo 2', sans-serif; font-style: italic; font-weight: 800; font-size: 19px; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #F4F5F3 0%, #CFD1CE 45%, #8C8E8B 100%); -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: #D4D4D4; }
+    .brand-word .ia { -webkit-text-fill-color: #A8D70F; color: #A8D70F; text-shadow: 0 0 14px rgba(168, 215, 15, 0.45); }
+    .brand-sub { font-size: 8.5px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); margin-top: 5px; font-weight: 600; }
+    .brand.lg { flex-direction: column; gap: 14px; text-align: center; }
+    .brand.lg .brand-txt { align-items: center; }
+    .brand.lg .brand-emblem { width: 96px; height: 96px; }
+    .brand.lg .brand-word { font-size: 34px; }
+    .brand.lg .brand-sub { font-size: 9.5px; margin-top: 8px; }
+    .brand-strip { text-align: center; padding: 22px 0 6px; }
+    .brand-strip .claim { font-size: 9.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-dim); line-height: 1.9; margin-top: 12px; }
+    .brand-strip .claim b { color: #A8D70F; font-weight: 600; }
+    /* títulos con el peso de la marca */
+    h1, h2, .section-title, .question-title, .welcome-title, .success-title, .auth-card h2 { font-weight: 700 !important; letter-spacing: -0.01em !important; }  </style>
 </head>
 <body>
   <div class="app">
@@ -344,8 +374,7 @@
     <!-- ===== HEADER (se rellena desde PLAN) ===== -->
     <header class="header">
       <div class="header-top">
-        <span class="logo-dot"></span>
-        <span class="logo-text">Tu Coach</span>
+        <div class="brand"><img class="brand-emblem" src="/assets/emblema-256.png" alt="Couch IA"><div class="brand-txt"><div class="brand-word">COUCH <span class="ia">IA</span></div><div class="brand-sub">by Team Macano</div></div></div>
         <span class="c2-badge" id="c2Badge">★ Miembro</span>
       </div>
       <h1 id="headline">—</h1>
@@ -380,7 +409,7 @@
       <h3 class="block-title">El recorrido</h3>
       <div class="timeline" id="timeline"></div>
 
-      <div class="install-hint" id="installHint"><b>💡 Instala tu plan como app:</b> en tu celular abre el menú del navegador y toca <b>"Agregar a pantalla de inicio"</b>. Queda como una app, con tus registros guardados en tu equipo.</div>
+      <div class="install-hint" id="installHint"><b>💡 Instala Couch IA en tu celular:</b> en tu celular abre el menú del navegador y toca <b>"Agregar a pantalla de inicio"</b>. Queda como una app, con tus registros guardados en tu equipo.</div>
     </section>
 
     <!-- ===== ENTRENO ===== -->
@@ -446,6 +475,7 @@
       <p class="disclaimer">Este plan es una guía educativa de entrenamiento y alimentación construida a partir de tus respuestas. No reemplaza la opinión de un médico, nutricionista clínico o fisioterapeuta. Si tienes una condición de salud, dolor agudo o tomas medicación, consulta con un profesional antes de empezar. Ante cualquier dolor fuera de lo normal durante un ejercicio, detente y avísale a tu coach.</p>
       <p class="disclaimer" id="reviewNote"></p>
       <button class="reset-btn" id="resetBtn">Reiniciar todos mis datos</button>
+      <div class="brand-strip"><div class="brand"><img class="brand-emblem" src="/assets/emblema-256.png" alt="Couch IA"><div class="brand-txt"><div class="brand-word">COUCH <span class="ia">IA</span></div><div class="brand-sub">by Team Macano</div></div></div><div class="claim">Tu entrenamiento <b>/</b> tu nutrición <b>/</b> tu progreso<br>Todo en un solo lugar</div></div>
     </div>
   </div>
 
@@ -482,8 +512,7 @@
   <!-- acceso élite (solo ciclo 2+) -->
   <div class="auth-overlay" id="authOverlay">
     <div class="auth-card">
-      <span class="logo-dot"></span>
-      <div class="logo-text" style="margin-bottom:18px;">Tu Coach</div>
+      <div style="margin-bottom:22px;"><div class="brand lg"><img class="brand-emblem" src="/assets/emblema-256.png" alt="Couch IA"><div class="brand-txt"><div class="brand-word">COUCH <span class="ia">IA</span></div><div class="brand-sub">Team Macano · Formando androides</div></div></div></div>
       <h2 id="authTitle">Acceso de miembro</h2>
       <div class="sub" id="authSub">Ingresa tu PIN para abrir tu plan.</div>
       <input type="password" inputmode="numeric" id="authPin" maxlength="6" placeholder="••••">
@@ -686,7 +715,10 @@
   }
 
   // ---------- Sincronización con la nube (Apps Script) ----------
-  const SYNC_URL = (PLAN.sync && /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(PLAN.sync.url || '')) ? PLAN.sync.url : '';
+  // Seguro de pruebas: abierta desde la PC del coach (localhost / archivo) NUNCA toca la nube,
+  // así una vista previa jamás pisa el avance real de un cliente.
+  const IS_LOCAL = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  const SYNC_URL = (!IS_LOCAL && PLAN.sync && /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(PLAN.sync.url || '')) ? PLAN.sync.url : '';
   const SYNC_KEYS = /^(start|checkins|track_|sets_|daydone_)/;
   function syncKey() { return CICLO >= 2 ? (store.get('pinhash', '') || '') : (PLAN.cliente.planKey || ''); }
   async function sha256(txt) {
@@ -793,6 +825,7 @@
 
   // ---------- Header + Resumen ----------
   function renderStatic() {
+    document.title = 'Couch IA · ' + PLAN.cliente.nombre;
     $('headline').innerHTML = PLAN.cliente.titulo;
     $('focusText').textContent = PLAN.cliente.enfoque;
     $('durText').textContent = DUR + ' semanas';
@@ -994,6 +1027,8 @@
   $('timerSkip').onclick = () => { clearInterval(timerInt); $('timerBar').classList.remove('show'); };
 
   // ---------- Gráficos SVG ----------
+  // El color sigue al tema: lima de la marca, dorado en miembros Team Macano.
+  const ACC = () => (getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#A8D70F');
   function svgLine(points, opts) {
     opts = opts || {};
     const W = 320, H = 140, padL = 34, padR = 12, padT = 14, padB = 22;
@@ -1006,7 +1041,7 @@
     const X = i => points.length === 1 ? (padL + (W - padL - padR) / 2) : padL + (W - padL - padR) * i / (points.length - 1);
     const Y = v => padT + (H - padT - padB) * (1 - (v - min) / (max - min));
     const path = points.map((p, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.y).toFixed(1)).join(' ');
-    const dots = points.map((p, i) => '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(p.y).toFixed(1) + '" r="3.4" fill="#E85D2F"/>' +
+    const dots = points.map((p, i) => '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(p.y).toFixed(1) + '" r="3.4" fill="' + ACC() + '"/>' +
       (points.length <= 8 || i === points.length - 1 || i === 0 ?
         '<text x="' + X(i).toFixed(1) + '" y="' + (Y(p.y) - 8).toFixed(1) + '" font-size="9" fill="#B8B2A6" text-anchor="middle">' + p.y + '</text>' : '')).join('');
     const labels = points.map((p, i) => (points.length <= 10 || i % 2 === 0) ?
@@ -1018,7 +1053,7 @@
         '<text x="' + (W - padR) + '" y="' + (dy - 4) + '" font-size="8.5" fill="#D9A441" text-anchor="end">récord ' + opts.dashedAt + '</text>';
     }
     return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg">' +
-      '<path d="' + path + '" fill="none" stroke="#E85D2F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="' + path + '" fill="none" stroke="' + ACC() + '" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>' +
       extra + dots + labels + '</svg>';
   }
   function svgBars(values, target) {
@@ -1031,7 +1066,7 @@
       const h = Math.round((H - padT - padB) * Math.min(v.y, maxV) / maxV);
       const y = H - padB - h;
       const full = v.y >= target;
-      return '<rect x="' + x + '" y="' + y + '" width="' + bw + '" height="' + Math.max(h, 2) + '" rx="4" fill="' + (full ? '#7BAE7F' : '#E85D2F') + '" opacity="' + (full ? '1' : '0.85') + '"/>' +
+      return '<rect x="' + x + '" y="' + y + '" width="' + bw + '" height="' + Math.max(h, 2) + '" rx="4" fill="' + ACC() + '" opacity="' + (full ? '1' : '0.35') + '"/>' +
         '<text x="' + (x + bw / 2) + '" y="' + (y - 4) + '" font-size="9" fill="#B8B2A6" text-anchor="middle">' + v.y + '</text>' +
         '<text x="' + (x + bw / 2) + '" y="' + (H - 6) + '" font-size="8.5" fill="#8B847A" text-anchor="middle">' + v.label + '</text>';
     }).join('');
