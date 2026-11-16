@@ -239,9 +239,9 @@
       {
         id: 'r1_nombre', type: 'text',
         eyebrow: 'Identificación',
-        title: '¿Cómo te llamas?',
-        subtitle: 'Escríbelo igual que en tu primer formulario, para encontrar tu historial.',
-        placeholder: 'Tu nombre', required: true
+        title: '¿Cuál es tu nombre y apellido?',
+        subtitle: 'Los dos son obligatorios. Escríbelo igual que en tu primer formulario, para encontrar tu historial.',
+        placeholder: 'Ej.: Juan Pérez', required: true, fullName: true
       },
       {
         id: 'r2_whatsapp', type: 'text', inputType: 'tel',
@@ -990,16 +990,35 @@
     // ============================================
     // VALIDACIÓN
     // ============================================
+    // Nombre completo obligatorio: al menos 2 palabras de 2+ letras (nombre y apellido)
+    function isFullName(v) {
+      const partes = String(v || '').trim().split(/\s+/).filter(p => /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'\-]{2,}$/.test(p));
+      return partes.length >= 2;
+    }
+    function nameHint(q) {
+      if (!q.fullName) return;
+      const inp = document.querySelector('input[type=text], input:not([type])');
+      if (!inp) return;
+      let h = document.getElementById('fullNameHint');
+      if (!h) {
+        h = document.createElement('div'); h.id = 'fullNameHint';
+        h.style.cssText = 'margin-top:10px;font-size:13px;color:#E0564B;min-height:18px;';
+        inp.insertAdjacentElement('afterend', h);
+      }
+      const v = state.answers[q.id];
+      h.textContent = (v && String(v).trim().length > 0 && !isFullName(v)) ? 'Escribe tu nombre Y tu apellido (ej.: Juan Pérez).' : '';
+    }
     function validateCurrent(q) {
       const nextBtn = document.getElementById('nextBtn');
       if (!nextBtn) return;
       nextBtn.disabled = !isValid(q);
+      nameHint(q);
     }
 
     function isValid(q) {
       let v = state.answers[q.id];
       if (!q.required && q.type !== 'composite') return true;
-      if (q.type === 'text') return v && String(v).trim().length > 0;
+      if (q.type === 'text') return q.fullName ? isFullName(v) : (v && String(v).trim().length > 0);
       if (q.type === 'textarea') {
         const len = (v || '').trim().length;
         if (q.required) return len >= (q.minLength || 1);
