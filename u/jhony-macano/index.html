@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0B0C0B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Couch IA · Tu plan</title>
+  <meta name="apple-mobile-web-app-title" content="Couch IA">
+  <link rel="icon" type="image/png" href="/assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Couch IA · Team Macano">
+  <meta property="og:title" content="Couch IA · Tu plan personalizado">
+  <meta property="og:description" content="Tu entrenamiento, tu nutrición y tu progreso — todo en un solo lugar.">
+  <meta property="og:image" content="https://couch-iaperu.github.io/assets/og-couchia.jpg">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="800">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0C0B;
+      --surface: #131513;
+      --surface-elev: #191B19;
+      --border: #262926;
+      --border-strong: #363A36;
+      --text: #EFF1EC;
+      --text-dim: #858A84;
+      --text-soft: #B4B9B2;
+      --accent: #A8D70F;
+      --accent-dim: #86B00A;
+      --accent-soft: rgba(168, 215, 15, 0.12);
+      --accent-rgb: 168, 215, 15;
+      --green: #9FDB3A;
+      --amber: #D9A441;
+      --red: #C75C5C;
+      --radius: 14px;
+      --radius-sm: 9px;
+      --ease: cubic-bezier(0.25, 0.8, 0.35, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 15px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 120px;
+    }
+    .app { max-width: 560px; margin: 0 auto; padding: 0 18px; }
+    em { font-style: italic; }
+    .accent { color: var(--accent); }
+    a { color: var(--accent); }
+
+    /* ===== HEADER ===== */
+    .header { padding: 34px 0 20px; }
+    .header-top { display: flex; align-items: center; gap: 9px; margin-bottom: 22px; }
+    .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(var(--accent-rgb),.7); }
+    .logo-text { font-family: 'Exo 2', sans-serif; font-size: 15px; letter-spacing: 0.06em; color: var(--text-soft); }
+    .header h1 { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: clamp(30px, 7.5vw, 40px); line-height: 1.12; margin-bottom: 20px; }
+    .header h1 em { color: var(--accent); }
+    .header-meta { display: flex; gap: 22px; flex-wrap: wrap; }
+    .meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .meta-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+    .meta-value { font-size: 13.5px; font-weight: 600; color: var(--text-soft); }
+
+    /* ===== NAV TABS ===== */
+    .tabs {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+      background: rgba(11,12,11,0.92); backdrop-filter: blur(14px);
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-around;
+      padding: 8px 4px calc(10px + env(safe-area-inset-bottom));
+    }
+    .tab {
+      flex: 1; max-width: 110px; background: none; border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      color: var(--text-dim); font-family: inherit; font-size: 10.5px; font-weight: 500;
+      padding: 5px 0; position: relative; transition: color .2s var(--ease);
+    }
+    .tab svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .tab.active { color: var(--accent); }
+    .tab .dot { position: absolute; top: 2px; right: 22%; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: none; }
+    .tab.has-dot .dot { display: block; }
+
+    /* ===== SECTIONS ===== */
+    .section { display: none; padding: 8px 0 40px; animation: fadeIn .3s var(--ease); }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+    .section-title { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 26px; line-height: 1.2; margin-bottom: 18px; }
+    .block-title { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 18px; margin: 30px 0 12px; }
+    .body { color: var(--text-soft); font-size: 14.5px; margin-bottom: 12px; }
+
+    /* ===== COACH NOTES ===== */
+    .coach-note { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 18px; }
+    .coach-note p { color: var(--text-soft); font-size: 14.5px; margin-bottom: 14px; }
+    .coach-note p:last-child { margin-bottom: 0; }
+    .coach-note strong { color: var(--text); }
+    .coach-sign { font-family: 'Exo 2', sans-serif; font-style: italic; color: var(--text) !important; font-size: 15.5px; }
+
+    .callout { background: var(--accent-soft); border: 1px solid rgba(var(--accent-rgb),.25); border-radius: var(--radius); padding: 16px; margin: 16px 0; }
+    .callout p { color: var(--text-soft); font-size: 13.5px; }
+    .callout strong { color: var(--text); }
+
+    /* ===== STAT / MACRO CARDS ===== */
+    .macro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px; margin: 16px 0; }
+    .macro-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 10px; text-align: center; }
+    .macro-val { font-family: 'Exo 2', sans-serif; font-size: 24px; color: var(--accent); }
+    .macro-val span { font-size: 12px; color: var(--text-dim); margin-left: 3px; font-family: 'DM Sans', sans-serif; }
+    .macro-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-top: 4px; }
+
+    /* ===== TIMELINE ===== */
+    .timeline { border-left: 2px solid var(--border-strong); margin: 14px 0 0 6px; padding-left: 18px; display: flex; flex-direction: column; gap: 18px; }
+    .tl-item { position: relative; }
+    .tl-item::before { content: ''; position: absolute; left: -24.5px; top: 5px; width: 11px; height: 11px; border-radius: 50%; background: var(--surface-elev); border: 2px solid var(--border-strong); }
+    .tl-item.deload::before { border-color: var(--amber); }
+    .tl-item.event::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb),.6); }
+    .tl-week { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+    .tl-title { font-family: 'Exo 2', sans-serif; font-size: 16px; margin: 2px 0; }
+    .tl-desc { font-size: 13px; color: var(--text-soft); }
+
+    .rir-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    .rir-table td { border: 1px solid var(--border); padding: 9px 12px; font-size: 13px; color: var(--text-soft); }
+    .rir-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+
+    /* ===== WEEK SELECTOR ===== */
+    .week-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 10px; scrollbar-width: none; }
+    .week-scroll::-webkit-scrollbar { display: none; }
+    .week-chip {
+      flex: 0 0 auto; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 999px; padding: 7px 14px; font-size: 12.5px; font-weight: 600;
+      color: var(--text-dim); cursor: pointer; font-family: inherit; transition: all .2s var(--ease);
+    }
+    .week-chip.deload { border-style: dashed; }
+    .week-chip.current { border-color: var(--border-strong); color: var(--text-soft); }
+    .week-chip.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .week-banner { background: var(--surface-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 16px; margin-bottom: 16px; font-size: 13px; color: var(--text-soft); }
+    .week-banner b { color: var(--text); }
+    .week-banner.deload { border-color: rgba(217,164,65,.4); }
+    .week-banner .rir-pill { display: inline-block; background: var(--accent-soft); color: var(--accent); border-radius: 6px; padding: 1px 8px; font-weight: 700; font-size: 12px; }
+
+    /* ===== DAY SELECTOR ===== */
+    .day-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 12px; scrollbar-width: none; }
+    .day-scroll::-webkit-scrollbar { display: none; }
+    .day-chip {
+      flex: 0 0 auto; background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 9px 14px; cursor: pointer; font-family: inherit;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-width: 86px;
+      transition: all .2s var(--ease);
+    }
+    .day-chip .d-num { font-size: 12px; font-weight: 700; color: var(--text-soft); }
+    .day-chip .d-focus { font-size: 10px; color: var(--text-dim); white-space: nowrap; }
+    .day-chip.active { background: var(--accent-soft); border-color: var(--accent); }
+    .day-chip.active .d-num { color: var(--accent); }
+    .day-chip.done .d-num::after { content: ' ✓'; color: var(--green); }
+    .day-head { margin: 8px 0 14px; }
+    .day-head h3 { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 20px; margin-bottom: 6px; }
+    .day-head p { font-size: 13.5px; color: var(--text-soft); }
+    .day-done-btn {
+      width: 100%; margin-top: 14px; background: var(--surface); border: 1px solid var(--border-strong);
+      color: var(--text-soft); border-radius: var(--radius); padding: 13px; font-family: inherit;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+    }
+    .day-done-btn.done { background: rgba(159,219,58,.12); border-color: var(--green); color: var(--green); }
+
+    /* ===== EXERCISE CARD ===== */
+    .ex { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; }
+    .ex-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+    .ex-name { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 16.5px; }
+    .ex-video { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; }
+    .ex-video svg { width: 15px; height: 15px; fill: var(--accent); }
+    .ex-scheme { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
+    .scheme-item { background: var(--surface-elev); border-radius: var(--radius-sm); padding: 7px 4px; text-align: center; }
+    .scheme-k { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-dim); }
+    .scheme-v { display: block; font-size: 13.5px; font-weight: 700; color: var(--text-soft); margin-top: 1px; }
+    .scheme-v.hl { color: var(--accent); }
+    .ex-tech { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 11.5px; font-weight: 600; border-radius: 6px; padding: 3px 9px; margin-bottom: 9px; }
+    .ex-cue { font-size: 13px; color: var(--text-soft); border-top: 1px dashed var(--border); padding-top: 10px; }
+    .ex-cue b { color: var(--text); }
+
+    /* sets circles + timer */
+    .sets-row { display: flex; align-items: center; gap: 9px; margin-top: 12px; flex-wrap: wrap; }
+    .sets-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+    .set-circle {
+      width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--border-strong);
+      background: transparent; color: var(--text-dim); font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all .15s var(--ease);
+    }
+    .set-circle.done { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+    /* tracking */
+    .track { margin-top: 12px; border-top: 1px dashed var(--border); padding-top: 12px; }
+    .track-last { font-size: 12.5px; color: var(--text-dim); margin-bottom: 8px; }
+    .track-last b { color: var(--text-soft); }
+    .track-last .pr { color: var(--amber); font-weight: 700; }
+    .track-sugg { font-size: 12.5px; color: var(--green); margin-bottom: 8px; }
+    .track-inputs { display: flex; gap: 8px; align-items: flex-end; }
+    .track-input-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-dim); margin-bottom: 4px; }
+    .track input {
+      width: 100%; background: var(--surface-elev); border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm); color: var(--text); font-family: inherit; font-size: 15px;
+      padding: 9px 10px; outline: none;
+    }
+    .track input:focus { border-color: var(--accent); }
+    .mult { color: var(--text-dim); padding-bottom: 10px; }
+    .track-save {
+      background: var(--accent); color: var(--bg); border: none; border-radius: var(--radius-sm);
+      padding: 10px 16px; font-family: inherit; font-weight: 700; font-size: 13.5px; cursor: pointer;
+    }
+    .track-save.saved { background: var(--green); }
+    .hist-toggle { background: none; border: none; color: var(--text-dim); font-family: inherit; font-size: 12px; cursor: pointer; margin-top: 9px; padding: 0; }
+    .track-history { display: none; margin-top: 8px; }
+    .track-history.open { display: block; }
+    .hist-row { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--text-soft); padding: 5px 0; border-bottom: 1px dashed var(--border); }
+    .hist-row span:first-child { color: var(--text-dim); }
+
+    /* rest timer bar */
+    .timer-bar {
+      position: fixed; bottom: calc(64px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%) translateY(300%);
+      width: min(92vw, 520px); z-index: 70; opacity: 0; pointer-events: none;
+      background: var(--surface-elev); border: 1px solid var(--accent); border-radius: var(--radius);
+      padding: 12px 16px; display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.5); transition: transform .3s var(--ease);
+    }
+    .timer-bar.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
+    .timer-time { font-family: 'Exo 2', sans-serif; font-size: 26px; color: var(--accent); min-width: 74px; }
+    .timer-info { flex: 1; font-size: 12px; color: var(--text-soft); line-height: 1.35; }
+    .timer-bar button { background: none; border: 1px solid var(--border-strong); color: var(--text-soft); border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit; font-size: 12px; cursor: pointer; }
+    .timer-bar.done-flash { border-color: var(--green); }
+    .timer-bar.done-flash .timer-time { color: var(--green); }
+
+    /* ===== NUTRITION ===== */
+    .meal-group { margin-bottom: 22px; }
+    .meal-group h4 { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 17px; margin-bottom: 10px; }
+    .meal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; }
+    .meal-top { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 5px; }
+    .meal-name { font-weight: 600; font-size: 14.5px; }
+    .meal-kcal { font-size: 12px; color: var(--text-dim); white-space: nowrap; }
+    .meal-desc { font-size: 13px; color: var(--text-soft); }
+    .meal-macro { font-size: 11.5px; color: var(--text-dim); margin-top: 6px; }
+    .nutri-targets { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px; margin: 16px 0; }
+
+    /* ===== PROGRESS / CHARTS ===== */
+    .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .chart-card h4 { font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 16px; margin-bottom: 4px; }
+    .chart-card .sub { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; }
+    .chart-svg { width: 100%; height: auto; display: block; }
+    .chart-empty { font-size: 13px; color: var(--text-dim); padding: 18px 0; text-align: center; }
+    .chart-select {
+      width: 100%; background: var(--surface-elev); border: 1px solid var(--border-strong); color: var(--text);
+      border-radius: var(--radius-sm); padding: 10px 12px; font-family: inherit; font-size: 13.5px; margin-bottom: 12px;
+      -webkit-appearance: none; appearance: none;
+    }
+    .pr-badge { display: inline-block; background: rgba(217,164,65,.15); color: var(--amber); border-radius: 6px; padding: 2px 8px; font-size: 11.5px; font-weight: 700; margin-left: 6px; }
+
+    /* ===== CHECK-IN ===== */
+    .ci-status { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .ci-light { width: 16px; height: 16px; border-radius: 50%; flex: 0 0 auto; }
+    .ci-light.g { background: var(--green); box-shadow: 0 0 12px rgba(159,219,58,.5); }
+    .ci-light.a { background: var(--amber); box-shadow: 0 0 12px rgba(217,164,65,.5); }
+    .ci-light.r { background: var(--red); box-shadow: 0 0 12px rgba(199,92,92,.5); }
+    .ci-status .t { font-size: 13.5px; color: var(--text-soft); }
+    .ci-status .t b { color: var(--text); }
+    .ci-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; }
+    .ci-q { margin-bottom: 16px; }
+    .ci-q label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+    .ci-q .hint { font-weight: 400; color: var(--text-dim); font-size: 12px; }
+    .ci-q input[type=number] {
+      width: 100%; background: var(--surface-elev); border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm); color: var(--text); font-family: inherit; font-size: 15px; padding: 10px 12px; outline: none;
+    }
+    .ci-q input:focus { border-color: var(--accent); }
+    .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+    .seg button {
+      flex: 1; min-width: 44px; background: var(--surface-elev); border: 1px solid var(--border-strong);
+      color: var(--text-dim); border-radius: var(--radius-sm); padding: 9px 4px; font-family: inherit;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .seg button.sel { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+    .ci-submit { width: 100%; background: var(--accent); color: var(--bg); border: none; border-radius: var(--radius); padding: 14px; font-family: inherit; font-weight: 700; font-size: 14.5px; cursor: pointer; margin-top: 4px; }
+    .ci-result { margin-top: 16px; }
+    .ci-history { margin-top: 22px; }
+    .renew-card { background: linear-gradient(135deg, var(--accent-soft), transparent); border: 1px solid var(--accent); border-radius: var(--radius); padding: 18px; margin: 18px 0; }
+    .renew-card h4 { font-family: 'Exo 2', sans-serif; font-size: 18px; margin-bottom: 8px; }
+    .renew-card p { font-size: 13.5px; color: var(--text-soft); margin-bottom: 12px; }
+
+    /* ===== FOOTER / MISC ===== */
+    .wa-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: var(--bg); text-decoration: none;
+      padding: 12px 20px; border-radius: var(--radius); font-weight: 600; font-size: 14px;
+    }
+    .wa-btn.ghost { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+    .install-hint { background: var(--surface-elev); border: 1px dashed var(--border-strong); border-radius: var(--radius); padding: 14px 16px; margin: 16px 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+    .install-hint b { color: var(--text-soft); }
+    .footer { border-top: 1px solid var(--border); margin-top: 30px; padding: 24px 0 20px; }
+    .footer .disclaimer { font-size: 11.5px; color: var(--text-dim); line-height: 1.5; margin: 14px 0; }
+    .reset-btn { background: transparent; color: var(--text-dim); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 9px 16px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 8px; }
+    .toast {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-150%);
+      background: var(--surface-elev); border: 1px solid var(--green); color: var(--text);
+      border-radius: 999px; padding: 9px 18px; font-size: 13px; z-index: 90; transition: transform .3s var(--ease);
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ===== FONDO PERSONALIZADO (marca de agua, solo miembros) ===== */
+    .marca-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-size: cover; background-position: center 18%;
+      filter: grayscale(30%);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,.45) 55%, rgba(0,0,0,.75));
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,.45) 55%, rgba(0,0,0,.75));
+    }
+    .app { position: relative; z-index: 1; }
+
+    /* ===== MIEMBRO CICLO 2+ (tema dorado) ===== */
+    body.c2 { --accent-rgb: 217, 164, 65; --accent: #D9A441; --accent-dim: #B8860B; --accent-soft: rgba(217, 164, 65, 0.13); }
+    .c2-badge {
+      display: none; margin-left: auto; background: linear-gradient(120deg, rgba(217,164,65,.18), rgba(217,164,65,.05));
+      border: 1px solid rgba(217,164,65,.5); color: #E9C36A; border-radius: 999px;
+      padding: 4px 12px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+    }
+    body.c2 .c2-badge { display: inline-block; }
+
+    /* ===== ACCESO (overlay de PIN, solo ciclo 2+) ===== */
+    .auth-overlay {
+      position: fixed; inset: 0; z-index: 200; background: var(--bg);
+      display: none; align-items: center; justify-content: center; padding: 24px;
+    }
+    .auth-overlay.show { display: flex; }
+    .auth-card { width: 100%; max-width: 380px; text-align: center; }
+    .auth-card .logo-dot { display: inline-block; margin-bottom: 14px; }
+    .auth-card h2 { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 26px; margin-bottom: 8px; }
+    .auth-card .sub { color: var(--text-soft); font-size: 13.5px; margin-bottom: 22px; }
+    .auth-card input {
+      width: 100%; background: var(--surface-elev); border: 1px solid var(--border-strong);
+      border-radius: var(--radius); color: var(--text); font-family: inherit; font-size: 22px;
+      letter-spacing: 0.35em; text-align: center; padding: 13px; outline: none; margin-bottom: 12px;
+    }
+    .auth-card input:focus { border-color: var(--accent); }
+    .auth-btn { width: 100%; background: var(--accent); color: var(--bg); border: none; border-radius: var(--radius); padding: 14px; font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; }
+    .auth-err { color: var(--red); font-size: 12.5px; min-height: 18px; margin-top: 10px; }
+    .auth-note { color: var(--text-dim); font-size: 11.5px; margin-top: 16px; line-height: 1.5; }
+    .sync-pill { position: fixed; top: 14px; right: 14px; z-index: 55; font-size: 10px; color: var(--text-dim); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; opacity: 0; transition: opacity .3s; }
+    .sync-pill.show { opacity: 1; }
+  
+    /* ===== MARCA COUCH IA · TEAM MACANO ===== */
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .brand-emblem { width: 34px; height: 34px; object-fit: contain; mix-blend-mode: screen; flex: 0 0 auto; }
+    .brand-txt { display: flex; flex-direction: column; line-height: 1; }
+    .brand-word { font-family: 'Exo 2', sans-serif; font-style: italic; font-weight: 800; font-size: 19px; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, #F4F5F3 0%, #CFD1CE 45%, #8C8E8B 100%); -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: #D4D4D4; }
+    .brand-word .ia { -webkit-text-fill-color: #A8D70F; color: #A8D70F; text-shadow: 0 0 14px rgba(168, 215, 15, 0.45); }
+    .brand-sub { font-size: 8.5px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); margin-top: 5px; font-weight: 600; }
+    .brand.lg { flex-direction: column; gap: 14px; text-align: center; }
+    .brand.lg .brand-txt { align-items: center; }
+    .brand.lg .brand-emblem { width: 96px; height: 96px; }
+    .brand.lg .brand-word { font-size: 34px; }
+    .brand.lg .brand-sub { font-size: 9.5px; margin-top: 8px; }
+    .brand-strip { text-align: center; padding: 22px 0 6px; }
+    .brand-strip .claim { font-size: 9.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-dim); line-height: 1.9; margin-top: 12px; }
+    .brand-strip .claim b { color: #A8D70F; font-weight: 600; }
+    /* títulos con el peso de la marca */
+    h1, h2, .section-title, .question-title, .welcome-title, .success-title, .auth-card h2 { font-weight: 700 !important; letter-spacing: -0.01em !important; }  </style>
+</head>
+<body>
+  <div class="app">
+
+    <!-- ===== HEADER (se rellena desde PLAN) ===== -->
+    <header class="header">
+      <div class="header-top">
+        <div class="brand"><img class="brand-emblem" src="/assets/emblema-256.png" alt="Couch IA"><div class="brand-txt"><div class="brand-word">COUCH <span class="ia">IA</span></div><div class="brand-sub">by Team Macano</div></div></div>
+        <span class="c2-badge" id="c2Badge">★ Miembro</span>
+      </div>
+      <h1 id="headline">—</h1>
+      <div class="header-meta">
+        <div class="meta-item"><span class="meta-label">Inicio</span><span class="meta-value" id="startDate">—</span></div>
+        <div class="meta-item"><span class="meta-label">Duración</span><span class="meta-value" id="durText">12 semanas</span></div>
+        <div class="meta-item"><span class="meta-label">Enfoque</span><span class="meta-value" id="focusText">—</span></div>
+        <div class="meta-item"><span class="meta-label">Semana actual</span><span class="meta-value" id="curWeekText">—</span></div>
+      </div>
+    </header>
+
+    <!-- ===== RESUMEN ===== -->
+    <section class="section active" id="sec-resumen">
+      <div class="eyebrow">Lo primero</div>
+      <h2 class="section-title">Notas honestas de tu coach</h2>
+      <div class="coach-note" id="coachNotes"></div>
+
+      <h3 class="block-title">Por qué tu plan se ve así</h3>
+      <div id="styleWhy"></div>
+      <div class="macro-grid" id="statCards"></div>
+
+      <h3 class="block-title">Intensidad semana a semana</h3>
+      <p class="body">Dentro de cada bloque, el RIR baja (te acercas más al fallo) y subes peso o reps. RIR = repeticiones que te guardas: RIR 2 significa "podía hacer 2 más".</p>
+      <table class="rir-table">
+        <tr><td>Semana 1</td><td>RIR 3-4 · establece pesos, técnica perfecta</td></tr>
+        <tr><td>Semana 2</td><td>RIR 2-3 · sube peso o reps</td></tr>
+        <tr><td>Semana 3</td><td>RIR 1-2 · semana dura, cerca del fallo</td></tr>
+        <tr><td>Semana 4</td><td>Deload · RIR 4-5, baja volumen ~30%</td></tr>
+      </table>
+      <div class="callout"><p><strong>Cómo progresar:</strong> con el mismo peso, sube repeticiones dentro del rango. Cuando llegues al tope del rango con el RIR indicado, sube el peso (2.5 kg o el salto mínimo) y vuelve al piso del rango. La app te lo sugiere sola cuando registras tus pesos.</p></div>
+
+      <h3 class="block-title">El recorrido</h3>
+      <div class="timeline" id="timeline"></div>
+
+      <div class="install-hint" id="installHint"><b>💡 Instala Couch IA en tu celular:</b> en tu celular abre el menú del navegador y toca <b>"Agregar a pantalla de inicio"</b>. Queda como una app, con tus registros guardados en tu equipo.</div>
+    </section>
+
+    <!-- ===== ENTRENO ===== -->
+    <section class="section" id="sec-entreno">
+      <div class="eyebrow">A darle</div>
+      <h2 class="section-title">Tu entrenamiento</h2>
+      <div class="week-scroll" id="weekSelector"></div>
+      <div class="week-banner" id="weekBanner"></div>
+      <div class="day-scroll" id="daySelector"></div>
+      <div id="dayContent"></div>
+    </section>
+
+    <!-- ===== NUTRICIÓN ===== -->
+    <section class="section" id="sec-nutricion">
+      <div class="eyebrow">Combustible</div>
+      <h2 class="section-title">Tu nutrición</h2>
+      <div id="nutriIntro"></div>
+      <div class="nutri-targets" id="nutriTargets"></div>
+      <div id="nutriExtras"></div>
+      <div id="mealGroups"></div>
+      <div id="nutriOpcionales"></div>
+      <div id="nutriNotas"></div>
+    </section>
+
+    <!-- ===== PROGRESO ===== -->
+    <section class="section" id="sec-progreso">
+      <div class="eyebrow">Tus números</div>
+      <h2 class="section-title">Tu progreso</h2>
+
+      <div class="chart-card">
+        <h4>Peso corporal</h4>
+        <div class="sub">Se alimenta de tus check-ins semanales. La tendencia importa más que el día a día.</div>
+        <div id="chartWeight"></div>
+      </div>
+
+      <div class="chart-card">
+        <h4>Fuerza por ejercicio <span id="prBadge"></span></h4>
+        <div class="sub">El mejor peso que registraste en cada sesión. La línea punteada marca tu récord.</div>
+        <select class="chart-select" id="exSelect"></select>
+        <div id="chartStrength"></div>
+      </div>
+
+      <div class="chart-card">
+        <h4>Constancia</h4>
+        <div class="sub">Días de entrenamiento completados por semana (de los <span id="targetDays">—</span> planificados).</div>
+        <div id="chartAdherence"></div>
+      </div>
+    </section>
+
+    <!-- ===== CHECK-IN ===== -->
+    <section class="section" id="sec-checkin">
+      <div class="eyebrow">Cada semana</div>
+      <h2 class="section-title">Check-in semanal</h2>
+      <div class="ci-status" id="ciStatus"></div>
+      <div id="ciFormWrap"></div>
+      <div id="renewWrap"></div>
+      <div class="ci-history" id="ciHistory"></div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+      <a id="waBtn" class="wa-btn" href="#" target="_blank" rel="noopener">💬 Escribir a mi coach</a>
+      <p class="disclaimer">Este plan es una guía educativa de entrenamiento y alimentación construida a partir de tus respuestas. No reemplaza la opinión de un médico, nutricionista clínico o fisioterapeuta. Si tienes una condición de salud, dolor agudo o tomas medicación, consulta con un profesional antes de empezar. Ante cualquier dolor fuera de lo normal durante un ejercicio, detente y avísale a tu coach.</p>
+      <p class="disclaimer" id="reviewNote"></p>
+      <button class="reset-btn" id="resetBtn">Reiniciar todos mis datos</button>
+      <div class="brand-strip"><div class="brand"><img class="brand-emblem" src="/assets/emblema-256.png" alt="Couch IA"><div class="brand-txt"><div class="brand-word">COUCH <span class="ia">IA</span></div><div class="brand-sub">by Team Macano</div></div></div><div class="claim">Tu entrenamiento <b>/</b> tu nutrición <b>/</b> tu progreso<br>Todo en un solo lugar</div></div>
+    </div>
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="tabs">
+    <button class="tab active" data-sec="sec-resumen">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Resumen<span class="dot"></span></button>
+    <button class="tab" data-sec="sec-entreno">
+      <svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg>
+      Entreno<span class="dot"></span></button>
+    <button class="tab" data-sec="sec-nutricion">
+      <svg viewBox="0 0 24 24"><path d="M12 3c-4 4-7 6.5-7 11a7 7 0 0 0 14 0c0-4.5-3-7-7-11z"/></svg>
+      Nutrición<span class="dot"></span></button>
+    <button class="tab" data-sec="sec-progreso">
+      <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Progreso<span class="dot"></span></button>
+    <button class="tab" data-sec="sec-checkin" id="tabCheckin">
+      <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M9 14l2 2 4-4"/></svg>
+      Check-in<span class="dot"></span></button>
+  </nav>
+
+  <!-- rest timer -->
+  <div class="timer-bar" id="timerBar">
+    <div class="timer-time" id="timerTime">0:00</div>
+    <div class="timer-info" id="timerInfo">Descanso</div>
+    <button id="timerPlus">+30s</button>
+    <button id="timerSkip">Listo</button>
+  </div>
+
+  <div class="toast" id="toast">Guardado ✓</div>
+  <div class="sync-pill" id="syncPill">☁ guardado en la nube</div>
+
+  <!-- acceso élite (solo ciclo 2+) -->
+  <div class="auth-overlay" id="authOverlay">
+    <div class="auth-card">
+      <div style="margin-bottom:22px;"><div class="brand lg"><img class="brand-emblem" src="/assets/emblema-256.png" alt="Couch IA"><div class="brand-txt"><div class="brand-word">COUCH <span class="ia">IA</span></div><div class="brand-sub">Team Macano · Formando androides</div></div></div></div>
+      <h2 id="authTitle">Acceso de miembro</h2>
+      <div class="sub" id="authSub">Ingresa tu PIN para abrir tu plan.</div>
+      <input type="password" inputmode="numeric" id="authPin" maxlength="6" placeholder="••••">
+      <button class="auth-btn" id="authBtn">Entrar</button>
+      <div class="auth-err" id="authErr"></div>
+      <div class="auth-note">¿Olvidaste tu PIN? Escríbele a tu coach y te lo restablece.<br>Tu avance está protegido y guardado en la nube.</div>
+    </div>
+  </div>
+  <script>
+  /* ===== PLAN_DATA_INICIO ===== Jhony Macano · HEAD COACH · ciclo 2 · 26 nov 2026 · EXCEPCIÓN AVANZADA ===== */
+  const PLAN = {
+    cliente: {
+      slug: 'jhony-macano',
+      nombre: 'Jhony',
+      titulo: 'Jhony, rumbo a la <em>Copa Neuro Fit</em>.',
+      enfoque: 'Preparación de competencia',
+      duracion: 12,
+      diasSemana: 6,
+      ciclo: 2,
+      planKey: 'jm-hc-8x2q7n',
+      whatsapp: '51992443099',
+      badge: '★ Head Coach',
+      authTitle: 'Bienvenido, Head Coach'
+    },
+    sync: { url: 'https://script.google.com/macros/s/AKfycbyvodzSWmymqQ5dwUVC6NQ5-mByizw8PZJ5jW760HdNig18bzdXor2GhBZk-WJiwucF/exec' },
+    evolucionHTML: '<p class="body" style="margin-bottom:14px;">Tu camino hasta acá:</p>' +
+      '<div class="macro-grid" style="margin:0 0 14px;">' +
+      '<div class="macro-box"><div class="macro-val">+2<span>años</span></div><div class="macro-name">Entrenando<br>consistente</div></div>' +
+      '<div class="macro-box"><div class="macro-val">2</div><div class="macro-name">Preparaciones<br>de competencia</div></div>' +
+      '<div class="macro-box"><div class="macro-val">20<span>dic</span></div><div class="macro-name">Copa<br>Neuro Fit</div></div>' +
+      '</div>' +
+      '<p class="body">Este ciclo tu app registra cada serie de tu preparación. Después del show, esta tarjeta va a mostrar tu curva real: <strong>cómo mantuviste la fuerza mientras bajabas al peso de tarima</strong>. Ese es el mejor anuncio que puede tener Couch IA.</p>',
+    coach: { whatsapp: '51992443099', equipo: 'Team Macano', renovacionUrl: 'https://couch-iaperu.github.io/renovacion/', revision: 'Check-in semanal obligatorio hasta el show: peso, cintura y cómo te ves. Después del 20 de diciembre, plan de recuperación y off-season.' },
+    marca: { imagen: '/assets/icon-512.png', opacidad: 0.07 },
+    notas: [
+      '<p>Jhony, este plan es distinto a todos los demás, y quiero que sepas por qué.</p>',
+      '<p><strong>Tú eres la cara de Couch IA.</strong> Cuando alguien abre esta app y ve "Team Macano", te ve a ti. Por eso el creador de la app pidió algo especial: que tu plan rompa las reglas que usamos con los principiantes y esté hecho <span class="accent">a tu altura de competidor</span>. Aquí no hay "aprende la técnica primero": aquí hay tempo, técnicas de intensidad, práctica de poses, refeed y una semana pico planificada. Eres el ejemplo vivo de que esta app funciona, y la mejor forma de demostrarlo es que la uses tú primero, con todo.</p>',
+      '<p><strong>Uno — faltan 24 días para la Copa Neuro Fit, y te voy a ser directo como coach a coach.</strong> En 3 semanas no se construye un físico: <strong>se pule el que ya construiste</strong>. Mi trabajo es que llegues al 20 de diciembre más seco, más lleno y con tus pesos intactos. La regla de estas semanas: <span class="accent">la intensidad se mantiene, el volumen baja un poco</span>. Es lo que conserva el músculo cuando la energía está al mínimo.</p>',
+      '<p><strong>Dos — tu semana pico es conservadora a propósito.</strong> Nada de cortar agua, nada de diuréticos, nada de jugar con la sal a último momento. La evidencia más actual sobre peak week es clara: la manipulación extrema de agua y sodio aporta poco y puede aplanarte o darte calambres en tarima. Lo que sí funciona es una <strong>carga de carbohidratos controlada</strong> los 2 días antes. Y lo más inteligente: <span class="accent">en la semana 2 haces un "ensayo de pico"</span> para ver cómo responde tu cuerpo, así el día del show no hay sorpresas.</p>',
+      '<p><strong>Tres — después del show viene la parte que separa a los competidores de verdad.</strong> El rebote post-tarima es lo que tumba a la mayoría. Tu plan sigue después del 20 de diciembre: 2 semanas de vuelta controlada (subiendo calorías poco a poco) y luego un off-season de mejora, con más volumen para atacar lo que los jueces te marquen.</p>',
+      '<p><strong>Cuatro — el core, que pediste priorizar, en clave de físico.</strong> En tarima el core no se trata de abdominales "fuertes": se trata de <strong>control y cintura chica</strong>. Por eso tienes vacío abdominal todos los días y trabajo de recto y oblicuos sin engrosar la cintura.</p>',
+      '<p><strong>Cinco — duermes 6 horas.</strong> En la recta final de una preparación, el sueño es lo que más rendimiento devuelve. Si puedes robarle 1 hora a la noche estas 3 semanas, vas a llegar más lleno y con mejor cabeza.</p>',
+      '<p class="coach-sign">Gracias por ser la cara de esto, Jhony. Ahora a demostrarlo en tarima. Vamos.</p>'
+    ],
+    estiloHTML: '<p class="body">Tu plan es <strong>Empuje / Tracción / Pierna dos veces por semana</strong>, nivel avanzado: compuestos pesados de 6 a 8 repeticiones con tempo controlado (notación excéntrica-pausa-concéntrica-pausa, ej. <strong>3-1-1-0</strong>), y aislamientos con <span class="accent">técnicas de intensidad</span> en la última serie: myo-reps, drop sets y rest-pause.</p><p class="body"><strong>Práctica de poses</strong> 3 días por semana y <strong>vacío abdominal</strong> todos los días. En prep, los aislamientos van al fallo; los compuestos pesados se quedan con 1 repetición en reserva para no acumular fatiga que no puedes recuperar en déficit.</p>',
+    statCards: [
+      { val: '24', unit: 'días', name: 'Al show' },
+      { val: '6', unit: 'días', name: 'Por semana' },
+      { val: '2050', unit: 'kcal', name: 'Fase de corte' },
+      { val: '180', unit: 'g', name: 'Proteína' }
+    ],
+    timeline: [
+      { week: 'Semanas 1-3 · Recta final', title: 'Pulir', desc: 'Déficit controlado, intensidad alta, volumen algo menor. Poses 3 veces por semana. En la semana 2, ensayo de pico.', type: '' },
+      { week: 'Semana 4 · 14-20 dic', title: '🏆 Semana pico + Copa Neuro Fit', desc: 'Volumen −50 %, solo bombeo. Carga de carbohidratos 2 días antes. El sábado 20, a tarima.', type: 'event' },
+      { week: 'Semanas 5-6 · Post-show', title: 'Vuelta controlada', desc: 'Recuperación, calorías subiendo poco a poco. Así se evita el rebote.', type: 'deload' },
+      { week: 'Semanas 7-11 · Off-season', title: 'Mejora', desc: 'Más volumen y superávit pequeño para atacar los puntos que te marquen los jueces.', type: '' },
+      { week: 'Semana 12 · Cierre', title: 'Evaluación', desc: 'Revisamos el ciclo y planificamos tu próxima competencia.', type: 'deload' }
+    ],
+    weeks: [
+      { n: 1, bloque: 1, fase: 'Prep · 3 semanas al show', rir: '1-2', deload: false, nota: 'Mantén los pesos de tus compuestos. Aislamientos al fallo con su técnica de intensidad. Poses: días 1, 3 y 5. Cardio LISS 30-40 min, 4 veces.' },
+      { n: 2, bloque: 1, fase: 'Prep · ensayo de pico', rir: '1-2', deload: false, nota: '🔬 ENSAYO DE PICO: el jueves y viernes sube a ~450 g de carbohidratos (agua y sal normales) y el sábado tómate fotos con la misma luz. Así sabes cómo responde tu cuerpo antes del show real.' },
+      { n: 3, bloque: 1, fase: 'Prep · última semana dura', rir: '1-2', deload: false, nota: 'Última semana pesada. Quita 1 serie por ejercicio si la fuerza cae. Poses todos los días (15 min).' },
+      { n: 4, bloque: 1, fase: '🏆 Semana pico · Show 20 dic', rir: '3-4', deload: true, nota: 'Lun-mié: entreno de cuerpo completo ligero, 2 series, sin fallo. Jue-vie: carga de carbohidratos según tu ensayo, agua y sal NORMALES. Sáb 20: tarima. Poses todos los días.' },
+      { n: 5, bloque: 2, fase: 'Post-show · recuperación', rir: '3-4', deload: true, nota: 'Semana de Navidad: 3 sesiones ligeras. Calorías a ~2450. Disfruta, pero vuelve a tu estructura el lunes: así se evita el rebote.' },
+      { n: 6, bloque: 2, fase: 'Post-show · transición', rir: '2-3', deload: false, nota: 'Vuelves a 5-6 días. Calorías a ~2650 (mantenimiento).' },
+      { n: 7, bloque: 3, fase: 'Off-season', rir: '2', deload: false, nota: 'Off-season: +1 serie en los puntos débiles que te marcaron los jueces. Superávit pequeño (~2850).' },
+      { n: 8, bloque: 3, fase: 'Off-season', rir: '1-2', deload: false, nota: 'Sube cargas en los compuestos.' },
+      { n: 9, bloque: 3, fase: 'Off-season', rir: '1-2', deload: false, nota: 'Semana de alto volumen.' },
+      { n: 10, bloque: 3, fase: 'Off-season', rir: '0-1', deload: false, nota: 'La semana más dura del off-season.' },
+      { n: 11, bloque: 3, fase: 'Deload', rir: '4-5', deload: true, nota: 'Descarga.' },
+      { n: 12, bloque: 3, fase: 'Cierre', rir: '2', deload: false, nota: 'Check-in de cierre y planificación de la próxima competencia.' }
+    ],
+    days: [
+      { id: 'd1', short: 'Día 1', focus: 'Empuje · pecho', title: 'Día 1 — Empuje A (pecho)', desc: 'Pecho de prioridad. Cierra con 10 minutos de poses.', ex: [
+        { id:'d1e1', name:'Press inclinado con mancuernas', sets:4, reps:'6-8', rir:'1', rest:'2-3 min', cue:'Tempo <b>3-1-1-0</b>: 3 s de bajada, 1 s de pausa estirado, sube explosivo. Banco a 30°.', tech:'Tempo 3-1-1-0', video:'https://www.youtube.com/results?search_query=incline+dumbbell+press+jeff+nippard' },
+        { id:'d1e2', name:'Press plano en máquina (o Smith)', sets:3, reps:'8-10', rir:'1', rest:'2 min', cue:'Recorrido completo, control en la bajada.', tech:'', video:'https://www.youtube.com/results?search_query=machine+chest+press+technique' },
+        { id:'d1e3', name:'Cruces en polea (de abajo hacia arriba)', sets:3, reps:'12-15', rir:'0', rest:'60 s', cue:'Para el pecho alto. Última serie: <b>drop set doble</b> (baja el peso 2 veces sin descanso).', tech:'Drop set doble', video:'https://www.youtube.com/results?search_query=low+to+high+cable+fly' },
+        { id:'d1e4', name:'Press militar en máquina', sets:3, reps:'8-10', rir:'1', rest:'2 min', cue:'Core firme, recorrido completo.', tech:'', video:'https://www.youtube.com/results?search_query=machine+shoulder+press+technique' },
+        { id:'d1e5', name:'Elevaciones laterales en polea', sets:4, reps:'12-15', rir:'0', rest:'60 s', cue:'Tensión constante. Última serie: <b>myo-reps</b> (al fallo, 10 s de descanso, 3-4 reps más, repite 3 veces).', tech:'Myo-reps', video:'https://www.youtube.com/results?search_query=cable+lateral+raise+technique' },
+        { id:'d1e6', name:'Tríceps con cuerda + práctica de poses', sets:3, reps:'12-15 · luego 10 min', rir:'0', rest:'60 s', cue:'Tríceps con la última serie en rest-pause. Luego <b>10 min de poses</b>: doble bíceps de frente, dorsales de frente, pecho de lado, abdomen y muslo. Mantén cada pose 10-15 s.', tech:'Rest-pause + poses', video:'https://www.youtube.com/results?search_query=mandatory+poses+classic+physique' }
+      ]},
+      { id: 'd2', short: 'Día 2', focus: 'Tracción · ancho', title: 'Día 2 — Tracción A (ancho de espalda)', desc: 'La V: espalda ancha, cintura chica.', ex: [
+        { id:'d2e1', name:'Dominadas lastradas', sets:4, reps:'6-8', rir:'1', rest:'2-3 min', cue:'Tempo <b>3-0-1-1</b>: 1 s de pausa arriba apretando dorsales.', tech:'Tempo 3-0-1-1', video:'https://www.youtube.com/results?search_query=weighted+pull+ups+technique' },
+        { id:'d2e2', name:'Jalón agarre neutro', sets:3, reps:'10-12', rir:'1', rest:'90 s', cue:'Codos hacia los bolsillos, estiramiento completo arriba.', tech:'', video:'https://www.youtube.com/results?search_query=neutral+grip+lat+pulldown' },
+        { id:'d2e3', name:'Remo con pecho apoyado', sets:3, reps:'8-10', rir:'1', rest:'2 min', cue:'Sin impulso, pausa 1 s atrás.', tech:'', video:'https://www.youtube.com/results?search_query=chest+supported+row+technique' },
+        { id:'d2e4', name:'Pullover en polea', sets:3, reps:'12-15', rir:'0', rest:'60 s', cue:'Brazos casi rectos. Última serie: drop set.', tech:'Drop set', video:'https://www.youtube.com/results?search_query=cable+pullover+lats' },
+        { id:'d2e5', name:'Face pull', sets:3, reps:'15-20', rir:'1', rest:'60 s', cue:'Deltoide posterior: el detalle que se ve de espalda.', tech:'', video:'https://www.youtube.com/results?search_query=face+pull+technique' },
+        { id:'d2e6', name:'Curl inclinado con mancuernas', sets:3, reps:'10-12', rir:'0', rest:'60 s', cue:'Cabeza larga del bíceps en estiramiento. Última serie: myo-reps.', tech:'Myo-reps', video:'https://www.youtube.com/results?search_query=incline+dumbbell+curl' }
+      ]},
+      { id: 'd3', short: 'Día 3', focus: 'Pierna · cuádriceps', title: 'Día 3 — Pierna A (cuádriceps)', desc: 'Cuádriceps con separación muscular. Cierra con poses.', ex: [
+        { id:'d3e1', name:'Sentadilla hack', sets:4, reps:'6-8', rir:'1', rest:'3 min', cue:'Tempo <b>3-1-1-0</b>, profundidad completa.', tech:'Tempo 3-1-1-0', video:'https://www.youtube.com/results?search_query=hack+squat+technique' },
+        { id:'d3e2', name:'Prensa de pierna', sets:3, reps:'10-12', rir:'0', rest:'2 min', cue:'Última serie: <b>rest-pause</b> (al fallo, 15 s, más reps, 2 veces).', tech:'Rest-pause', video:'https://www.youtube.com/results?search_query=leg+press+technique' },
+        { id:'d3e3', name:'Sentadilla búlgara', sets:3, reps:'8-10 c/pierna', rir:'1', rest:'90 s', cue:'Torso erguido para más cuádriceps.', tech:'', video:'https://www.youtube.com/results?search_query=bulgarian+split+squat+quads' },
+        { id:'d3e4', name:'Extensión de cuádriceps', sets:3, reps:'12-15', rir:'0', rest:'60 s', cue:'Pausa 2 s arriba. Última serie: drop set doble.', tech:'Drop set doble', video:'https://www.youtube.com/results?search_query=leg+extension+technique' },
+        { id:'d3e5', name:'Elevación de gemelo de pie', sets:4, reps:'10-12', rir:'0', rest:'60 s', cue:'Pausa 2 s abajo estirado, 1 s arriba.', tech:'', video:'https://www.youtube.com/results?search_query=standing+calf+raise' },
+        { id:'d3e6', name:'Vacío abdominal + poses', sets:5, reps:'20 s · luego 10 min', rir:'—', rest:'30 s', cue:'Bota todo el aire y mete el ombligo hacia la columna 20 s. Luego 10 min de poses: cuádriceps de frente y lado, abdomen y muslo.', tech:'Poses', video:'https://www.youtube.com/results?search_query=stomach+vacuum+bodybuilding' }
+      ]},
+      { id: 'd4', short: 'Día 4', focus: 'Empuje · hombro', title: 'Día 4 — Empuje B (hombro 3D)', desc: 'Hombro redondo: lo que más se nota en tarima.', ex: [
+        { id:'d4e1', name:'Press militar con mancuernas', sets:4, reps:'6-8', rir:'1', rest:'2-3 min', cue:'Sentado con respaldo, tempo 3-0-1-0.', tech:'', video:'https://www.youtube.com/results?search_query=seated+dumbbell+shoulder+press' },
+        { id:'d4e2', name:'Press inclinado en Smith', sets:3, reps:'8-10', rir:'1', rest:'2 min', cue:'Segunda dosis de pecho alto.', tech:'', video:'https://www.youtube.com/results?search_query=smith+machine+incline+press' },
+        { id:'d4e3', name:'Elevaciones laterales con mancuernas', sets:4, reps:'12-20', rir:'0', rest:'45 s', cue:'Última serie: myo-reps.', tech:'Myo-reps', video:'https://www.youtube.com/results?search_query=dumbbell+lateral+raise+technique' },
+        { id:'d4e4', name:'Pájaros en máquina (reverse pec deck)', sets:3, reps:'15-20', rir:'0', rest:'45 s', cue:'Deltoide posterior. Última serie: drop set.', tech:'Drop set', video:'https://www.youtube.com/results?search_query=reverse+pec+deck' },
+        { id:'d4e5', name:'Aperturas en pec deck', sets:3, reps:'12-15', rir:'0', rest:'60 s', cue:'Pausa 2 s cerrado.', tech:'', video:'https://www.youtube.com/results?search_query=pec+deck+fly' },
+        { id:'d4e6', name:'Fondos lastrados', sets:3, reps:'8-12', rir:'1', rest:'90 s', cue:'Torso vertical para más tríceps.', tech:'', video:'https://www.youtube.com/results?search_query=weighted+dips+triceps' }
+      ]},
+      { id: 'd5', short: 'Día 5', focus: 'Tracción · grosor', title: 'Día 5 — Tracción B (grosor)', desc: 'Densidad de espalda y brazos. Cierra con poses.', ex: [
+        { id:'d5e1', name:'Remo con barra', sets:4, reps:'6-8', rir:'1', rest:'2-3 min', cue:'Torso a 45°, pausa 1 s en el abdomen.', tech:'', video:'https://www.youtube.com/results?search_query=barbell+row+technique' },
+        { id:'d5e2', name:'Remo con mancuerna a una mano', sets:3, reps:'8-10 c/lado', rir:'1', rest:'90 s', cue:'Estiramiento completo abajo.', tech:'', video:'https://www.youtube.com/results?search_query=one+arm+dumbbell+row' },
+        { id:'d5e3', name:'Jalón agarre cerrado', sets:3, reps:'10-12', rir:'0', rest:'60 s', cue:'Última serie: rest-pause.', tech:'Rest-pause', video:'https://www.youtube.com/results?search_query=close+grip+lat+pulldown' },
+        { id:'d5e4', name:'Encogimientos con mancuernas', sets:3, reps:'10-12', rir:'0', rest:'60 s', cue:'Pausa 2 s arriba.', tech:'', video:'https://www.youtube.com/results?search_query=dumbbell+shrugs' },
+        { id:'d5e5', name:'Curl con barra', sets:3, reps:'8-10', rir:'0', rest:'60 s', cue:'Sin balanceo. Última serie: drop set.', tech:'Drop set', video:'https://www.youtube.com/results?search_query=barbell+curl+technique' },
+        { id:'d5e6', name:'Curl martillo + poses', sets:3, reps:'10-12 · luego 10 min', rir:'0', rest:'60 s', cue:'Luego 10 min de poses: dorsales y doble bíceps de espalda, tríceps de lado.', tech:'Poses', video:'https://www.youtube.com/results?search_query=back+double+biceps+pose' }
+      ]},
+      { id: 'd6', short: 'Día 6', focus: 'Pierna · posterior', title: 'Día 6 — Pierna B (femoral, glúteo y core)', desc: 'Cadena posterior y cintura.', ex: [
+        { id:'d6e1', name:'Peso muerto rumano', sets:4, reps:'6-8', rir:'1', rest:'3 min', cue:'Tempo 3-1-1-0, estiramiento máximo del femoral.', tech:'', video:'https://www.youtube.com/results?search_query=romanian+deadlift+technique' },
+        { id:'d6e2', name:'Curl femoral tumbado', sets:4, reps:'8-10', rir:'0', rest:'90 s', cue:'Última serie: myo-reps.', tech:'Myo-reps', video:'https://www.youtube.com/results?search_query=lying+leg+curl' },
+        { id:'d6e3', name:'Hip thrust', sets:3, reps:'8-10', rir:'1', rest:'2 min', cue:'Pausa 2 s arriba.', tech:'', video:'https://www.youtube.com/results?search_query=hip+thrust+technique' },
+        { id:'d6e4', name:'Aductores en máquina', sets:3, reps:'12-15', rir:'0', rest:'60 s', cue:'El detalle de la cara interna del muslo.', tech:'', video:'https://www.youtube.com/results?search_query=adductor+machine' },
+        { id:'d6e5', name:'Elevación de gemelo sentado', sets:4, reps:'12-15', rir:'0', rest:'45 s', cue:'Sóleo. Última serie: drop set.', tech:'Drop set', video:'https://www.youtube.com/results?search_query=seated+calf+raise' },
+        { id:'d6e6', name:'Elevación de piernas colgado + crunch en polea', sets:3, reps:'10-12 c/u', rir:'0', rest:'60 s', cue:'Súper-serie de core. Y cierra con 5 vacíos de 20 s.', tech:'Súper-serie', video:'https://www.youtube.com/results?search_query=hanging+leg+raise+cable+crunch' }
+      ]}
+    ],
+    nutricion: {
+      introHTML: '<p class="body">Tu gasto estimado es de <strong>~2640 kcal</strong> (Mifflin-St Jeor con actividad alta). Para la recta final te pongo en <span class="accent">2050 kcal</span> con proteína alta, y un <strong>refeed</strong> semanal para sostener el rendimiento y el llenado.</p><p class="body"><strong>Las fases de tus calorías:</strong> corte hasta el 13 dic: 2050 · semana pico: carga de carbos jue-vie · post-show: 2450 → 2650 · off-season: ~2850.</p>',
+      targets: [
+        { val: '2050', unit: 'kcal', name: 'Corte' },
+        { val: '180', unit: 'g', name: 'Proteína' },
+        { val: '231', unit: 'g', name: 'Carbohidratos' },
+        { val: '45', unit: 'g', name: 'Grasas' }
+      ],
+      extrasHTML: '<div class="callout"><p><strong>Refeed semanal (el día de pierna A):</strong> +150 g de carbohidratos (arroz integral, camote, avena), grasa al mínimo ese día. Llena el músculo y sostiene el rendimiento.</p></div><div class="callout"><p><strong>Semana pico (jue-vie antes del show):</strong> carbohidratos a ~6-7 g/kg (~450 g/día) según lo que viste en tu ensayo de la semana 2. <strong>Agua y sal iguales que siempre</strong>. Fibra baja esos 2 días (menos verdura, nada de menestra) para no inflarte. El día del show: comidas pequeñas de arroz o camote con algo de grasa (palta) antes de subir.</p></div><div class="callout"><p><strong>Cardio:</strong> LISS de 30-40 min, 4 veces por semana hasta el 13 dic. En semana pico, solo caminar.</p></div>',
+      comidas: [
+        { tipo: 'Desayunos (elige 1)', items: [
+          { nombre: 'Avena con claras y fruta', desc: '60 g de avena + 4 claras + 1 huevo entero + 1 pera.', kcal: '~430 kcal', macro: '33 g prot' },
+          { nombre: 'Huevos con camote', desc: '2 huevos + 4 claras + 150 g de camote.', kcal: '~400 kcal', macro: '35 g prot' }
+        ]},
+        { tipo: 'Almuerzos (elige 1)', items: [
+          { nombre: 'Bonito con arroz integral y brócoli', desc: '180 g de bonito + 150 g de arroz integral + brócoli.', kcal: '~560 kcal', macro: '48 g prot' },
+          { nombre: 'Pollo con quinua y espinaca', desc: '180 g de pechuga + 130 g de quinua + espinaca salteada.', kcal: '~520 kcal', macro: '52 g prot' },
+          { nombre: 'Bistec con camote', desc: '170 g de bistec magro + 180 g de camote + brócoli.', kcal: '~560 kcal', macro: '45 g prot' }
+        ]},
+        { tipo: 'Cenas (elige 1)', items: [
+          { nombre: 'Tilapia con plátano sancochado', desc: '200 g de tilapia + ½ plátano sancochado + ensalada.', kcal: '~400 kcal', macro: '46 g prot' },
+          { nombre: 'Pollo con brócoli', desc: '180 g de pollo + brócoli + ¼ de palta.', kcal: '~380 kcal', macro: '52 g prot' }
+        ]},
+        { tipo: 'Snacks', items: [
+          { nombre: 'Proteína con fruta', desc: '1 medida de proteína + 1 manzana o naranja.', kcal: '~200 kcal', macro: '24 g prot' },
+          { nombre: 'Cuajada con fruta', desc: '100 g de cuajada + 1 pera.', kcal: '~200 kcal', macro: '13 g prot' }
+        ]}
+      ],
+      opcionalesHTML: '<h3 class="block-title">Sobre tu lista</h3><p class="body">La cecina, la chuleta y los frutos secos van <strong>fuera del corte</strong> (mucha grasa o sal): resérvalos para el post-show y el off-season. En el corte, prioriza bonito, tilapia, pollo y bistec magro.</p>',
+      notasHTML: '<div class="callout"><p><strong>Suplementos:</strong> proteína ✔. Si no la tomas, la <strong>creatina (3-5 g/día)</strong> te ayudaría a llegar más lleno y a sostener la fuerza en déficit. Ojo: retiene algo de agua dentro del músculo, lo que en tarima es bueno, no malo. Y mantenla constante toda la prep, incluida la semana pico.</p></div>'
+    },
+    checkin: { cintura: true }
+  };
+  /* ===== PLAN_DATA_FIN ===== */
+
+  /* ============================================================
+     MOTOR DE LA APP — no editar al generar planes
+     ============================================================ */
+
+  // ---------- Almacenamiento con prefijo único por cliente ----------
+  const PFX = PLAN.cliente.slug + '_';
+  const store = {
+    get(k, fb) { try { const v = localStorage.getItem(PFX + k); return v == null ? fb : JSON.parse(v); } catch (e) { return fb; } },
+    set(k, v) { try { localStorage.setItem(PFX + k, JSON.stringify(v)); } catch (e) {} },
+    del(k)    { try { localStorage.removeItem(PFX + k); } catch (e) {} }
+  };
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s);
+
+  // ---------- Fechas y semana actual ----------
+  const DUR = PLAN.cliente.duracion || 12;
+  const CICLO = PLAN.cliente.ciclo || 1;
+  let startDate = null, activeWeek = 1, activeDay = 0;
+  function computedWeek() {
+    if (!startDate) return 1;
+    const days = Math.floor((Date.now() - new Date(startDate).getTime()) / 86400000);
+    return Math.min(DUR, Math.max(1, Math.floor(days / 7) + 1));
+  }
+
+  // ---------- Sincronización con la nube (Apps Script) ----------
+  // Seguro de pruebas: abierta desde la PC del coach (localhost / archivo) NUNCA toca la nube,
+  // así una vista previa jamás pisa el avance real de un cliente.
+  const IS_LOCAL = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  const SYNC_URL = (!IS_LOCAL && PLAN.sync && /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(PLAN.sync.url || '')) ? PLAN.sync.url : '';
+  const SYNC_KEYS = /^(start|checkins|track_|sets_|daydone_)/;
+  function syncKey() { return CICLO >= 2 ? (store.get('pinhash', '') || '') : (PLAN.cliente.planKey || ''); }
+  async function sha256(txt) {
+    if (crypto && crypto.subtle) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    let h = 5381; for (let i = 0; i < txt.length; i++) h = ((h << 5) + h + txt.charCodeAt(i)) >>> 0; // respaldo simple
+    return 'x' + h.toString(16);
+  }
+  function collectState() {
+    const state = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.indexOf(PFX) === 0) {
+        const short = k.slice(PFX.length);
+        if (SYNC_KEYS.test(short)) { try { state[short] = JSON.parse(localStorage.getItem(k)); } catch (e) {} }
+      }
+    }
+    return state;
+  }
+  function applyState(state) {
+    Object.keys(state || {}).forEach(k => { if (SYNC_KEYS.test(k)) { try { localStorage.setItem(PFX + k, JSON.stringify(state[k])); } catch (e) {} } });
+  }
+  async function syncCall(body, ms) {
+    // Nunca dejamos la app colgada esperando a la nube: si no responde, seguimos en local.
+    const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    const t = setTimeout(() => { try { ctrl && ctrl.abort(); } catch (e) {} }, ms || 8000);
+    try {
+      const res = await fetch(SYNC_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(body), signal: ctrl ? ctrl.signal : undefined });
+      return await res.json();
+    } finally { clearTimeout(t); }
+  }
+  let syncT = null;
+  function scheduleSync() {
+    if (!SYNC_URL || !syncKey()) return;
+    clearTimeout(syncT);
+    syncT = setTimeout(pushState, 4000);
+  }
+  async function pushState() {
+    if (!SYNC_URL || !syncKey()) return;
+    try {
+      const r = await syncCall({ action: 'sync', slug: PLAN.cliente.slug, key: syncKey(), pinHash: syncKey(), nombre: PLAN.cliente.nombre, whatsapp: PLAN.cliente.whatsapp || '', ciclo: CICLO, semana: computedWeek(), state: collectState() });
+      if (r && r.ok) { const p = $('syncPill'); p.classList.add('show'); setTimeout(() => p.classList.remove('show'), 1600); }
+    } catch (e) { /* sin internet: queda local y se reintenta en el próximo guardado */ }
+  }
+  async function tryRestore() {
+    if (!SYNC_URL || !syncKey()) return;
+    try {
+      const r = await syncCall({ action: 'fetch', slug: PLAN.cliente.slug, key: syncKey() });
+      if (r && r.ok && r.exists && r.state) { applyState(r.state); toast('Tu avance se restauró'); }
+    } catch (e) {}
+  }
+  // cada guardado local programa una subida a la nube
+  const _origSet = store.set.bind(store);
+  store.set = function (k, v) { _origSet(k, v); if (SYNC_KEYS.test(k)) scheduleSync(); };
+
+  // ---------- Acceso de miembro (ciclo 2+) ----------
+  function ensureAuth() {
+    return new Promise(async resolve => {
+      if (CICLO < 2 || store.get('pinhash', '')) return resolve();
+      const ov = $('authOverlay'); ov.classList.add('show');
+      const equipo = (PLAN.coach.equipo || 'club de miembros');
+      $('authTitle').textContent = PLAN.cliente.authTitle || ('Bienvenido al ' + equipo);
+      // La consulta al servidor va en paralelo: el botón funciona desde el primer segundo.
+      const modePromise = (async () => {
+        if (!SYNC_URL) return 'create';
+        try {
+          const r = await syncCall({ action: 'fetch', slug: PLAN.cliente.slug, key: '' });
+          if (r && r.ok && (r.exists === false || !r.hasPin)) return 'create';
+          return 'login';
+        } catch (e) { return 'create'; }
+      })();
+      modePromise.then(m => {
+        if (m === 'create') {
+          $('authSub').textContent = 'Ya eres de la casa. Crea tu PIN de 4 a 6 dígitos: con él entrarás a tu plan desde cualquier celular.';
+          $('authBtn').textContent = 'Crear mi PIN';
+        }
+      });
+      $('authBtn').onclick = async () => {
+        const mode = await modePromise;
+        const pin = ($('authPin').value || '').trim();
+        if (!/^\d{4,6}$/.test(pin)) { $('authErr').textContent = 'El PIN debe tener de 4 a 6 números.'; return; }
+        $('authErr').textContent = ''; $('authBtn').disabled = true;
+        const hash = await sha256(PLAN.cliente.slug + ':' + pin);
+        try {
+          if (mode === 'create') {
+            if (SYNC_URL) { const r = await syncCall({ action: 'register', slug: PLAN.cliente.slug, pinHash: hash, nombre: PLAN.cliente.nombre, whatsapp: PLAN.cliente.whatsapp || '', ciclo: CICLO }); if (!r || !r.ok) throw new Error(r && r.error); }
+            _origSet('pinhash', hash);
+          } else {
+            if (SYNC_URL) {
+              const r = await syncCall({ action: 'fetch', slug: PLAN.cliente.slug, key: hash });
+              if (!r || !r.ok) { $('authErr').textContent = 'PIN incorrecto. Intenta de nuevo o escríbele a tu coach.'; $('authBtn').disabled = false; return; }
+              _origSet('pinhash', hash);
+              if (r.state) applyState(r.state);
+            } else { _origSet('pinhash', hash); }
+          }
+          ov.classList.remove('show'); resolve();
+        } catch (e) { $('authErr').textContent = 'No se pudo conectar. Revisa tu internet e intenta de nuevo.'; $('authBtn').disabled = false; }
+      };
+      $('authPin').addEventListener('keydown', ev => { if (ev.key === 'Enter') $('authBtn').click(); });
+    });
+  }
+
+  // ---------- Header + Resumen ----------
+  function renderStatic() {
+    document.title = 'Couch IA · ' + PLAN.cliente.nombre;
+    $('headline').innerHTML = PLAN.cliente.titulo;
+    $('focusText').textContent = PLAN.cliente.enfoque;
+    $('durText').textContent = DUR + ' semanas';
+    $('startDate').textContent = new Date(startDate).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' });
+    $('curWeekText').textContent = 'Semana ' + computedWeek() + ' de ' + DUR;
+    $('coachNotes').innerHTML = PLAN.notas.join('');
+    $('styleWhy').innerHTML = PLAN.estiloHTML;
+    $('statCards').innerHTML = PLAN.statCards.map(c =>
+      '<div class="macro-box"><div class="macro-val">' + c.val + (c.unit ? '<span>' + c.unit + '</span>' : '') + '</div><div class="macro-name">' + c.name + '</div></div>').join('');
+    $('timeline').innerHTML = PLAN.timeline.map(t =>
+      '<div class="tl-item ' + (t.type || '') + '"><div class="tl-week">' + t.week + '</div><div class="tl-title">' + t.title + '</div><div class="tl-desc">' + t.desc + '</div></div>').join('');
+    $('waBtn').href = 'https://wa.me/' + PLAN.coach.whatsapp + '?text=' + encodeURIComponent('Hola coach, soy ' + PLAN.cliente.nombre + '. Tengo una consulta sobre mi plan:');
+    $('reviewNote').textContent = PLAN.coach.revision || '';
+    $('targetDays').textContent = PLAN.cliente.diasSemana;
+  }
+
+  // ---------- Nutrición ----------
+  function renderNutrition() {
+    $('nutriIntro').innerHTML = PLAN.nutricion.introHTML;
+    $('nutriTargets').innerHTML = PLAN.nutricion.targets.map(c =>
+      '<div class="macro-box"><div class="macro-val">' + c.val + (c.unit ? '<span>' + c.unit + '</span>' : '') + '</div><div class="macro-name">' + c.name + '</div></div>').join('');
+    $('nutriExtras').innerHTML = PLAN.nutricion.extrasHTML || '';
+    $('mealGroups').innerHTML = PLAN.nutricion.comidas.map(g =>
+      '<div class="meal-group"><h4>' + g.tipo + '</h4>' + g.items.map(m =>
+        '<div class="meal"><div class="meal-top"><div class="meal-name">' + m.nombre + '</div><div class="meal-kcal">' + (m.kcal || '') + '</div></div>' +
+        '<div class="meal-desc">' + m.desc + '</div>' + (m.macro ? '<div class="meal-macro">🥩 ' + m.macro + '</div>' : '') + '</div>').join('') + '</div>').join('');
+    $('nutriOpcionales').innerHTML = PLAN.nutricion.opcionalesHTML || '';
+    $('nutriNotas').innerHTML = PLAN.nutricion.notasHTML || '';
+  }
+
+  // ---------- Semanas ----------
+  function weekObj(n) { return PLAN.weeks[n - 1] || PLAN.weeks[0]; }
+  function rirFor(ex) { const w = weekObj(activeWeek); return w.deload ? '4-5' : (w.rir || ex.rir || '—'); }
+
+  function renderWeekSelector() {
+    const cw = computedWeek();
+    $('weekSelector').innerHTML = PLAN.weeks.map(w => {
+      const cls = ['week-chip'];
+      if (w.deload) cls.push('deload');
+      if (w.n === cw) cls.push('current');
+      if (w.n === activeWeek) cls.push('active');
+      return '<button class="' + cls.join(' ') + '" data-w="' + w.n + '">S' + w.n + '</button>';
+    }).join('');
+    Array.from($('weekSelector').children).forEach(b => b.onclick = () => {
+      activeWeek = parseInt(b.dataset.w, 10); store.set('weekSel', activeWeek);
+      renderWeekSelector(); renderWeekBanner(); renderDaySelector(); renderDay();
+    });
+  }
+  function renderWeekBanner() {
+    const w = weekObj(activeWeek);
+    $('weekBanner').className = 'week-banner' + (w.deload ? ' deload' : '');
+    $('weekBanner').innerHTML = '<b>Semana ' + w.n + '</b> · Bloque ' + w.bloque + ' — ' + w.fase +
+      ' · <span class="rir-pill">RIR ' + w.rir + '</span><br>' + w.nota;
+  }
+
+  // ---------- Días y ejercicios ----------
+  function dayDoneMap() { return store.get('daydone_w' + activeWeek, {}); }
+  function renderDaySelector() {
+    const done = dayDoneMap();
+    $('daySelector').innerHTML = PLAN.days.map((d, i) =>
+      '<button class="day-chip' + (i === activeDay ? ' active' : '') + (done[d.id] ? ' done' : '') + '" data-i="' + i + '">' +
+      '<span class="d-num">' + d.short + '</span><span class="d-focus">' + d.focus + '</span></button>').join('');
+    Array.from($('daySelector').children).forEach(b => b.onclick = () => { activeDay = parseInt(b.dataset.i, 10); renderDaySelector(); renderDay(); });
+  }
+
+  function parseRestSec(rest) {
+    if (!rest) return 90;
+    const m = String(rest).match(/(\d+(?:[\.,]\d+)?)/);
+    if (!m) return 90;
+    const n = parseFloat(m[1].replace(',', '.'));
+    return /min/i.test(rest) ? Math.round(n * 60) : Math.round(n);
+  }
+  function parseTopReps(reps) {
+    const nums = String(reps || '').match(/\d+/g);
+    return nums && nums.length ? parseInt(nums[nums.length - 1], 10) : null;
+  }
+
+  function trackKey(exId) { return 'track_' + exId; }
+  function getHistory(exId) { return store.get(trackKey(exId), []); }
+  function saveEntry(exId, kg, r) {
+    const hist = getHistory(exId);
+    hist.push({ d: Date.now(), w: activeWeek, kg: kg, r: r });
+    store.set(trackKey(exId), hist.slice(-40));
+  }
+  function bestKg(exId, exceptLast) {
+    const h = getHistory(exId); const upto = exceptLast ? h.slice(0, -1) : h;
+    return upto.reduce((m, e) => Math.max(m, e.kg || 0), 0);
+  }
+
+  function renderExercise(ex) {
+    const setsN = parseInt(ex.sets, 10) || 3;
+    const setsDone = store.get('sets_w' + activeWeek + '_' + ex.id, []);
+    const circles = Array.from({ length: setsN }, (_, i) =>
+      '<button class="set-circle' + (setsDone[i] ? ' done' : '') + '" data-ex="' + ex.id + '" data-i="' + i + '" data-rest="' + parseRestSec(ex.rest) + '">' + (i + 1) + '</button>').join('');
+    return '<div class="ex">' +
+      '<div class="ex-top"><div class="ex-name">' + ex.name + '</div>' +
+      '<a class="ex-video" href="' + ex.video + '" target="_blank" rel="noopener" title="Ver técnica en video"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></a></div>' +
+      '<div class="ex-scheme">' +
+      '<div class="scheme-item"><span class="scheme-k">Series</span><span class="scheme-v">' + ex.sets + '</span></div>' +
+      '<div class="scheme-item"><span class="scheme-k">Reps</span><span class="scheme-v hl">' + ex.reps + '</span></div>' +
+      '<div class="scheme-item"><span class="scheme-k">RIR</span><span class="scheme-v">' + rirFor(ex) + '</span></div>' +
+      '<div class="scheme-item"><span class="scheme-k">Descanso</span><span class="scheme-v">' + ex.rest + '</span></div></div>' +
+      (ex.tech ? '<span class="ex-tech">⚡ ' + ex.tech + '</span>' : '') +
+      '<div class="ex-cue">' + ex.cue + '</div>' +
+      '<div class="sets-row"><span class="sets-label">Series</span>' + circles + '<span class="sets-label" style="margin-left:auto">toca al terminar cada una</span></div>' +
+      '<div class="track">' +
+      '<div class="track-last" id="last-' + ex.id + '"></div>' +
+      '<div class="track-sugg" id="sugg-' + ex.id + '"></div>' +
+      '<div class="track-inputs">' +
+      '<div style="flex:1;"><div class="track-input-label">Peso (kg)</div><input type="number" inputmode="decimal" id="w-' + ex.id + '" placeholder="0"></div>' +
+      '<span class="mult">×</span>' +
+      '<div style="flex:1;"><div class="track-input-label">Reps</div><input type="number" inputmode="numeric" id="r-' + ex.id + '" placeholder="0"></div>' +
+      '<button class="track-save" id="save-' + ex.id + '">Guardar</button></div>' +
+      '<button class="hist-toggle" id="ht-' + ex.id + '">Ver historial ▾</button>' +
+      '<div class="track-history" id="hist-' + ex.id + '"></div>' +
+      '</div></div>';
+  }
+
+  function attachTracking(ex) {
+    const lastEl = $('last-' + ex.id), suggEl = $('sugg-' + ex.id);
+    function refreshInfo() {
+      const h = getHistory(ex.id);
+      if (!h.length) { lastEl.innerHTML = 'Primera vez: registra tu peso de arranque.'; suggEl.textContent = ''; return; }
+      const last = h[h.length - 1];
+      const date = new Date(last.d).toLocaleDateString('es', { day: 'numeric', month: 'short' });
+      const isPR = last.kg >= bestKg(ex.id, false) && last.kg > bestKg(ex.id, true);
+      lastEl.innerHTML = 'Última vez (' + date + '): <b>' + last.kg + ' kg × ' + last.r + '</b>' + (isPR ? ' <span class="pr">● Récord</span>' : '');
+      const top = parseTopReps(ex.reps);
+      if (top && last.r >= top) suggEl.textContent = '📈 Llegaste al tope del rango: prueba ' + (Math.round((last.kg + 2.5) * 10) / 10) + ' kg hoy.';
+      else if (top) suggEl.textContent = '';
+    }
+    refreshInfo();
+    $('save-' + ex.id).onclick = () => {
+      const kg = parseFloat($('w-' + ex.id).value), r = parseInt($('r-' + ex.id).value, 10);
+      if (isNaN(kg) || isNaN(r) || kg < 0 || r <= 0) return;
+      saveEntry(ex.id, kg, r);
+      $('w-' + ex.id).value = ''; $('r-' + ex.id).value = '';
+      const btn = $('save-' + ex.id); btn.textContent = '✓'; btn.classList.add('saved');
+      setTimeout(() => { btn.textContent = 'Guardar'; btn.classList.remove('saved'); }, 1200);
+      refreshInfo(); renderHist(); toast('Registro guardado');
+    };
+    function renderHist() {
+      const h = getHistory(ex.id).slice(-5).reverse();
+      $('hist-' + ex.id).innerHTML = h.length ? h.map(e =>
+        '<div class="hist-row"><span>S' + (e.w || '·') + ' — ' + new Date(e.d).toLocaleDateString('es', { day: 'numeric', month: 'short' }) + '</span><span>' + e.kg + ' kg × ' + e.r + '</span></div>').join('') :
+        '<div class="hist-row"><span>Sin registros aún</span><span></span></div>';
+    }
+    renderHist();
+    $('ht-' + ex.id).onclick = () => $('hist-' + ex.id).classList.toggle('open');
+  }
+
+  function renderDay() {
+    const d = PLAN.days[activeDay];
+    const w = weekObj(activeWeek);
+    const done = dayDoneMap();
+    $('dayContent').innerHTML =
+      '<div class="day-head"><h3>' + d.title + '</h3><p>' + d.desc + '</p>' +
+      (w.deload ? '<p style="color:var(--amber);font-size:13px;margin-top:6px;">🔸 Semana de descarga: haz ~2 series por ejercicio con peso cómodo (RIR 4-5).</p>' : '') + '</div>' +
+      d.ex.map(renderExercise).join('') +
+      '<button class="day-done-btn' + (done[d.id] ? ' done' : '') + '" id="dayDoneBtn">' + (done[d.id] ? '✓ Día completado — ¡bien ahí!' : 'Marcar día como completado') + '</button>';
+    d.ex.forEach(attachTracking);
+    Array.from(document.querySelectorAll('.set-circle')).forEach(b => b.onclick = () => {
+      const exId = b.dataset.ex, i = parseInt(b.dataset.i, 10);
+      const key = 'sets_w' + activeWeek + '_' + exId;
+      const arr = store.get(key, []);
+      arr[i] = !arr[i]; store.set(key, arr);
+      b.classList.toggle('done', !!arr[i]);
+      if (arr[i]) startTimer(parseInt(b.dataset.rest, 10), b.closest('.ex').querySelector('.ex-name').textContent);
+    });
+    $('dayDoneBtn').onclick = () => {
+      const map = dayDoneMap();
+      if (map[d.id]) delete map[d.id]; else map[d.id] = Date.now();
+      store.set('daydone_w' + activeWeek, map);
+      renderDaySelector(); renderDay(); renderProgress();
+    };
+  }
+
+  // ---------- Timer de descanso ----------
+  let timerInt = null, timerLeft = 0;
+  function fmtTime(s) { return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+  function startTimer(sec, label) {
+    clearInterval(timerInt); timerLeft = sec || 90;
+    const bar = $('timerBar'); bar.classList.remove('done-flash'); bar.classList.add('show');
+    $('timerInfo').textContent = 'Descanso — ' + (label || 'siguiente serie');
+    $('timerTime').textContent = fmtTime(timerLeft);
+    timerInt = setInterval(() => {
+      timerLeft--;
+      $('timerTime').textContent = fmtTime(Math.max(0, timerLeft));
+      if (timerLeft <= 0) {
+        clearInterval(timerInt);
+        bar.classList.add('done-flash');
+        $('timerInfo').textContent = '¡Listo! Siguiente serie 💪';
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        setTimeout(() => bar.classList.remove('show'), 4000);
+      }
+    }, 1000);
+  }
+  $('timerPlus').onclick = () => { timerLeft += 30; $('timerTime').textContent = fmtTime(timerLeft); };
+  $('timerSkip').onclick = () => { clearInterval(timerInt); $('timerBar').classList.remove('show'); };
+
+  // ---------- Gráficos SVG ----------
+  // El color sigue al tema: lima de la marca, dorado en miembros Team Macano.
+  const ACC = () => (getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#A8D70F');
+  function svgLine(points, opts) {
+    opts = opts || {};
+    const W = 320, H = 140, padL = 34, padR = 12, padT = 14, padB = 22;
+    if (!points.length) return '<div class="chart-empty">' + (opts.empty || 'Aún no hay datos.') + '</div>';
+    const ys = points.map(p => p.y);
+    let min = Math.min.apply(null, ys), max = Math.max.apply(null, ys);
+    if (min === max) { min -= 1; max += 1; }
+    const span = max - min;
+    min -= span * 0.12; max += span * 0.12;
+    const X = i => points.length === 1 ? (padL + (W - padL - padR) / 2) : padL + (W - padL - padR) * i / (points.length - 1);
+    const Y = v => padT + (H - padT - padB) * (1 - (v - min) / (max - min));
+    const path = points.map((p, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.y).toFixed(1)).join(' ');
+    const dots = points.map((p, i) => '<circle cx="' + X(i).toFixed(1) + '" cy="' + Y(p.y).toFixed(1) + '" r="3.4" fill="' + ACC() + '"/>' +
+      (points.length <= 8 || i === points.length - 1 || i === 0 ?
+        '<text x="' + X(i).toFixed(1) + '" y="' + (Y(p.y) - 8).toFixed(1) + '" font-size="9" fill="#B8B2A6" text-anchor="middle">' + p.y + '</text>' : '')).join('');
+    const labels = points.map((p, i) => (points.length <= 10 || i % 2 === 0) ?
+      '<text x="' + X(i).toFixed(1) + '" y="' + (H - 6) + '" font-size="8.5" fill="#8B847A" text-anchor="middle">' + esc(p.label) + '</text>' : '').join('');
+    let extra = '';
+    if (opts.dashedAt != null) {
+      const dy = Y(opts.dashedAt).toFixed(1);
+      extra = '<line x1="' + padL + '" y1="' + dy + '" x2="' + (W - padR) + '" y2="' + dy + '" stroke="#D9A441" stroke-width="1" stroke-dasharray="4 4"/>' +
+        '<text x="' + (W - padR) + '" y="' + (dy - 4) + '" font-size="8.5" fill="#D9A441" text-anchor="end">récord ' + opts.dashedAt + '</text>';
+    }
+    return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="' + path + '" fill="none" stroke="' + ACC() + '" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      extra + dots + labels + '</svg>';
+  }
+  function svgBars(values, target) {
+    const W = 320, H = 120, padL = 10, padB = 20, padT = 12;
+    if (!values.length) return '<div class="chart-empty">Completa tus primeros días de entreno y aquí verás tu constancia.</div>';
+    const bw = Math.min(34, (W - padL * 2) / values.length - 8);
+    const maxV = Math.max(target, 1);
+    const bars = values.map((v, i) => {
+      const x = padL + i * ((W - padL * 2) / values.length) + 4;
+      const h = Math.round((H - padT - padB) * Math.min(v.y, maxV) / maxV);
+      const y = H - padB - h;
+      const full = v.y >= target;
+      return '<rect x="' + x + '" y="' + y + '" width="' + bw + '" height="' + Math.max(h, 2) + '" rx="4" fill="' + ACC() + '" opacity="' + (full ? '1' : '0.35') + '"/>' +
+        '<text x="' + (x + bw / 2) + '" y="' + (y - 4) + '" font-size="9" fill="#B8B2A6" text-anchor="middle">' + v.y + '</text>' +
+        '<text x="' + (x + bw / 2) + '" y="' + (H - 6) + '" font-size="8.5" fill="#8B847A" text-anchor="middle">' + v.label + '</text>';
+    }).join('');
+    return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg">' + bars + '</svg>';
+  }
+
+  function allExercises() { const out = []; PLAN.days.forEach(d => d.ex.forEach(e => out.push(e))); return out; }
+
+  function renderProgress() {
+    // Evolución vs ciclo anterior (solo renovaciones)
+    if (PLAN.evolucionHTML && !$('evoCard')) {
+      const card = document.createElement('div');
+      card.className = 'chart-card'; card.id = 'evoCard';
+      card.innerHTML = '<h4>★ Tu evolución desde el día 1</h4><div class="sub">Lo que construiste en tu ciclo anterior no se borra: se compara.</div>' + PLAN.evolucionHTML;
+      const sec = $('sec-progreso');
+      sec.insertBefore(card, sec.querySelector('.chart-card'));
+    }
+    // Peso corporal (de check-ins)
+    const cis = store.get('checkins', []);
+    $('chartWeight').innerHTML = svgLine(
+      cis.filter(c => c.peso).map(c => ({ y: c.peso, label: 'S' + c.w })),
+      { empty: 'Tu primer check-in semanal pondrá el primer punto aquí.' });
+    // Fuerza por ejercicio
+    const exs = allExercises();
+    const sel = $('exSelect');
+    if (!sel.dataset.filled) {
+      sel.innerHTML = exs.map(e => '<option value="' + e.id + '">' + e.name + '</option>').join('');
+      const withHist = exs.find(e => getHistory(e.id).length);
+      if (withHist) sel.value = withHist.id;
+      sel.dataset.filled = '1';
+      sel.onchange = renderProgress;
+    }
+    const ex = exs.find(e => e.id === sel.value) || exs[0];
+    if (ex) {
+      const h = getHistory(ex.id);
+      const pr = bestKg(ex.id, false);
+      $('prBadge').innerHTML = pr ? '<span class="pr-badge">PR ' + pr + ' kg</span>' : '';
+      $('chartStrength').innerHTML = svgLine(
+        h.map(e => ({ y: e.kg, label: 'S' + (e.w || '·') })),
+        { empty: 'Registra tus pesos en la pestaña Entreno y aquí verás tu curva de fuerza.', dashedAt: pr || null });
+    }
+    // Constancia
+    const cw = computedWeek();
+    const vals = [];
+    for (let w = Math.max(1, cw - 7); w <= cw; w++) {
+      vals.push({ y: Object.keys(store.get('daydone_w' + w, {})).length, label: 'S' + w });
+    }
+    $('chartAdherence').innerHTML = svgBars(vals, PLAN.cliente.diasSemana);
+  }
+
+  // ---------- Check-in semanal ----------
+  const ciDraft = { comidas: null, energia: null, sueno: null, entrenos: null };
+  function ciScore(c) {
+    const e = Math.min(1, c.entrenos / PLAN.cliente.diasSemana) * 40;
+    const f = Math.min(1, c.comidas / 7) * 30;
+    const b = ((c.energia + c.sueno) / 10) * 30;
+    return Math.round(e + f + b);
+  }
+  function lightFor(score) { return score >= 75 ? 'g' : score >= 50 ? 'a' : 'r'; }
+  function lightText(score) {
+    return score >= 75 ? '<b>Semana verde.</b> Vas firme — sigue exactamente así.' :
+           score >= 50 ? '<b>Semana ámbar.</b> Hubo baches, pero sigues en carrera. Ajusta lo que falló y listo.' :
+                         '<b>Semana roja.</b> Pasa — lo importante es no encadenar dos. Vuelve a lo simple: siguiente entreno y siguiente comida.';
+  }
+
+  function segRow(field, from, to, labels) {
+    let html = '<div class="seg" data-field="' + field + '">';
+    for (let v = from; v <= to; v++) html += '<button data-v="' + v + '">' + (labels ? labels[v - from] : v) + '</button>';
+    return html + '</div>';
+  }
+  function bindSegs(container) {
+    Array.from(container.querySelectorAll('.seg')).forEach(seg => {
+      Array.from(seg.children).forEach(btn => btn.onclick = () => {
+        Array.from(seg.children).forEach(b => b.classList.remove('sel'));
+        btn.classList.add('sel');
+        ciDraft[seg.dataset.field] = parseInt(btn.dataset.v, 10);
+      });
+    });
+  }
+
+  function renderCheckin() {
+    const cw = computedWeek();
+    const cis = store.get('checkins', []);
+    const current = cis.find(c => c.w === cw);
+    const last = cis[cis.length - 1];
+    // status
+    const stEl = $('ciStatus');
+    if (last) {
+      stEl.innerHTML = '<div class="ci-light ' + lightFor(last.score) + '"></div><div class="t">' + lightText(last.score) +
+        '<br><span style="color:var(--text-dim);font-size:12px;">Último check-in: semana ' + last.w + ' · ' + new Date(last.d).toLocaleDateString('es', { day: 'numeric', month: 'short' }) + '</span></div>';
+    } else {
+      stEl.innerHTML = '<div class="ci-light a"></div><div class="t"><b>Aún sin check-ins.</b> Cada semana respondes 5 cosas en 1 minuto; con eso tu coach te sigue de verdad y tus gráficos cobran vida.</div>';
+    }
+    $('tabCheckin').classList.toggle('has-dot', !current);
+    // form o resumen
+    const wrap = $('ciFormWrap');
+    if (current) {
+      wrap.innerHTML = '<div class="ci-form"><p class="body" style="margin-bottom:10px;">✓ Ya hiciste tu check-in de la <strong>semana ' + cw + '</strong>' + (current.peso ? ' — peso ' + current.peso + ' kg' : '') + '.</p>' +
+        '<a class="wa-btn" style="width:100%;justify-content:center;box-sizing:border-box;" target="_blank" rel="noopener" href="' + waCheckinLink(current) + '">📤 Enviárselo a mi coach</a>' +
+        '<button class="reset-btn" id="ciRedo" style="width:100%;margin-top:10px;">Rehacer el de esta semana</button></div>';
+      $('ciRedo').onclick = () => { store.set('checkins', cis.filter(c => c.w !== cw)); renderCheckin(); };
+    } else {
+      const autoDays = Object.keys(store.get('daydone_w' + cw, {})).length;
+      ciDraft.entrenos = autoDays; ciDraft.comidas = null; ciDraft.energia = null; ciDraft.sueno = null;
+      wrap.innerHTML = '<div class="ci-form">' +
+        '<div class="ci-q"><label>Tu peso hoy <span class="hint">(en ayunas si puedes — kg)</span></label><input type="number" inputmode="decimal" id="ciPeso" placeholder="0.0"></div>' +
+        (PLAN.checkin && PLAN.checkin.cintura ? '<div class="ci-q"><label>Cintura <span class="hint">(cm, a la altura del ombligo — opcional)</span></label><input type="number" inputmode="decimal" id="ciCintura" placeholder="0"></div>' : '') +
+        '<div class="ci-q"><label>Entrenos completados esta semana <span class="hint">(detecté ' + autoDays + ' marcados)</span></label>' + segRow('entrenos', 0, PLAN.cliente.diasSemana) + '</div>' +
+        '<div class="ci-q"><label>¿Cuántos días comiste según el plan?</label>' + segRow('comidas', 0, 7) + '</div>' +
+        '<div class="ci-q"><label>Energía esta semana</label>' + segRow('energia', 1, 5, ['😫', '😕', '😐', '🙂', '⚡']) + '</div>' +
+        '<div class="ci-q"><label>¿Cómo dormiste?</label>' + segRow('sueno', 1, 5, ['😫', '😕', '😐', '🙂', '😴']) + '</div>' +
+        '<button class="ci-submit" id="ciSubmit">Guardar mi check-in</button>' +
+        '<div class="ci-result" id="ciResult"></div></div>';
+      bindSegs(wrap);
+      // preselecciona los entrenos detectados
+      const segE = wrap.querySelector('.seg[data-field=entrenos]');
+      if (segE && segE.children[autoDays]) segE.children[autoDays].classList.add('sel');
+      $('ciSubmit').onclick = () => {
+        const peso = parseFloat($('ciPeso').value) || null;
+        const cint = $('ciCintura') ? (parseFloat($('ciCintura').value) || null) : null;
+        if (ciDraft.comidas == null || ciDraft.energia == null || ciDraft.sueno == null || ciDraft.entrenos == null) {
+          $('ciResult').innerHTML = '<p class="body" style="color:var(--amber);">Marca las 4 respuestas de opciones para guardar.</p>'; return;
+        }
+        const c = { w: cw, d: Date.now(), peso: peso, cintura: cint, entrenos: ciDraft.entrenos, comidas: ciDraft.comidas, energia: ciDraft.energia, sueno: ciDraft.sueno };
+        c.score = ciScore(c);
+        const list = store.get('checkins', []).filter(x => x.w !== cw); list.push(c); list.sort((a, b) => a.w - b.w);
+        store.set('checkins', list);
+        toast('Check-in guardado'); renderCheckin(); renderProgress();
+      };
+    }
+    renewCard(cw, cis);
+    // historial
+    $('ciHistory').innerHTML = cis.length ? '<h3 class="block-title">Tus semanas</h3>' + cis.slice().reverse().map(c =>
+      '<div class="hist-row"><span>Semana ' + c.w + (c.peso ? ' · ' + c.peso + ' kg' : '') + '</span><span style="color:var(--' + (lightFor(c.score) === 'g' ? 'green' : lightFor(c.score) === 'a' ? 'amber' : 'red') + ');">●</span></div>').join('') : '';
+  }
+
+  function waCheckinLink(c) {
+    const msg = 'Hola coach, soy ' + PLAN.cliente.nombre + ' 👋 Mi check-in de la semana ' + c.w + ':\n' +
+      (c.peso ? '• Peso: ' + c.peso + ' kg\n' : '') +
+      (c.cintura ? '• Cintura: ' + c.cintura + ' cm\n' : '') +
+      '• Entrenos: ' + c.entrenos + '/' + PLAN.cliente.diasSemana + '\n' +
+      '• Comidas según plan: ' + c.comidas + '/7\n' +
+      '• Energía: ' + c.energia + '/5 · Sueño: ' + c.sueno + '/5';
+    return 'https://wa.me/' + PLAN.coach.whatsapp + '?text=' + encodeURIComponent(msg);
+  }
+
+  function renewCard(cw, cis) {
+    const el = $('renewWrap');
+    if (cw >= DUR - 1) {
+      const teaser = CICLO < 2 ? '<p>Y al renovar entras al <strong>' + (PLAN.coach.equipo || 'club de miembros') + '</strong>: acceso con PIN, app dorada de miembro, tu evolución completa desde el día 1 y tu app personalizada con la figura que te inspira.</p>' : '';
+      el.innerHTML = '<div class="renew-card"><h4>🏁 Se viene el cierre de tu ciclo</h4>' +
+        '<p>' + PLAN.cliente.nombre + ', estás en la recta final de tus ' + DUR + ' semanas. Lo que sigue: responde el cuestionario de renovación (2 minutos) y tu coach arma tu <strong>siguiente ciclo</strong> partiendo de todo lo que lograste — no desde cero.</p>' + teaser +
+        '<a class="wa-btn" style="width:100%;justify-content:center;box-sizing:border-box;" href="' + PLAN.coach.renovacionUrl + '" target="_blank" rel="noopener">Empezar mi renovación →</a></div>';
+    } else { el.innerHTML = ''; }
+  }
+
+  // ---------- Tabs, toast, reset ----------
+  Array.from(document.querySelectorAll('.tab')).forEach(t => t.onclick = () => {
+    Array.from(document.querySelectorAll('.tab')).forEach(x => x.classList.remove('active'));
+    Array.from(document.querySelectorAll('.section')).forEach(s => s.classList.remove('active'));
+    t.classList.add('active');
+    $(t.dataset.sec).classList.add('active');
+    window.scrollTo({ top: 0 });
+    if (t.dataset.sec === 'sec-progreso') renderProgress();
+    if (t.dataset.sec === 'sec-checkin') renderCheckin();
+  });
+  let toastT = null;
+  function toast(msg) {
+    const el = $('toast'); el.textContent = msg + ' ✓'; el.classList.add('show');
+    clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 1800);
+  }
+  $('resetBtn').onclick = async () => {
+    if (!confirm('¿Borrar TODOS tus registros de este plan (pesos, series, check-ins)? Esto no se puede deshacer.')) return;
+    if (SYNC_URL && syncKey()) { try { await syncCall({ action: 'sync', slug: PLAN.cliente.slug, key: syncKey(), pinHash: syncKey(), nombre: PLAN.cliente.nombre, whatsapp: PLAN.cliente.whatsapp || '', ciclo: CICLO, semana: '', state: {} }); } catch (e) {} }
+    const kill = [];
+    for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf(PFX) === 0) kill.push(k); }
+    kill.forEach(k => localStorage.removeItem(k));
+    location.reload();
+  };
+
+  // ---------- Init ----------
+  (async function boot() {
+    if (CICLO >= 2) {
+      document.body.classList.add('c2');
+      const equipo = (PLAN.coach.equipo || 'Miembro');
+      $('c2Badge').textContent = PLAN.cliente.badge || ('★ ' + equipo + ' · Ciclo ' + CICLO);
+      await ensureAuth();
+      // fondo personalizado (su ídolo) como marca de agua
+      if (PLAN.marca && PLAN.marca.imagen) {
+        const bg = document.createElement('div');
+        bg.className = 'marca-bg';
+        bg.style.backgroundImage = 'url("' + PLAN.marca.imagen + '")';
+        bg.style.opacity = String(PLAN.marca.opacidad || 0.08);
+        document.body.prepend(bg);
+      }
+    }
+    // celular nuevo (sin datos locales): intenta restaurar de la nube
+    if (!store.get('start', null)) await tryRestore();
+    startDate = store.get('start', null);
+    if (!startDate) { startDate = new Date().toISOString(); store.set('start', startDate); }
+    activeWeek = store.get('weekSel', null) || computedWeek();
+    if (activeWeek < 1 || activeWeek > DUR) activeWeek = computedWeek();
+    renderStatic();
+    renderNutrition();
+    renderWeekSelector();
+    renderWeekBanner();
+    renderDaySelector();
+    renderDay();
+    renderProgress();
+    renderCheckin();
+    // al salir de la app, empuja lo pendiente
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && SYNC_URL && syncKey()) { clearTimeout(syncT); try { navigator.sendBeacon ? navigator.sendBeacon(SYNC_URL, JSON.stringify({ action: 'sync', slug: PLAN.cliente.slug, key: syncKey(), pinHash: syncKey(), nombre: PLAN.cliente.nombre, whatsapp: PLAN.cliente.whatsapp || '', ciclo: CICLO, semana: computedWeek(), state: collectState() })) : pushState(); } catch (e) {} } });
+  })();
+  </script>
+</body>
+</html>
